@@ -39,6 +39,7 @@
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -64,7 +65,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.openToolStripMenuItem,
             this.openDVBCToolStripMenuItem,
-            this.openDVBTToolStripMenuItem});
+            this.openDVBTToolStripMenuItem,
+            this.filterToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -72,21 +74,21 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Open DVB-S";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openDVBCToolStripMenuItem
             // 
             this.openDVBCToolStripMenuItem.Name = "openDVBCToolStripMenuItem";
-            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openDVBCToolStripMenuItem.Text = "Open DVB-C";
             this.openDVBCToolStripMenuItem.Click += new System.EventHandler(this.openDVBCToolStripMenuItem_Click);
             // 
             // openDVBTToolStripMenuItem
             // 
             this.openDVBTToolStripMenuItem.Name = "openDVBTToolStripMenuItem";
-            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openDVBTToolStripMenuItem.Text = "Open DVB-T";
             this.openDVBTToolStripMenuItem.Click += new System.EventHandler(this.openDVBTToolStripMenuItem_Click);
             // 
@@ -155,6 +157,13 @@
             this.tabPage1.Text = "Service";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // filterToolStripMenuItem
+            // 
+            this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.filterToolStripMenuItem.Text = "Filter...";
+            this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -192,6 +201,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
     }
 }
 

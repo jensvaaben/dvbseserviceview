@@ -1122,5 +1122,11 @@ namespace dvbseserviceview
 
             Properties.Settings.Default.Save();
         }
+
+        private void filterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FilterForm filter = new FilterForm();
+            filter.ShowDialog();
+        }
     }
 }
