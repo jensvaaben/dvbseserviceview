@@ -151,6 +151,8 @@ namespace dvbseserviceview
             }
         }
 
+        FilterContext filterContext = new FilterContext();
+
         public Form1()
         {
             InitializeComponent();
@@ -1126,6 +1128,7 @@ namespace dvbseserviceview
         private void filterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FilterForm filter = new FilterForm();
+            filter.filterContext = this.filterContext;
             filter.ShowDialog();
         }
     }

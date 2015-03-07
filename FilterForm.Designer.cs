@@ -28,25 +28,34 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.listViewFilterCondition = new System.Windows.Forms.ListView();
             this.buttonOk = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.comboBox3 = new System.Windows.Forms.ComboBox();
+            this.comboBoxAttribute = new System.Windows.Forms.ComboBox();
+            this.comboBoxCondition = new System.Windows.Forms.ComboBox();
+            this.comboBoxValue = new System.Windows.Forms.ComboBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.radioButtonInclude = new System.Windows.Forms.RadioButton();
             this.radioButtonExclude = new System.Windows.Forms.RadioButton();
+            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Relation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
-            // listView1
+            // listViewFilterCondition
             // 
-            this.listView1.Location = new System.Drawing.Point(31, 108);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(545, 97);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
+            this.listViewFilterCondition.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.Attribute,
+            this.Relation,
+            this.Value});
+            this.listViewFilterCondition.FullRowSelect = true;
+            this.listViewFilterCondition.Location = new System.Drawing.Point(31, 108);
+            this.listViewFilterCondition.Name = "listViewFilterCondition";
+            this.listViewFilterCondition.Size = new System.Drawing.Size(545, 97);
+            this.listViewFilterCondition.TabIndex = 0;
+            this.listViewFilterCondition.UseCompatibleStateImageBehavior = false;
+            this.listViewFilterCondition.View = System.Windows.Forms.View.Details;
             // 
             // buttonOk
             // 
@@ -56,30 +65,49 @@
             this.buttonOk.TabIndex = 1;
             this.buttonOk.Text = "&OK";
             this.buttonOk.UseVisualStyleBackColor = true;
+            this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
-            // comboBox1
+            // comboBoxAttribute
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(31, 38);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
-            this.comboBox1.TabIndex = 2;
+            this.comboBoxAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxAttribute.FormattingEnabled = true;
+            this.comboBoxAttribute.Items.AddRange(new object[] {
+            "Name",
+            "Provider",
+            "NetworkName",
+            "CASystemID",
+            "Features"});
+            this.comboBoxAttribute.Location = new System.Drawing.Point(31, 38);
+            this.comboBoxAttribute.Name = "comboBoxAttribute";
+            this.comboBoxAttribute.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxAttribute.TabIndex = 2;
             // 
-            // comboBox2
+            // comboBoxCondition
             // 
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Location = new System.Drawing.Point(175, 38);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(121, 21);
-            this.comboBox2.TabIndex = 3;
+            this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxCondition.FormattingEnabled = true;
+            this.comboBoxCondition.Items.AddRange(new object[] {
+            "Is",
+            "IsNot",
+            "LessThan",
+            "MoreThan",
+            "BeginsWith",
+            "EndsWith",
+            "Contains",
+            "Excludes",
+            "InRange"});
+            this.comboBoxCondition.Location = new System.Drawing.Point(175, 38);
+            this.comboBoxCondition.Name = "comboBoxCondition";
+            this.comboBoxCondition.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxCondition.TabIndex = 3;
             // 
-            // comboBox3
+            // comboBoxValue
             // 
-            this.comboBox3.FormattingEnabled = true;
-            this.comboBox3.Location = new System.Drawing.Point(316, 38);
-            this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(121, 21);
-            this.comboBox3.TabIndex = 4;
+            this.comboBoxValue.FormattingEnabled = true;
+            this.comboBoxValue.Location = new System.Drawing.Point(316, 38);
+            this.comboBoxValue.Name = "comboBoxValue";
+            this.comboBoxValue.Size = new System.Drawing.Size(121, 21);
+            this.comboBoxValue.TabIndex = 4;
             // 
             // buttonAdd
             // 
@@ -89,6 +117,7 @@
             this.buttonAdd.TabIndex = 5;
             this.buttonAdd.Text = "&Add";
             this.buttonAdd.UseVisualStyleBackColor = true;
+            this.buttonAdd.Click += new System.EventHandler(this.buttonAdd_Click);
             // 
             // buttonRemove
             // 
@@ -98,6 +127,7 @@
             this.buttonRemove.TabIndex = 6;
             this.buttonRemove.Text = "&Remove";
             this.buttonRemove.UseVisualStyleBackColor = true;
+            this.buttonRemove.Click += new System.EventHandler(this.buttonRemove_Click);
             // 
             // buttonReset
             // 
@@ -107,6 +137,7 @@
             this.buttonReset.TabIndex = 7;
             this.buttonReset.Text = "Reset";
             this.buttonReset.UseVisualStyleBackColor = true;
+            this.buttonReset.Click += new System.EventHandler(this.buttonReset_Click);
             // 
             // radioButtonInclude
             // 
@@ -118,6 +149,7 @@
             this.radioButtonInclude.TabStop = true;
             this.radioButtonInclude.Text = "&Include";
             this.radioButtonInclude.UseVisualStyleBackColor = true;
+            this.radioButtonInclude.CheckedChanged += new System.EventHandler(this.radioButtonInclude_CheckedChanged);
             // 
             // radioButtonExclude
             // 
@@ -130,6 +162,18 @@
             this.radioButtonExclude.Text = "&Exclude";
             this.radioButtonExclude.UseVisualStyleBackColor = true;
             // 
+            // Attribute
+            // 
+            this.Attribute.Text = "Attribute";
+            // 
+            // Relation
+            // 
+            this.Relation.Text = "Relation";
+            // 
+            // Value
+            // 
+            this.Value.Text = "Value";
+            // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -140,13 +184,14 @@
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.buttonAdd);
-            this.Controls.Add(this.comboBox3);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxValue);
+            this.Controls.Add(this.comboBoxCondition);
+            this.Controls.Add(this.comboBoxAttribute);
             this.Controls.Add(this.buttonOk);
-            this.Controls.Add(this.listView1);
+            this.Controls.Add(this.listViewFilterCondition);
             this.Name = "FilterForm";
             this.Text = "Filter";
+            this.Load += new System.EventHandler(this.FilterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -154,15 +199,18 @@
 
         #endregion
 
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.ListView listViewFilterCondition;
         private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.ComboBox comboBox3;
+        private System.Windows.Forms.ComboBox comboBoxAttribute;
+        private System.Windows.Forms.ComboBox comboBoxCondition;
+        private System.Windows.Forms.ComboBox comboBoxValue;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Button buttonReset;
         private System.Windows.Forms.RadioButton radioButtonInclude;
         private System.Windows.Forms.RadioButton radioButtonExclude;
+        private System.Windows.Forms.ColumnHeader Attribute;
+        private System.Windows.Forms.ColumnHeader Relation;
+        private System.Windows.Forms.ColumnHeader Value;
     }
 }
