@@ -206,6 +206,7 @@ namespace dvbseserviceview
         }
 
         List<Service> servicelist = new List<Service>();
+        List<Service> servicelistfiltered = new List<Service>();
 
         private int[] dvbscolumn = new int[20] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
         private int[] dvbtcolumn = new int[19] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
@@ -258,6 +259,7 @@ namespace dvbseserviceview
                     ExtractService((XmlNode)service, s, networktype);
                     servicelist.Add(s);
                 }
+                this.filterContext.ApplyFilter(this.servicelist, this.servicelistfiltered);
                 AddDvbColoumns(networktype);
                 CreateTree();
                 BuildIdx();
@@ -653,21 +655,21 @@ namespace dvbseserviceview
             allalphabeticidx.Clear();
 
             //provideridx
-            BuildProviderIdx(this.servicelist, this.provideridx);
+            BuildProviderIdx(this.servicelistfiltered, this.provideridx);
             //nidtsidx
-            BuildNetworkIdx(this.servicelist, this.networkidx);
+            BuildNetworkIdx(this.servicelistfiltered, this.networkidx);
             //onidtsidx
-            BuildOriginalNetworkIdx(this.servicelist, this.originalnetworkidx);
+            BuildOriginalNetworkIdx(this.servicelistfiltered, this.originalnetworkidx);
             //networknameidx
-            BuildNetworkNameIdx(this.servicelist, this.networknameidx);
+            BuildNetworkNameIdx(this.servicelistfiltered, this.networknameidx);
             //satnameidx
-            BuildSatNameIdx(this.servicelist, this.satnameidx);
+            BuildSatNameIdx(this.servicelistfiltered, this.satnameidx);
             //alphabeticidx
-            BuildAlphabeticIdx(this.servicelist, this.alphabeticidx);
+            BuildAlphabeticIdx(this.servicelistfiltered, this.alphabeticidx);
             //allalphabeticidx
-            BuildAllAlphabetic(this.servicelist, this.allalphabeticidx);
+            BuildAllAlphabetic(this.servicelistfiltered, this.allalphabeticidx);
             //bouquetidx
-            BuildBouquetIdx(this.servicelist, this.bouquetidx);
+            BuildBouquetIdx(this.servicelistfiltered, this.bouquetidx);
         }
 
         private void BuildProviderIdx(List<Service> s,SortedDictionary<string, List<Service>> idx)
@@ -959,7 +961,7 @@ namespace dvbseserviceview
                 TreeViewContext context = (TreeViewContext)selected.Tag;
                 if (context.NodeType == TreeViewNodeType.ServicesRoot)
                 {
-                    UpdateList(this.servicelist, this.networktype);
+                    UpdateList(this.servicelistfiltered, this.networktype);
                 }
                 else if (context.NodeType == TreeViewNodeType.Provider)
                 {
@@ -1130,6 +1132,18 @@ namespace dvbseserviceview
             FilterForm filter = new FilterForm();
             filter.filterContext = this.filterContext;
             filter.ShowDialog();
+            this.filterContext.ApplyFilter(this.servicelist, this.servicelistfiltered);
+            RefreshView();
+        }
+
+        private void RefreshView()
+        {
+            this.treeView1.Nodes.Clear();
+            this.listView1.Items.Clear();
+            CreateTree();
+            BuildIdx();
+            UpdateTreeView();
+            this.treeView1.SelectedNode = this.root;
         }
     }
 }

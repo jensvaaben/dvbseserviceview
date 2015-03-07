@@ -99,5 +99,15 @@ namespace dvbseserviceview
             get;
             set;
         }
+
+        public void ApplyFilter(List<Service> listin, List<Service> listout)
+        {
+            listout.Clear();
+            foreach (var item in listin)
+            {
+                //TODO: apply filter condition
+                listout.Add(item);
+            }
+        }
     }
 }
