@@ -33,13 +33,13 @@
             this.openToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDVBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDVBTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -91,6 +91,13 @@
             this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openDVBTToolStripMenuItem.Text = "Open DVB-T";
             this.openDVBTToolStripMenuItem.Click += new System.EventHandler(this.openDVBTToolStripMenuItem_Click);
+            // 
+            // filterToolStripMenuItem
+            // 
+            this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.filterToolStripMenuItem.Text = "Filter...";
+            this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -156,13 +163,6 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Service";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // filterToolStripMenuItem
-            // 
-            this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.filterToolStripMenuItem.Text = "Filter...";
-            this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
             // 
             // Form1
             // 

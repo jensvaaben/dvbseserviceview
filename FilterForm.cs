@@ -128,7 +128,8 @@ namespace dvbseserviceview
 
         private void buttonOk_Click(object sender, EventArgs e)
         {
-            
+            this.DialogResult = System.Windows.Forms.DialogResult.OK;
+            Close();   
         }
 
         private string ConvertAttributeTypeToString(FilterAttributeType t)
