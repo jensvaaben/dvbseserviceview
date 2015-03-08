@@ -47,6 +47,7 @@ namespace dvbseserviceview
             foreach (var item in this.filterContext.FilterConditionSet)
             {
                 ListViewItem i = new ListViewItem();
+                i.Checked = item.Enable;
                 i.Tag = item;
                 i.Text = ConvertAttributeTypeToString(item.filterAttributeType);
                 i.SubItems.Add(ConvertFilterRelationTypeToString(item.filterRelationType));
@@ -118,6 +119,7 @@ namespace dvbseserviceview
             }
 
             filtercondition.Value = this.comboBoxValue.Text;
+            filtercondition.Enable = true;
 
             this.filterContext.FilterConditionSet.Add(filtercondition);
             RefreshList();
@@ -193,6 +195,11 @@ namespace dvbseserviceview
             }
             Properties.Settings.Default.FilterColumnHeaderWidth = str;
             Properties.Settings.Default.Save();
+        }
+
+        private void listViewFilterCondition_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            ((FilterCondition)e.Item.Tag).Enable = e.Item.Checked;
         }
     }
 }

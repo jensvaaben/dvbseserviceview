@@ -69,6 +69,12 @@ namespace dvbseserviceview
             }
         }
 
+        public bool Enable
+        {
+            get;
+            set;
+        }
+
     }
 
     internal class FilterConditionComparer : Comparer<FilterCondition>
@@ -131,6 +137,13 @@ namespace dvbseserviceview
 
             while (moreitems)
             {
+                //skip disabled items
+                if (!enumurator.Current.Enable)
+                {
+                    moreitems = enumurator.MoveNext();
+                    continue;
+                }
+
                 // loop through all filter conditions of unique attribute type. Conditions for unique attribute type ared OR'ed.
                 // Groups of unique attribute type are AND'ed.
                 FilterAttributeType filterattributetype = enumurator.Current.filterAttributeType;

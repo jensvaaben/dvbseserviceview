@@ -45,6 +45,7 @@
             // 
             // listViewFilterCondition
             // 
+            this.listViewFilterCondition.CheckBoxes = true;
             this.listViewFilterCondition.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.Attribute,
             this.Relation,
@@ -56,6 +57,7 @@
             this.listViewFilterCondition.TabIndex = 0;
             this.listViewFilterCondition.UseCompatibleStateImageBehavior = false;
             this.listViewFilterCondition.View = System.Windows.Forms.View.Details;
+            this.listViewFilterCondition.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.listViewFilterCondition_ItemChecked);
             // 
             // Attribute
             // 
