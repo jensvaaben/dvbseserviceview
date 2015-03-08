@@ -85,31 +85,16 @@
             // 
             this.comboBoxAttribute.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxAttribute.FormattingEnabled = true;
-            this.comboBoxAttribute.Items.AddRange(new object[] {
-            "Name",
-            "Provider",
-            "NetworkName",
-            "CASystemID",
-            "Features"});
             this.comboBoxAttribute.Location = new System.Drawing.Point(31, 38);
             this.comboBoxAttribute.Name = "comboBoxAttribute";
             this.comboBoxAttribute.Size = new System.Drawing.Size(121, 21);
             this.comboBoxAttribute.TabIndex = 2;
+            this.comboBoxAttribute.SelectedIndexChanged += new System.EventHandler(this.comboBoxAttribute_SelectedIndexChanged);
             // 
             // comboBoxCondition
             // 
             this.comboBoxCondition.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxCondition.FormattingEnabled = true;
-            this.comboBoxCondition.Items.AddRange(new object[] {
-            "Is",
-            "IsNot",
-            "LessThan",
-            "MoreThan",
-            "BeginsWith",
-            "EndsWith",
-            "Contains",
-            "Excludes",
-            "InRange"});
             this.comboBoxCondition.Location = new System.Drawing.Point(175, 38);
             this.comboBoxCondition.Name = "comboBoxCondition";
             this.comboBoxCondition.Size = new System.Drawing.Size(121, 21);

@@ -124,6 +124,54 @@
   <data name="dataserv" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\dataserv.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FilterAttributeTypeCASystemID" xml:space="preserve">
+    <value>CASystemID</value>
+  </data>
+  <data name="FilterAttributeTypeFeatures" xml:space="preserve">
+    <value>Features</value>
+  </data>
+  <data name="FilterAttributeTypeName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="FilterAttributeTypeNetworkName" xml:space="preserve">
+    <value>NetworkName</value>
+  </data>
+  <data name="FilterAttributeTypeNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="FilterAttributeTypeProvider" xml:space="preserve">
+    <value>Provider</value>
+  </data>
+  <data name="FilterRelationTypeBeginsWith" xml:space="preserve">
+    <value>BeginsWith</value>
+  </data>
+  <data name="FilterRelationTypeContains" xml:space="preserve">
+    <value>Contains</value>
+  </data>
+  <data name="FilterRelationTypeEndsWith" xml:space="preserve">
+    <value>EndsWith</value>
+  </data>
+  <data name="FilterRelationTypeExcludes" xml:space="preserve">
+    <value>Excludes</value>
+  </data>
+  <data name="FilterRelationTypeInRange" xml:space="preserve">
+    <value>InRange</value>
+  </data>
+  <data name="FilterRelationTypeIs" xml:space="preserve">
+    <value>Is</value>
+  </data>
+  <data name="FilterRelationTypeIsNot" xml:space="preserve">
+    <value>IsNot</value>
+  </data>
+  <data name="FilterRelationTypeLessThan" xml:space="preserve">
+    <value>LessThan</value>
+  </data>
+  <data name="FilterRelationTypeMoreThan" xml:space="preserve">
+    <value>MoreThan</value>
+  </data>
+  <data name="FilterRelationTypeNone" xml:space="preserve">
+    <value>None</value>
+  </data>
   <data name="video" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\video.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>

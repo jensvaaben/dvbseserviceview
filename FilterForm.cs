@@ -36,6 +36,24 @@ namespace dvbseserviceview
         {
             if (this.filterContext.Exclude) this.radioButtonExclude.Checked = true;
             else this.radioButtonInclude.Checked = true;
+
+            //populate dropdown list contols
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeName);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeProvider);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeNetworkName);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeCASystemID);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeFeatures);
+
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeBeginsWith);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeEndsWith);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
+            this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
+            
             this.comboBoxAttribute.SelectedIndex = 0;
             this.comboBoxCondition.SelectedIndex = 0;
             RefreshList();
@@ -60,60 +78,60 @@ namespace dvbseserviceview
         {
             FilterCondition filtercondition = new FilterCondition();
 
-            if ((string)this.comboBoxAttribute.SelectedItem == "Name")
+            if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeName)
             {
                 filtercondition.filterAttributeType = FilterAttributeType.Name;
             }
-            else if ((string)this.comboBoxAttribute.SelectedItem == "Provider")
+            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeProvider)
             {
                 filtercondition.filterAttributeType = FilterAttributeType.Provider;
             }
-            else if ((string)this.comboBoxAttribute.SelectedItem == "NetworkName")
+            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeNetworkName)
             {
                 filtercondition.filterAttributeType = FilterAttributeType.NetworkName;
             }
-            else if ((string)this.comboBoxAttribute.SelectedItem == "CASystemID")
+            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeCASystemID)
             {
                 filtercondition.filterAttributeType = FilterAttributeType.CASystemID;
             }
-            else if ((string)this.comboBoxAttribute.SelectedItem == "Features")
+            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeFeatures)
             {
                 filtercondition.filterAttributeType = FilterAttributeType.Features;
             }
 
-            if ((string)this.comboBoxCondition.SelectedItem == "Is")
+            if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeIs)
             {
                 filtercondition.filterRelationType = FilterRelationType.Is;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "IsNot")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeIsNot)
             {
                 filtercondition.filterRelationType = FilterRelationType.IsNot;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "LessThan")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeLessThan)
             {
                 filtercondition.filterRelationType = FilterRelationType.LessThan;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "MoreThan")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeMoreThan)
             {
                 filtercondition.filterRelationType = FilterRelationType.MoreThan;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "BeginsWith")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeBeginsWith)
             {
                 filtercondition.filterRelationType = FilterRelationType.BeginsWith;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "EndsWith")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeEndsWith)
             {
                 filtercondition.filterRelationType = FilterRelationType.EndsWith;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "Contains")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeContains)
             {
                 filtercondition.filterRelationType = FilterRelationType.Contains;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "Excludes")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeExcludes)
             {
                 filtercondition.filterRelationType = FilterRelationType.Excludes;
             }
-            else if ((string)this.comboBoxCondition.SelectedItem == "InRange")
+            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeInRange)
             {
                 filtercondition.filterRelationType = FilterRelationType.InRange;
             }
@@ -200,6 +218,12 @@ namespace dvbseserviceview
         private void listViewFilterCondition_ItemChecked(object sender, ItemCheckedEventArgs e)
         {
             ((FilterCondition)e.Item.Tag).Enable = e.Item.Checked;
+        }
+
+        private void comboBoxAttribute_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //TODO: populate relation dropdown list in context of selected attribute
+            Trace.WriteLine("comboBoxAttribute_SelectedIndexChanged");
         }
     }
 }
