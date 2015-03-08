@@ -166,26 +166,26 @@ namespace dvbseserviceview
 
         private string ConvertAttributeTypeToString(FilterAttributeType t)
         {
-            if (t == FilterAttributeType.Name) return "Name";
-            else if (t == FilterAttributeType.Provider) return "Provider";
-            else if (t == FilterAttributeType.NetworkName) return "NetworkName";
-            else if (t == FilterAttributeType.CASystemID) return "CASystemID";
-            else if (t == FilterAttributeType.Features) return "Features";
-            else return "None"; // this should not happen
+            if (t == FilterAttributeType.Name) return Properties.Resources.FilterAttributeTypeName;
+            else if (t == FilterAttributeType.Provider) return Properties.Resources.FilterAttributeTypeProvider;
+            else if (t == FilterAttributeType.NetworkName) return Properties.Resources.FilterAttributeTypeNetworkName;
+            else if (t == FilterAttributeType.CASystemID) return Properties.Resources.FilterAttributeTypeCASystemID;
+            else if (t == FilterAttributeType.Features) return Properties.Resources.FilterAttributeTypeFeatures;
+            else return Properties.Resources.FilterAttributeTypeNone; // this should not happen
         }
 
         private string ConvertFilterRelationTypeToString(FilterRelationType t)
         {
-            if (t == FilterRelationType.Is) return "Is";
-            else if (t == FilterRelationType.IsNot) return "IsNot";
-            else if (t == FilterRelationType.LessThan) return "LessThan";
-            else if (t == FilterRelationType.MoreThan) return "MoreThan";
-            else if (t == FilterRelationType.BeginsWith) return "BeginsWith";
-            else if (t == FilterRelationType.EndsWith) return "EndsWith";
-            else if (t == FilterRelationType.Contains) return "Contains";
-            else if (t == FilterRelationType.Excludes) return "Excludes";
-            else if (t == FilterRelationType.InRange) return "InRange";
-            else return "None"; // this should not happen
+            if (t == FilterRelationType.Is) return Properties.Resources.FilterRelationTypeIs;
+            else if (t == FilterRelationType.IsNot) return Properties.Resources.FilterRelationTypeIsNot;
+            else if (t == FilterRelationType.LessThan) return Properties.Resources.FilterRelationTypeLessThan;
+            else if (t == FilterRelationType.MoreThan) return Properties.Resources.FilterRelationTypeMoreThan;
+            else if (t == FilterRelationType.BeginsWith) return Properties.Resources.FilterRelationTypeBeginsWith;
+            else if (t == FilterRelationType.EndsWith) return Properties.Resources.FilterRelationTypeEndsWith;
+            else if (t == FilterRelationType.Contains) return Properties.Resources.FilterRelationTypeContains;
+            else if (t == FilterRelationType.Excludes) return Properties.Resources.FilterRelationTypeExcludes;
+            else if (t == FilterRelationType.InRange) return Properties.Resources.FilterRelationTypeInRange;
+            else return Properties.Resources.FilterRelationTypeNone; // this should not happen
         }
 
         private void radioButtonInclude_CheckedChanged(object sender, EventArgs e)
