@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Diagnostics;
+using System.Configuration;
 
 namespace dvbseserviceview
 {
@@ -163,6 +165,8 @@ namespace dvbseserviceview
             imageListSmall.Images.Add(Properties.Resources.dataserv);
             this.listView1.SmallImageList = imageListSmall;
 
+            LoadFilterXML();
+
             //initialize column header width
             // no validation of array sizes.
             if (Properties.Settings.Default.DVBSColumnHeaderWidth.Count() > 0)
@@ -189,6 +193,10 @@ namespace dvbseserviceview
                     this.dvbccolumn[n] = Convert.ToInt32(columnwidth[n]);
                 }
             }
+
+            // intialize filter condition
+            this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
+
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1074,6 +1082,8 @@ namespace dvbseserviceview
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
+            SaveFilterXML();
+
             //save column width state
             if (this.listView1.Columns.Count > 0)
             {
@@ -1124,6 +1134,8 @@ namespace dvbseserviceview
             }
             Properties.Settings.Default.DVBCColumnHeaderWidth = str;
 
+            Properties.Settings.Default.FilterOptionExclude = this.filterContext.Exclude;
+
             Properties.Settings.Default.Save();
         }
 
@@ -1145,5 +1157,89 @@ namespace dvbseserviceview
             UpdateTreeView();
             this.treeView1.SelectedNode = this.root;
         }
+
+        private void LoadFilterXML()
+        {
+            string settingspath = GetSettingsPath();
+            settingspath += "\\filter.xml";
+
+            try
+            {
+                using (System.IO.Stream f = new FileStream(settingspath,FileMode.Open))
+                {
+                    XmlReader reader = new XmlTextReader(f);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(reader);
+
+                    foreach (var item in doc["filterconditions"])
+                    {
+                        FilterCondition filtercondition = new FilterCondition();
+
+                        filtercondition.Enable = Convert.ToBoolean(((XmlNode)item).Attributes["enable"].Value);
+                        filtercondition.filterAttributeType = (FilterAttributeType)System.Enum.Parse(typeof(FilterAttributeType), ((XmlNode)item).Attributes["attribute"].Value);
+                        filtercondition.filterRelationType = (FilterRelationType)System.Enum.Parse(typeof(FilterRelationType), ((XmlNode)item).Attributes["relation"].Value);
+                        filtercondition.Value = ((XmlNode)item).Attributes["value"].Value;
+
+                        this.filterContext.FilterConditionSet.Add(filtercondition);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                // this is excepted first time application 
+                Trace.WriteLine(string.Format("error loading filterXML: {0}",e.Message));
+            }
+        }
+
+        private void SaveFilterXML()
+        {
+            string settingspath = GetSettingsPath();
+            settingspath += "\\filter.xml";
+
+            XmlDocument doc = new XmlDocument();
+            XmlElement element = doc.CreateElement("filterconditions");
+
+            foreach (var item in this.filterContext.FilterConditionSet)
+            {
+                XmlNode s = doc.CreateElement("filtercondition");
+                XmlAttribute attribute = null;
+
+                attribute = doc.CreateAttribute("enable");
+                attribute.Value = Convert.ToString(item.Enable);
+                s.Attributes.Append(attribute);
+
+                attribute = doc.CreateAttribute("attribute");
+                attribute.Value = Convert.ToString(item.filterAttributeType);
+                s.Attributes.Append(attribute);
+
+                attribute = doc.CreateAttribute("relation");
+                attribute.Value = Convert.ToString(item.filterRelationType);
+                s.Attributes.Append(attribute);
+
+
+                attribute = doc.CreateAttribute("value");
+                attribute.Value = item.Value;
+                s.Attributes.Append(attribute);
+
+                element.AppendChild(s);
+            }
+            doc.AppendChild(element);
+            doc.Save(settingspath);
+        }
+
+        private string GetSettingsPath()
+        {
+            try
+            {
+                var UserConfig = ConfigurationManager.OpenExeConfiguration( ConfigurationUserLevel.PerUserRoamingAndLocal);
+                return System.IO.Path.GetDirectoryName(UserConfig.FilePath);
+            }
+            catch (ConfigurationException e)
+            {
+                Trace.WriteLine(string.Format("error retrieving settings folder: {0}", e.Message));
+                return e.Filename;
+            }
+        }
+
     }
 }
