@@ -20,5 +20,8 @@
     <Setting Name="DVBCColumnHeaderWidth" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="FilterColumnHeaderWidth" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

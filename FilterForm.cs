@@ -13,9 +13,21 @@ namespace dvbseserviceview
 {
     public partial class FilterForm : Form
     {
+
         public FilterForm()
         {
             InitializeComponent();
+
+            //initialize column header width
+            // no validation of array sizes.
+            if (Properties.Settings.Default.FilterColumnHeaderWidth.Count() > 0)
+            {
+                string[] columnwidth = Properties.Settings.Default.FilterColumnHeaderWidth.Split(new char[1] { ',' });
+                for (int n = 0; n < columnwidth.Count(); n++)
+                {
+                    this.listViewFilterCondition.Columns[n].Width = Convert.ToInt32(columnwidth[n]);
+                }
+            }
         }
 
         internal FilterContext filterContext = new FilterContext();
@@ -159,6 +171,28 @@ namespace dvbseserviceview
         private void radioButtonInclude_CheckedChanged(object sender, EventArgs e)
         {
             this.filterContext.Exclude = this.radioButtonExclude.Checked;
+        }
+
+        private void FilterForm_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            //save column width state
+
+            int[] columnwidth = new int[3];
+
+
+            for (int n = 0; n < this.listViewFilterCondition.Columns.Count; n++)
+            {
+                columnwidth[n] = this.listViewFilterCondition.Columns[n].Width;
+            }
+
+            string str = "";
+            for (int n = 0; n < columnwidth.Count(); n++)
+            {
+                if (n != 0) str += ",";
+                str += Convert.ToString(columnwidth[n]);
+            }
+            Properties.Settings.Default.FilterColumnHeaderWidth = str;
+            Properties.Settings.Default.Save();
         }
     }
 }

@@ -29,6 +29,9 @@
         private void InitializeComponent()
         {
             this.listViewFilterCondition = new System.Windows.Forms.ListView();
+            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Relation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonOk = new System.Windows.Forms.Button();
             this.comboBoxAttribute = new System.Windows.Forms.ComboBox();
             this.comboBoxCondition = new System.Windows.Forms.ComboBox();
@@ -38,9 +41,6 @@
             this.buttonReset = new System.Windows.Forms.Button();
             this.radioButtonInclude = new System.Windows.Forms.RadioButton();
             this.radioButtonExclude = new System.Windows.Forms.RadioButton();
-            this.Attribute = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Relation = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Value = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.SuspendLayout();
             // 
             // listViewFilterCondition
@@ -56,6 +56,18 @@
             this.listViewFilterCondition.TabIndex = 0;
             this.listViewFilterCondition.UseCompatibleStateImageBehavior = false;
             this.listViewFilterCondition.View = System.Windows.Forms.View.Details;
+            // 
+            // Attribute
+            // 
+            this.Attribute.Text = "Attribute";
+            // 
+            // Relation
+            // 
+            this.Relation.Text = "Relation";
+            // 
+            // Value
+            // 
+            this.Value.Text = "Value";
             // 
             // buttonOk
             // 
@@ -162,18 +174,6 @@
             this.radioButtonExclude.Text = "&Exclude";
             this.radioButtonExclude.UseVisualStyleBackColor = true;
             // 
-            // Attribute
-            // 
-            this.Attribute.Text = "Attribute";
-            // 
-            // Relation
-            // 
-            this.Relation.Text = "Relation";
-            // 
-            // Value
-            // 
-            this.Value.Text = "Value";
-            // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -191,6 +191,7 @@
             this.Controls.Add(this.listViewFilterCondition);
             this.Name = "FilterForm";
             this.Text = "Filter";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.FilterForm_FormClosed);
             this.Load += new System.EventHandler(this.FilterForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
