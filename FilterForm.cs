@@ -240,7 +240,7 @@ namespace dvbseserviceview
             this.comboBoxCondition.Items.Clear();
             switch(FilterAttributeTypeFromString((string)this.comboBoxAttribute.SelectedItem))
             {
-                case FilterAttributeType.Name:
+                case FilterAttributeType.Name: // single string fields
                 case FilterAttributeType.Provider:
                 case FilterAttributeType.NetworkName:
                 case FilterAttributeType.Position:
@@ -253,7 +253,9 @@ namespace dvbseserviceview
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
                     break;
-                case FilterAttributeType.CASystemID:
+                case FilterAttributeType.CASystemID: //  comma separated list of integers 
+                case FilterAttributeType.Video: // this is in most if not all cases just a single integer. But there could theoretically be more than one video stream 
+                case FilterAttributeType.Audio: // Audio list also contgain language. But for now we will only consider PID part.
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
@@ -264,8 +266,22 @@ namespace dvbseserviceview
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
                     break;
-                case FilterAttributeType.Features:
+                case FilterAttributeType.Features: //  comma separated list of strings 
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    break;
+                case FilterAttributeType.Lcn: // single integer fields
+                case FilterAttributeType.FreeCAMode: // this is really a boolean
+                case FilterAttributeType.Type:
+                case FilterAttributeType.Pcr:
+                case FilterAttributeType.Pmt:
+                case FilterAttributeType.Sid:
+                case FilterAttributeType.Tsid:
+                case FilterAttributeType.Nid:
+                case FilterAttributeType.Onid:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
                     break;
                 default:
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
