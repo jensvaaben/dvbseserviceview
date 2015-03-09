@@ -81,6 +81,24 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Audio.
+        /// </summary>
+        internal static string FilterAttributeTypeAudio {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeAudio", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to List.
+        /// </summary>
+        internal static string FilterAttributeTypeBouquetList {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeBouquetList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to CASystemID.
         /// </summary>
         internal static string FilterAttributeTypeCASystemID {
@@ -95,6 +113,24 @@ namespace dvbseserviceview.Properties {
         internal static string FilterAttributeTypeFeatures {
             get {
                 return ResourceManager.GetString("FilterAttributeTypeFeatures", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to FreeCAMode.
+        /// </summary>
+        internal static string FilterAttributeTypeFreeCAMode {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeFreeCAMode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lcn.
+        /// </summary>
+        internal static string FilterAttributeTypeLcn {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeLcn", resourceCulture);
             }
         }
         
@@ -117,6 +153,15 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Nid.
+        /// </summary>
+        internal static string FilterAttributeTypeNid {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeNid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to None.
         /// </summary>
         internal static string FilterAttributeTypeNone {
@@ -126,11 +171,83 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Onid.
+        /// </summary>
+        internal static string FilterAttributeTypeOnid {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeOnid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pcr.
+        /// </summary>
+        internal static string FilterAttributeTypePcr {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypePcr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pmt.
+        /// </summary>
+        internal static string FilterAttributeTypePmt {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypePmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        internal static string FilterAttributeTypePosition {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypePosition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Provider.
         /// </summary>
         internal static string FilterAttributeTypeProvider {
             get {
                 return ResourceManager.GetString("FilterAttributeTypeProvider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sid.
+        /// </summary>
+        internal static string FilterAttributeTypeSid {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeSid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tsid.
+        /// </summary>
+        internal static string FilterAttributeTypeTsid {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeTsid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        internal static string FilterAttributeTypeType {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Video.
+        /// </summary>
+        internal static string FilterAttributeTypeVideo {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeVideo", resourceCulture);
             }
         }
         

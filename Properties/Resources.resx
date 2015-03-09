@@ -175,4 +175,43 @@
   <data name="video" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\video.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="FilterAttributeTypeAudio" xml:space="preserve">
+    <value>Audio</value>
+  </data>
+  <data name="FilterAttributeTypeBouquetList" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="FilterAttributeTypeFreeCAMode" xml:space="preserve">
+    <value>FreeCAMode</value>
+  </data>
+  <data name="FilterAttributeTypeLcn" xml:space="preserve">
+    <value>Lcn</value>
+  </data>
+  <data name="FilterAttributeTypeNid" xml:space="preserve">
+    <value>Nid</value>
+  </data>
+  <data name="FilterAttributeTypeOnid" xml:space="preserve">
+    <value>Onid</value>
+  </data>
+  <data name="FilterAttributeTypePcr" xml:space="preserve">
+    <value>Pcr</value>
+  </data>
+  <data name="FilterAttributeTypePmt" xml:space="preserve">
+    <value>Pmt</value>
+  </data>
+  <data name="FilterAttributeTypePosition" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="FilterAttributeTypeSid" xml:space="preserve">
+    <value>Sid</value>
+  </data>
+  <data name="FilterAttributeTypeTsid" xml:space="preserve">
+    <value>Tsid</value>
+  </data>
+  <data name="FilterAttributeTypeType" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="FilterAttributeTypeVideo" xml:space="preserve">
+    <value>Video</value>
+  </data>
 </root>

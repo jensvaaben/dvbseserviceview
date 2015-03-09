@@ -10,7 +10,20 @@ namespace dvbseserviceview
         Provider,
         NetworkName,
         CASystemID,
-        Features
+        Features,
+        Position,
+        Lcn,
+        FreeCAMode,
+        Type,
+        Pcr,
+        Pmt,
+        Sid,
+        Tsid,
+        Nid,
+        Onid,
+        BouquetList,
+        Video,
+        Audio
     }
 
     internal enum FilterRelationType

@@ -43,6 +43,19 @@ namespace dvbseserviceview
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeNetworkName);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeCASystemID);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeFeatures);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypePosition);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeLcn);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeFreeCAMode);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeType);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypePcr);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypePmt);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeSid);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeTsid);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeNid);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeOnid);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeBouquetList);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeVideo);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudio);
 
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
@@ -230,6 +243,7 @@ namespace dvbseserviceview
                 case FilterAttributeType.Name:
                 case FilterAttributeType.Provider:
                 case FilterAttributeType.NetworkName:
+                case FilterAttributeType.Position:
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
@@ -289,6 +303,58 @@ namespace dvbseserviceview
             else if (s == Properties.Resources.FilterAttributeTypeFeatures)
             {
                 return FilterAttributeType.Features;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypePosition)
+            {
+                return FilterAttributeType.Position;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeLcn)
+            {
+                return FilterAttributeType.Lcn;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeFreeCAMode)
+            {
+                return FilterAttributeType.FreeCAMode;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeType)
+            {
+                return FilterAttributeType.Type;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypePcr)
+            {
+                return FilterAttributeType.Pcr;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypePmt)
+            {
+                return FilterAttributeType.Pmt;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeSid)
+            {
+                return FilterAttributeType.Sid;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeTsid)
+            {
+                return FilterAttributeType.Tsid;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeNid)
+            {
+                return FilterAttributeType.Nid;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeOnid)
+            {
+                return FilterAttributeType.Onid;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeBouquetList)
+            {
+                return FilterAttributeType.BouquetList;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeVideo)
+            {
+                return FilterAttributeType.Video;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeAudio)
+            {
+                return FilterAttributeType.Audio;
             }
             else
             {
