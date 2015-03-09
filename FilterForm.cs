@@ -224,6 +224,76 @@ namespace dvbseserviceview
         {
             //TODO: populate relation dropdown list in context of selected attribute
             Trace.WriteLine("comboBoxAttribute_SelectedIndexChanged");
+            this.comboBoxCondition.Items.Clear();
+            switch(FilterAttributeTypeFromString((string)this.comboBoxAttribute.SelectedItem))
+            {
+                case FilterAttributeType.Name:
+                case FilterAttributeType.Provider:
+                case FilterAttributeType.NetworkName:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeBeginsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeEndsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
+                    break;
+                case FilterAttributeType.CASystemID:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeBeginsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeEndsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
+                    break;
+                case FilterAttributeType.Features:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    break;
+                default:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeBeginsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeEndsWith);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
+                    break;
+            }
+            this.comboBoxCondition.SelectedIndex = 0;
+        }
+
+        private FilterAttributeType FilterAttributeTypeFromString(string s)
+        {
+            if (s == Properties.Resources.FilterAttributeTypeName)
+            {
+                return FilterAttributeType.Name;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeProvider)
+            {
+                return FilterAttributeType.Provider;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeNetworkName)
+            {
+                return FilterAttributeType.NetworkName;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeCASystemID)
+            {
+                return FilterAttributeType.CASystemID;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeFeatures)
+            {
+                return FilterAttributeType.Features;
+            }
+            else
+            {
+                return FilterAttributeType.None;
+            }
         }
     }
 }
