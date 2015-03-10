@@ -178,90 +178,78 @@ namespace dvbseserviceview
             switch (f.filterAttributeType)
             {
                 case FilterAttributeType.Name:
-                    return FilterMatchName(s,f);
+                    return FilterMatchString(f.filterRelationType,s.Name, f.Value);
                 case FilterAttributeType.Provider:
-                    return FilterMatchProvider(s,f);
+                    return FilterMatchString(f.filterRelationType,s.Provider, f.Value);
                 case FilterAttributeType.NetworkName:
-                    return FilterMatchNetworkName(s,f);
+                    return FilterMatchString(f.filterRelationType,s.NetworkName, f.Value);
                 case FilterAttributeType.CASystemID:
                     return FilterMatchCASystemID(s,f);
                 case FilterAttributeType.Features:
-                    return FilterMatchFeatures(s,f);
+                    return FilterMatchString(f.filterRelationType,s.FeatureList, f.Value);
+                case FilterAttributeType.Position:
+                    return FilterMatchString(f.filterRelationType, s.Position, f.Value);
+                case FilterAttributeType.Lcn:
+                    return FilterMatchInt(f.filterRelationType, s.Lcn, f.Value);
+                case FilterAttributeType.FreeCAMode:
+                    return FilterMatchInt(f.filterRelationType, s.FreeCaMode ? 1 : 0, f.Value);
+                case FilterAttributeType.Type:
+                    return FilterMatchInt(f.filterRelationType, s.Type, f.Value);
+                case FilterAttributeType.Pcr:
+                    return FilterMatchInt(f.filterRelationType, s.Pcr, f.Value);
+                case FilterAttributeType.Pmt:
+                    return FilterMatchInt(f.filterRelationType, s.Pmt, f.Value);
+                case FilterAttributeType.Sid:
+                    return FilterMatchInt(f.filterRelationType, s.Sid, f.Value);
+                case FilterAttributeType.Tsid:
+                    return FilterMatchInt(f.filterRelationType, s.Tsid, f.Value);
+                case FilterAttributeType.Nid:
+                    return FilterMatchInt(f.filterRelationType, s.Nid, f.Value);
+                case FilterAttributeType.Onid:
+                    return FilterMatchInt(f.filterRelationType, s.Onid, f.Value);
                 default:
                     return false; // this should not happen
             }
         }
 
-        private bool FilterMatchName(Service s, FilterCondition f)
+        private bool FilterMatchInt(FilterRelationType r,int servicevalue, string filtervalue)
         {
-            switch (f.filterRelationType)
+            int value = Convert.ToInt32(filtervalue);
+            switch (r)
             {
                 case FilterRelationType.Is:
-                    return s.Name.CompareTo(f.Value)==0;
+                    return servicevalue == value;
                 case FilterRelationType.IsNot:
-                    return s.Name.CompareTo(f.Value) != 0;
+                    return servicevalue != value;
                 case FilterRelationType.LessThan:
-                    return s.Name.CompareTo(f.Value) < 0;
+                    return servicevalue < value;
                 case FilterRelationType.MoreThan:
-                    return s.Name.CompareTo(f.Value) > 0;
-                case FilterRelationType.BeginsWith:
-                    return s.Name.StartsWith(f.Value);
-                case FilterRelationType.EndsWith:
-                    return s.Name.EndsWith(f.Value);
-                case FilterRelationType.Contains:
-                    return s.Name.Contains(f.Value);
-                case FilterRelationType.Excludes:
-                    return !s.Name.Contains(f.Value);
+                    return servicevalue > value;
                 default:
-                    return false; // no match for unsupported relation 
+                    return false;
             }
         }
 
-        private bool FilterMatchProvider(Service s, FilterCondition f)
+        private bool FilterMatchString(FilterRelationType r, string servicevalue, string filtervalue)
         {
-            switch (f.filterRelationType)
+            switch (r)
             {
                 case FilterRelationType.Is:
-                    return s.Provider.CompareTo(f.Value) == 0;
+                    return servicevalue.CompareTo(filtervalue) == 0;
                 case FilterRelationType.IsNot:
-                    return s.Provider.CompareTo(f.Value) != 0;
+                    return servicevalue.CompareTo(filtervalue) != 0;
                 case FilterRelationType.LessThan:
-                    return s.Provider.CompareTo(f.Value) < 0;
+                    return servicevalue.CompareTo(filtervalue) < 0;
                 case FilterRelationType.MoreThan:
-                    return s.Provider.CompareTo(f.Value) > 0;
+                    return servicevalue.CompareTo(filtervalue) > 0;
                 case FilterRelationType.BeginsWith:
-                    return s.Provider.StartsWith(f.Value);
+                    return servicevalue.StartsWith(filtervalue);
                 case FilterRelationType.EndsWith:
-                    return s.Provider.EndsWith(f.Value);
+                    return servicevalue.EndsWith(filtervalue);
                 case FilterRelationType.Contains:
-                    return s.Provider.Contains(f.Value);
+                    return servicevalue.Contains(filtervalue);
                 case FilterRelationType.Excludes:
-                    return !s.Provider.Contains(f.Value);
-                default:
-                    return false; // no match for unsupported relation 
-            }
-        }
-
-        private bool FilterMatchNetworkName(Service s, FilterCondition f)
-        {
-            switch (f.filterRelationType)
-            {
-                case FilterRelationType.Is:
-                    return s.NetworkName.CompareTo(f.Value) == 0;
-                case FilterRelationType.IsNot:
-                    return s.NetworkName.CompareTo(f.Value) != 0;
-                case FilterRelationType.LessThan:
-                    return s.NetworkName.CompareTo(f.Value) < 0;
-                case FilterRelationType.MoreThan:
-                    return s.NetworkName.CompareTo(f.Value) > 0;
-                case FilterRelationType.BeginsWith:
-                    return s.NetworkName.StartsWith(f.Value);
-                case FilterRelationType.EndsWith:
-                    return s.NetworkName.EndsWith(f.Value);
-                case FilterRelationType.Contains:
-                    return s.NetworkName.Contains(f.Value);
-                case FilterRelationType.Excludes:
-                    return !s.NetworkName.Contains(f.Value);
+                    return !servicevalue.Contains(filtervalue);
                 default:
                     return false; // no match for unsupported relation 
             }

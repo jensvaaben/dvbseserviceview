@@ -90,68 +90,10 @@ namespace dvbseserviceview
         private void buttonAdd_Click(object sender, EventArgs e)
         {
             FilterCondition filtercondition = new FilterCondition();
-
-            if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeName)
-            {
-                filtercondition.filterAttributeType = FilterAttributeType.Name;
-            }
-            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeProvider)
-            {
-                filtercondition.filterAttributeType = FilterAttributeType.Provider;
-            }
-            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeNetworkName)
-            {
-                filtercondition.filterAttributeType = FilterAttributeType.NetworkName;
-            }
-            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeCASystemID)
-            {
-                filtercondition.filterAttributeType = FilterAttributeType.CASystemID;
-            }
-            else if ((string)this.comboBoxAttribute.SelectedItem == Properties.Resources.FilterAttributeTypeFeatures)
-            {
-                filtercondition.filterAttributeType = FilterAttributeType.Features;
-            }
-
-            if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeIs)
-            {
-                filtercondition.filterRelationType = FilterRelationType.Is;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeIsNot)
-            {
-                filtercondition.filterRelationType = FilterRelationType.IsNot;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeLessThan)
-            {
-                filtercondition.filterRelationType = FilterRelationType.LessThan;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeMoreThan)
-            {
-                filtercondition.filterRelationType = FilterRelationType.MoreThan;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeBeginsWith)
-            {
-                filtercondition.filterRelationType = FilterRelationType.BeginsWith;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeEndsWith)
-            {
-                filtercondition.filterRelationType = FilterRelationType.EndsWith;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeContains)
-            {
-                filtercondition.filterRelationType = FilterRelationType.Contains;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeExcludes)
-            {
-                filtercondition.filterRelationType = FilterRelationType.Excludes;
-            }
-            else if ((string)this.comboBoxCondition.SelectedItem == Properties.Resources.FilterRelationTypeInRange)
-            {
-                filtercondition.filterRelationType = FilterRelationType.InRange;
-            }
-
+            filtercondition.filterAttributeType = FilterAttributeTypeFromString((string)this.comboBoxAttribute.SelectedItem);
+            filtercondition.filterRelationType = FilterRelationTypeFromString((string)this.comboBoxCondition.SelectedItem);
             filtercondition.Value = this.comboBoxValue.Text;
             filtercondition.Enable = true;
-
             this.filterContext.FilterConditionSet.Add(filtercondition);
             RefreshList();
         }
@@ -184,6 +126,19 @@ namespace dvbseserviceview
             else if (t == FilterAttributeType.NetworkName) return Properties.Resources.FilterAttributeTypeNetworkName;
             else if (t == FilterAttributeType.CASystemID) return Properties.Resources.FilterAttributeTypeCASystemID;
             else if (t == FilterAttributeType.Features) return Properties.Resources.FilterAttributeTypeFeatures;
+            else if (t == FilterAttributeType.Position) return Properties.Resources.FilterAttributeTypePosition;
+            else if (t == FilterAttributeType.Lcn) return Properties.Resources.FilterAttributeTypeLcn;
+            else if (t == FilterAttributeType.FreeCAMode) return Properties.Resources.FilterAttributeTypeFreeCAMode;
+            else if (t == FilterAttributeType.Type) return Properties.Resources.FilterAttributeTypeType;
+            else if (t == FilterAttributeType.Pcr) return Properties.Resources.FilterAttributeTypePcr;
+            else if (t == FilterAttributeType.Pmt) return Properties.Resources.FilterAttributeTypePmt;
+            else if (t == FilterAttributeType.Sid) return Properties.Resources.FilterAttributeTypeSid;
+            else if (t == FilterAttributeType.Tsid) return Properties.Resources.FilterAttributeTypeTsid;
+            else if (t == FilterAttributeType.Nid) return Properties.Resources.FilterAttributeTypeNid;
+            else if (t == FilterAttributeType.Onid) return Properties.Resources.FilterAttributeTypeOnid;
+            else if (t == FilterAttributeType.BouquetList) return Properties.Resources.FilterAttributeTypeBouquetList;
+            else if (t == FilterAttributeType.Video) return Properties.Resources.FilterAttributeTypeVideo;
+            else if (t == FilterAttributeType.Audio) return Properties.Resources.FilterAttributeTypeAudio;
             else return Properties.Resources.FilterAttributeTypeNone; // this should not happen
         }
 
@@ -375,6 +330,50 @@ namespace dvbseserviceview
             else
             {
                 return FilterAttributeType.None;
+            }
+        }
+
+        private FilterRelationType FilterRelationTypeFromString(string s)
+        {
+            if (s == Properties.Resources.FilterRelationTypeIs)
+            {
+               return FilterRelationType.Is;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeIsNot)
+            {
+                return FilterRelationType.IsNot;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeLessThan)
+            {
+                return FilterRelationType.LessThan;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeMoreThan)
+            {
+                return FilterRelationType.MoreThan;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeBeginsWith)
+            {
+                return FilterRelationType.BeginsWith;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeEndsWith)
+            {
+                return FilterRelationType.EndsWith;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeContains)
+            {
+                return FilterRelationType.Contains;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeExcludes)
+            {
+                return FilterRelationType.Excludes;
+            }
+            else if (s == Properties.Resources.FilterRelationTypeInRange)
+            {
+                return FilterRelationType.InRange;
+            }
+            else
+            {
+                return FilterRelationType.None; // This should not happen
             }
         }
     }
