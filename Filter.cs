@@ -186,7 +186,7 @@ namespace dvbseserviceview
                 case FilterAttributeType.CASystemID:
                     return FilterMatchCASystemID(s,f);
                 case FilterAttributeType.Features:
-                    return FilterMatchString(f.filterRelationType,s.FeatureList, f.Value);
+                    return FilterMatchFeatures(s,f);
                 case FilterAttributeType.Position:
                     return FilterMatchString(f.filterRelationType, s.Position, f.Value);
                 case FilterAttributeType.Lcn:
@@ -207,6 +207,9 @@ namespace dvbseserviceview
                     return FilterMatchInt(f.filterRelationType, s.Nid, f.Value);
                 case FilterAttributeType.Onid:
                     return FilterMatchInt(f.filterRelationType, s.Onid, f.Value);
+                case FilterAttributeType.BouquetList:
+                case FilterAttributeType.Audio:
+                case FilterAttributeType.Video:
                 default:
                     return false; // this should not happen
             }
@@ -257,18 +260,29 @@ namespace dvbseserviceview
 
         private bool FilterMatchCASystemID(Service s, FilterCondition f)
         {
+            string[] systemidlist = f.Value.Split(new char[1] { ',' });
+
             return true;
         }
 
         private bool FilterMatchFeatures(Service s, FilterCondition f)
         {
-            switch (f.filterRelationType)
+            // each element of filter value is matched against all values in service.
+            // If just one elment fails the whole condition fails (AND)
+            string[] featurelist = f.Value.Split(new char[1] { ',' });
+
+            foreach (var element in featurelist)
             {
-                case FilterRelationType.Contains:
-                    return s.FeatureList.Contains(f.Value);
-                default:
-                    return false; // no match for unsupported relation 
+                switch (f.filterRelationType)
+                {
+                    case FilterRelationType.Contains:
+                        if (!s.FeatureList.Contains(element)) return false;
+                        break;
+                    default:
+                        return false; // no match for unsupported relation 
+                }
             }
+            return true; // if we reached here all elements matched
         }
     }
 }
