@@ -304,6 +304,86 @@ namespace dvbseserviceview
         DvbSTuner dvbstuner = new DvbSTuner();
         DvbCTTuner dvbcttuner = new DvbCTTuner();
 
+        // list of audio/video stream PIDs. Used by filter
+        SortedSet<int> audiopidlist = new SortedSet<int>();
+        SortedSet<int> videopidlist = new SortedSet<int>();
+        // list of CA System ID. Used by filter
+        SortedSet<int> casystemidlist = new SortedSet<int>();
+
+        //Reserved for future use
+        SortedSet<int> subtitlepidlist = new SortedSet<int>();
+        SortedSet<int> teletextpidlist = new SortedSet<int>();
+
+        //List of ISO 639 language codes for audio streams.  Used by filter
+        SortedSet<string> audiolanguagelist = new SortedSet<string>();
+        //Reserved for future use
+        SortedSet<string> subtitlelanguagelist = new SortedSet<string>();
+        SortedSet<string> teletextlanguagelist = new SortedSet<string>();
+
+        public SortedSet<int> AudioPidList
+        {
+            get
+            {
+                return this.audiopidlist;
+            }
+        }
+
+        public SortedSet<int> VideoPidList
+        {
+            get
+            {
+                return this.videopidlist;
+            }
+        }
+
+        public SortedSet<int> SubtitlePidList
+        {
+            get
+            {
+                return this.subtitlepidlist;
+            }
+        }
+
+        public SortedSet<int> TeletextPidList
+        {
+            get
+            {
+                return this.teletextpidlist;
+            }
+        }
+
+        public SortedSet<int> CaSystemIdList
+        {
+            get
+            {
+                return this.casystemidlist;
+            }
+        }
+
+        SortedSet<string> AudioLanguageList
+        {
+            get
+            {
+                return this.audiolanguagelist;
+            }
+        }
+
+        SortedSet<string> SubtitleLanguageList
+        {
+            get
+            {
+                return this.subtitlelanguagelist;
+            }
+        }
+
+        SortedSet<string> TeletextLanguageList
+        {
+            get
+            {
+                return this.teletextlanguagelist;
+            }
+        }
+
         public string Position
         {
             get
@@ -536,14 +616,14 @@ namespace dvbseserviceview
                 this.number = value;
             }
         }
-        public string VideoPidList
+        public string VideoPidListString
         {
             get
             {
                 return this.video_pid_list;
             }
         }
-        public string AudioPidList
+        public string AudioPidListString
         {
             get
             {
@@ -557,7 +637,7 @@ namespace dvbseserviceview
                 return this.bouquet_list_string;
             }
         }
-        public string CaSystemIdList
+        public string CaSystemIdListString
         {
             get
             {
@@ -580,6 +660,7 @@ namespace dvbseserviceview
             {
                 if (IsVideoStream(stream.Type2))
                 {
+                    this.videopidlist.Add(stream.Pid);
                     if (!first)
                     {
                         tmp += ",";
@@ -603,6 +684,8 @@ namespace dvbseserviceview
             {
                 if (IsaudioStream(stream.Type2))
                 {
+                    this.audiopidlist.Add(stream.Pid);
+                    this.audiolanguagelist.Add(stream.Language);
                     if (!first)
                     {
                         tmp += ",";
@@ -632,12 +715,14 @@ namespace dvbseserviceview
             foreach (var ca in this.ca_list)
             {
                 calist.Add(ca.SystemId);
+                this.casystemidlist.Add(ca.SystemId);
             }
             foreach (var stream in this.streams)
             {
                 foreach (var ca in stream.CAList)
                 {
                     calist.Add(ca.SystemId);
+                    this.casystemidlist.Add(ca.SystemId);
                 }
             }
             string tmp = "";
@@ -646,12 +731,13 @@ namespace dvbseserviceview
             {
                 if (!first)
                 {
-                    tmp += ",";
-                    tmp += Convert.ToString(ca);
+                    tmp += ",0x";
+                    tmp += ca.ToString("x4");
                 }
                 else
                 {
-                    tmp += Convert.ToString(ca);
+                    tmp += "0x";
+                    tmp += ca.ToString("x4");
                     first = false;
                 }
             }
@@ -683,7 +769,22 @@ namespace dvbseserviceview
             SortedSet<string> list = new SortedSet<string>();
             foreach (var s in this.streams)
             {
-                if (s.Type2 == "mhp" || s.Type2 == "ip" || s.Type2 == "teletext" || s.Type2 == "mhp_oc" || s.Type2 == "mpe" || s.Type2 == "subtitle" || s.Type2 == "hbbtv") list.Add(s.Type2);
+                if (s.Type2 == "mhp" || s.Type2 == "ip" || s.Type2 == "mhp_oc" || s.Type2 == "mpe" || s.Type2 == "hbbtv")
+                {
+                    list.Add(s.Type2);
+                }
+                else if (s.Type2 == "subtitle")
+                {
+                    this.subtitlepidlist.Add(s.Pid);
+                    this.teletextlanguagelist.Add(s.Language);
+                    list.Add(s.Type2);
+                }
+                else if (s.Type2 == "teletext")
+                {
+                    this.teletextpidlist.Add(s.Pid);
+                    this.teletextlanguagelist.Add(s.Language);
+                    list.Add(s.Type2);
+                }
             }
             string tmp = "";
             bool first = true;
@@ -742,140 +843,4 @@ namespace dvbseserviceview
             CreateFeatureList();
         }
     }
-
-
-    //internal class ServiceDVBS : Service
-    //{
-    //    int roll_off = -1;
-    //    int modulation_type = -1;
-    //    int modulation_system = -1;
-    //    string fec = "";
-    //    int symbolrate = -1;
-    //    string polarity = "";
-    //    int frequency = -1;
-    //    string position = "";
-
-    //    public int RollOff
-    //    {
-    //        get
-    //        {
-    //            return this.roll_off;
-    //        }
-    //        set
-    //        {
-    //            this.roll_off = value;
-    //        }
-    //    }
-    //    public int ModulationType
-    //    {
-    //        get
-    //        {
-    //            return this.modulation_type;
-    //        }
-    //        set
-    //        {
-    //            this.modulation_type = value;
-    //        }
-    //    }
-    //    public int ModulationSystem
-    //    {
-    //        get
-    //        {
-    //            return this.modulation_system;
-    //        }
-    //        set
-    //        {
-    //            this.modulation_system = value;
-    //        }
-    //    }
-    //    public string Fec
-    //    {
-    //        get
-    //        {
-    //            return this.fec;
-    //        }
-    //        set
-    //        {
-    //            this.fec = value;
-    //        }
-    //    }
-    //    public int Symbolrate
-    //    {
-    //        get
-    //        {
-    //            return this.symbolrate;
-    //        }
-    //        set
-    //        {
-    //            this.symbolrate = value;
-    //        }
-    //    }
-    //    public string Polarity
-    //    {
-    //        get
-    //        {
-    //            return this.polarity;
-    //        }
-    //        set
-    //        {
-    //            this.polarity = value;
-    //        }
-    //    }
-    //    public int Frequency
-    //    {
-    //        get
-    //        {
-    //            return this.frequency;
-    //        }
-    //        set
-    //        {
-    //            this.frequency = value;
-    //        }
-    //    }
-    //    public string Position
-    //    {
-    //        get
-    //        {
-    //            return this.position;
-    //        }
-    //        set
-    //        {
-    //            this.position = value;
-    //        }
-    //    }
-    //}
-
-    //internal class ServiceDVBT : Service
-    //{
-    //    int frequency = -1;
-
-    //    public int Frequency
-    //    {
-    //        get
-    //        {
-    //            return this.frequency;
-    //        }
-    //        set
-    //        {
-    //            this.frequency = value;
-    //        }
-    //    }
-    //}
-
-    //internal class ServiceDVBC : Service
-    //{
-    //    int frequency = -1;
-
-    //    public int Frequency
-    //    {
-    //        get
-    //        {
-    //            return this.frequency;
-    //        }
-    //        set
-    //        {
-    //            this.frequency = value;
-    //        }
-    //    }
-    //}
 }

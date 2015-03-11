@@ -211,14 +211,7 @@ namespace dvbseserviceview
                 case FilterAttributeType.CASystemID: //  comma separated list of integers 
                 case FilterAttributeType.Video: // this is in most if not all cases just a single integer. But there could theoretically be more than one video stream 
                 case FilterAttributeType.Audio: // Audio list also contgain language. But for now we will only consider PID part.
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeBeginsWith);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeEndsWith);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
-                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeExcludes);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
                     break;
                 case FilterAttributeType.Features: //  comma separated list of strings 

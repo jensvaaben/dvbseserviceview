@@ -571,13 +571,13 @@ namespace dvbseserviceview
             i.SubItems.Add(Convert.ToString(service.Tsid));
             i.SubItems.Add(Convert.ToString(service.Nid));
             i.SubItems.Add(Convert.ToString(service.Onid));
-            i.SubItems.Add(service.VideoPidList); //VPID
-            i.SubItems.Add(service.AudioPidList); //APID
+            i.SubItems.Add(service.VideoPidListString); //VPID
+            i.SubItems.Add(service.AudioPidListString); //APID
             i.SubItems.Add(Convert.ToString(service.Pmt));
             i.SubItems.Add(Convert.ToString(service.Pcr));
             i.SubItems.Add(Convert.ToString(service.Type));
             i.SubItems.Add(service.FreeCaMode ? "1" : "0");
-            i.SubItems.Add(service.CaSystemIdList); //CA_system_ID
+            i.SubItems.Add(service.CaSystemIdListString); //CA_system_ID
             i.SubItems.Add(service.Lcn!=-1 ? Convert.ToString(service.Lcn) : "n/a");
             i.SubItems.Add(service.BouquetListString); //bouquet
             i.SubItems.Add(service.FeatureList); //features

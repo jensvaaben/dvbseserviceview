@@ -184,9 +184,9 @@ namespace dvbseserviceview
                 case FilterAttributeType.NetworkName:
                     return FilterMatchString(f.filterRelationType,s.NetworkName, f.Value);
                 case FilterAttributeType.CASystemID:
-                    return FilterMatchCASystemID(s,f);
+                    return FilterMatchIntList(f.filterRelationType, s.CaSystemIdList, f.Value);
                 case FilterAttributeType.Features:
-                    return FilterMatchFeatures(s,f);
+                    return /*FilterMatchFeatures(s,f)*/FilterMatchStringList(s.FeatureList,f);
                 case FilterAttributeType.Position:
                     return FilterMatchString(f.filterRelationType, s.Position, f.Value);
                 case FilterAttributeType.Lcn:
@@ -209,10 +209,64 @@ namespace dvbseserviceview
                     return FilterMatchInt(f.filterRelationType, s.Onid, f.Value);
                 case FilterAttributeType.BouquetList:
                 case FilterAttributeType.Audio:
+                    return FilterMatchIntList(f.filterRelationType, s.AudioPidList, f.Value);
                 case FilterAttributeType.Video:
+                    return FilterMatchIntList(f.filterRelationType, s.VideoPidList, f.Value);
                 default:
                     return false; // this should not happen
             }
+        }
+
+        private bool FilterMatchIntList(FilterRelationType r,SortedSet<int> servicevalue,string filtervalue)
+        {
+            if (r == FilterRelationType.Contains)
+            {
+                // each element of filter value is matched against all values in service.
+                // If just one elment fails the whole condition fails (AND)
+                string[] list = filtervalue.Split(new char[1] { ',' });
+                SortedSet<int> intlist = new SortedSet<int>();
+                foreach (var item in list)
+                {
+                    try
+                    {
+                        intlist.Add(item.StartsWith("0x") ? Convert.ToInt32(item.Substring(2), 16) : Convert.ToInt32(item));
+                    }
+                    catch (Exception)
+                    {
+                        //on failure no match
+                        return false;
+                    }
+                }
+
+                foreach (var elememt in intlist)
+                {
+                    if(!servicevalue.Contains(elememt)) return false;
+                }
+                return true; // if we reached here all elements matched
+
+
+            }
+            else if (r == FilterRelationType.InRange)
+            {
+                string[] list = filtervalue.Split(new char[2] { ',','-' });
+                
+                //only two values are allowed, start and end
+                if (list.Length != 2) return false;
+                int v1 = list[0].StartsWith("0x") ? Convert.ToInt32(list[0].Substring(2), 16) : Convert.ToInt32(list[0]);
+                int v2 = list[1].StartsWith("0x") ? Convert.ToInt32(list[1].Substring(2), 16) : Convert.ToInt32(list[1]);
+
+                // if 
+                foreach (var item in servicevalue)
+                {
+                    if (item >= v1 && item <= v2) return true;
+                }
+                return false; // if we reached here none of the elements matched
+            }
+            else
+            {
+                return false;
+            }
+            return false;
         }
 
         private bool FilterMatchInt(FilterRelationType r,int servicevalue, string filtervalue)
@@ -258,14 +312,7 @@ namespace dvbseserviceview
             }
         }
 
-        private bool FilterMatchCASystemID(Service s, FilterCondition f)
-        {
-            string[] systemidlist = f.Value.Split(new char[1] { ',' });
-
-            return true;
-        }
-
-        private bool FilterMatchFeatures(Service s, FilterCondition f)
+        private bool FilterMatchStringList(string value, FilterCondition f)
         {
             // each element of filter value is matched against all values in service.
             // If just one elment fails the whole condition fails (AND)
@@ -276,7 +323,7 @@ namespace dvbseserviceview
                 switch (f.filterRelationType)
                 {
                     case FilterRelationType.Contains:
-                        if (!s.FeatureList.Contains(element)) return false;
+                        if (!value.Contains(element)) return false;
                         break;
                     default:
                         return false; // no match for unsupported relation 
@@ -284,5 +331,26 @@ namespace dvbseserviceview
             }
             return true; // if we reached here all elements matched
         }
+
+        private bool FilterMatchStringList(SortedSet<string> s,FilterCondition f)
+        {
+            // each element of filter value is matched against all values in service.
+            // If just one elment fails the whole condition fails (AND)
+            string[] list = f.Value.Split(new char[1] { ',' });
+
+            foreach (var element in list)
+            {
+                switch (f.filterRelationType)
+                {
+                    case FilterRelationType.Contains:
+                        if (!s.Contains(element)) return false;
+                        break;
+                    default:
+                        return false; // no match for unsupported relation 
+                }
+            }
+            return true; // if we reached here all elements matched
+        }
+
     }
 }
