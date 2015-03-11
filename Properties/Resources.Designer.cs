@@ -90,6 +90,15 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to AudioLanguage.
+        /// </summary>
+        internal static string FilterAttributeTypeAudioLanguage {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeAudioLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to BouquetList.
         /// </summary>
         internal static string FilterAttributeTypeBouquetList {

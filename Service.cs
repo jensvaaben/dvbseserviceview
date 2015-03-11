@@ -360,7 +360,7 @@ namespace dvbseserviceview
             }
         }
 
-        SortedSet<string> AudioLanguageList
+        public SortedSet<string> AudioLanguageList
         {
             get
             {
@@ -368,7 +368,7 @@ namespace dvbseserviceview
             }
         }
 
-        SortedSet<string> SubtitleLanguageList
+        public SortedSet<string> SubtitleLanguageList
         {
             get
             {
@@ -376,7 +376,7 @@ namespace dvbseserviceview
             }
         }
 
-        SortedSet<string> TeletextLanguageList
+        public SortedSet<string> TeletextLanguageList
         {
             get
             {

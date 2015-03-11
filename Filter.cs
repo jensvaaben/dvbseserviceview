@@ -23,7 +23,9 @@ namespace dvbseserviceview
         Onid,
         BouquetList,
         Video,
-        Audio
+        Audio,
+        AudioLanguage
+
     }
 
     internal enum FilterRelationType
@@ -212,6 +214,8 @@ namespace dvbseserviceview
                     return FilterMatchIntList(f.filterRelationType, s.AudioPidList, f.Value);
                 case FilterAttributeType.Video:
                     return FilterMatchIntList(f.filterRelationType, s.VideoPidList, f.Value);
+                case FilterAttributeType.AudioLanguage:
+                    return FilterMatchStringList(s.AudioLanguageList,f);
                 default:
                     return false; // this should not happen
             }
@@ -266,12 +270,20 @@ namespace dvbseserviceview
             {
                 return false;
             }
-            return false;
         }
 
         private bool FilterMatchInt(FilterRelationType r,int servicevalue, string filtervalue)
         {
-            int value = Convert.ToInt32(filtervalue);
+            int value;
+            try
+            {
+                value = Int32.Parse(filtervalue);
+            }
+            catch (Exception)
+            {
+                //on failure no match
+                return false;
+            }
             switch (r)
             {
                 case FilterRelationType.Is:

@@ -53,7 +53,7 @@
             this.listViewFilterCondition.FullRowSelect = true;
             this.listViewFilterCondition.Location = new System.Drawing.Point(31, 108);
             this.listViewFilterCondition.Name = "listViewFilterCondition";
-            this.listViewFilterCondition.Size = new System.Drawing.Size(545, 97);
+            this.listViewFilterCondition.Size = new System.Drawing.Size(545, 196);
             this.listViewFilterCondition.TabIndex = 0;
             this.listViewFilterCondition.UseCompatibleStateImageBehavior = false;
             this.listViewFilterCondition.View = System.Windows.Forms.View.Details;
@@ -73,7 +73,7 @@
             // 
             // buttonOk
             // 
-            this.buttonOk.Location = new System.Drawing.Point(31, 227);
+            this.buttonOk.Location = new System.Drawing.Point(31, 328);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 1;
@@ -164,7 +164,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(638, 262);
+            this.ClientSize = new System.Drawing.Size(638, 376);
             this.Controls.Add(this.textBoxValue);
             this.Controls.Add(this.radioButtonExclude);
             this.Controls.Add(this.radioButtonInclude);

@@ -56,6 +56,7 @@ namespace dvbseserviceview
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeBouquetList);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeVideo);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudio);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudioLanguage);
 
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
@@ -139,6 +140,7 @@ namespace dvbseserviceview
             else if (t == FilterAttributeType.BouquetList) return Properties.Resources.FilterAttributeTypeBouquetList;
             else if (t == FilterAttributeType.Video) return Properties.Resources.FilterAttributeTypeVideo;
             else if (t == FilterAttributeType.Audio) return Properties.Resources.FilterAttributeTypeAudio;
+            else if (t == FilterAttributeType.AudioLanguage) return Properties.Resources.FilterAttributeTypeAudioLanguage;
             else return Properties.Resources.FilterAttributeTypeNone; // this should not happen
         }
 
@@ -210,11 +212,12 @@ namespace dvbseserviceview
                     break;
                 case FilterAttributeType.CASystemID: //  comma separated list of integers 
                 case FilterAttributeType.Video: // this is in most if not all cases just a single integer. But there could theoretically be more than one video stream 
-                case FilterAttributeType.Audio: // Audio list also contgain language. But for now we will only consider PID part.
+                case FilterAttributeType.Audio: // Audio list also contain language. But for now we will only consider PID part.
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeInRange);
                     break;
                 case FilterAttributeType.Features: //  comma separated list of strings 
+                case FilterAttributeType.AudioLanguage:
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
                     break;
                 case FilterAttributeType.Lcn: // single integer fields
@@ -319,6 +322,10 @@ namespace dvbseserviceview
             else if (s == Properties.Resources.FilterAttributeTypeAudio)
             {
                 return FilterAttributeType.Audio;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeAudioLanguage)
+            {
+                return FilterAttributeType.AudioLanguage;
             }
             else
             {
