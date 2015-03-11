@@ -35,12 +35,12 @@
             this.buttonOk = new System.Windows.Forms.Button();
             this.comboBoxAttribute = new System.Windows.Forms.ComboBox();
             this.comboBoxCondition = new System.Windows.Forms.ComboBox();
-            this.comboBoxValue = new System.Windows.Forms.ComboBox();
             this.buttonAdd = new System.Windows.Forms.Button();
             this.buttonRemove = new System.Windows.Forms.Button();
             this.buttonReset = new System.Windows.Forms.Button();
             this.radioButtonInclude = new System.Windows.Forms.RadioButton();
             this.radioButtonExclude = new System.Windows.Forms.RadioButton();
+            this.textBoxValue = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // listViewFilterCondition
@@ -100,14 +100,6 @@
             this.comboBoxCondition.Size = new System.Drawing.Size(121, 21);
             this.comboBoxCondition.TabIndex = 3;
             // 
-            // comboBoxValue
-            // 
-            this.comboBoxValue.FormattingEnabled = true;
-            this.comboBoxValue.Location = new System.Drawing.Point(316, 38);
-            this.comboBoxValue.Name = "comboBoxValue";
-            this.comboBoxValue.Size = new System.Drawing.Size(121, 21);
-            this.comboBoxValue.TabIndex = 4;
-            // 
             // buttonAdd
             // 
             this.buttonAdd.Location = new System.Drawing.Point(361, 79);
@@ -161,17 +153,24 @@
             this.radioButtonExclude.Text = "&Exclude";
             this.radioButtonExclude.UseVisualStyleBackColor = true;
             // 
+            // textBoxValue
+            // 
+            this.textBoxValue.Location = new System.Drawing.Point(315, 38);
+            this.textBoxValue.Name = "textBoxValue";
+            this.textBoxValue.Size = new System.Drawing.Size(218, 20);
+            this.textBoxValue.TabIndex = 10;
+            // 
             // FilterForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(638, 262);
+            this.Controls.Add(this.textBoxValue);
             this.Controls.Add(this.radioButtonExclude);
             this.Controls.Add(this.radioButtonInclude);
             this.Controls.Add(this.buttonReset);
             this.Controls.Add(this.buttonRemove);
             this.Controls.Add(this.buttonAdd);
-            this.Controls.Add(this.comboBoxValue);
             this.Controls.Add(this.comboBoxCondition);
             this.Controls.Add(this.comboBoxAttribute);
             this.Controls.Add(this.buttonOk);
@@ -191,7 +190,6 @@
         private System.Windows.Forms.Button buttonOk;
         private System.Windows.Forms.ComboBox comboBoxAttribute;
         private System.Windows.Forms.ComboBox comboBoxCondition;
-        private System.Windows.Forms.ComboBox comboBoxValue;
         private System.Windows.Forms.Button buttonAdd;
         private System.Windows.Forms.Button buttonRemove;
         private System.Windows.Forms.Button buttonReset;
@@ -200,5 +198,6 @@
         private System.Windows.Forms.ColumnHeader Attribute;
         private System.Windows.Forms.ColumnHeader Relation;
         private System.Windows.Forms.ColumnHeader Value;
+        private System.Windows.Forms.TextBox textBoxValue;
     }
 }

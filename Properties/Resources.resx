@@ -179,7 +179,7 @@
     <value>Audio</value>
   </data>
   <data name="FilterAttributeTypeBouquetList" xml:space="preserve">
-    <value>List</value>
+    <value>BouquetList</value>
   </data>
   <data name="FilterAttributeTypeFreeCAMode" xml:space="preserve">
     <value>FreeCAMode</value>

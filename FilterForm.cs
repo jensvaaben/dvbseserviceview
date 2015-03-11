@@ -92,7 +92,7 @@ namespace dvbseserviceview
             FilterCondition filtercondition = new FilterCondition();
             filtercondition.filterAttributeType = FilterAttributeTypeFromString((string)this.comboBoxAttribute.SelectedItem);
             filtercondition.filterRelationType = FilterRelationTypeFromString((string)this.comboBoxCondition.SelectedItem);
-            filtercondition.Value = this.comboBoxValue.Text;
+            filtercondition.Value = this.textBoxValue.Text;
             filtercondition.Enable = true;
             this.filterContext.FilterConditionSet.Add(filtercondition);
             RefreshList();

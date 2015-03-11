@@ -90,7 +90,7 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to List.
+        ///   Looks up a localized string similar to BouquetList.
         /// </summary>
         internal static string FilterAttributeTypeBouquetList {
             get {
