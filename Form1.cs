@@ -1186,45 +1186,52 @@ namespace dvbseserviceview
             }
             catch (Exception e)
             {
-                // this is excepted first time application 
+                // this is excepted first time application is run
                 Trace.WriteLine(string.Format("error loading filterXML: {0}",e.Message));
             }
         }
 
         private void SaveFilterXML()
         {
-            string settingspath = GetSettingsPath();
-            settingspath += "\\filter.xml";
-
-            XmlDocument doc = new XmlDocument();
-            XmlElement element = doc.CreateElement("filterconditions");
-
-            foreach (var item in this.filterContext.FilterConditionSet)
+            try
             {
-                XmlNode s = doc.CreateElement("filtercondition");
-                XmlAttribute attribute = null;
+                string settingspath = GetSettingsPath();
+                settingspath += "\\filter.xml";
 
-                attribute = doc.CreateAttribute("enable");
-                attribute.Value = Convert.ToString(item.Enable);
-                s.Attributes.Append(attribute);
+                XmlDocument doc = new XmlDocument();
+                XmlElement element = doc.CreateElement("filterconditions");
 
-                attribute = doc.CreateAttribute("attribute");
-                attribute.Value = Convert.ToString(item.filterAttributeType);
-                s.Attributes.Append(attribute);
+                foreach (var item in this.filterContext.FilterConditionSet)
+                {
+                    XmlNode s = doc.CreateElement("filtercondition");
+                    XmlAttribute attribute = null;
 
-                attribute = doc.CreateAttribute("relation");
-                attribute.Value = Convert.ToString(item.filterRelationType);
-                s.Attributes.Append(attribute);
+                    attribute = doc.CreateAttribute("enable");
+                    attribute.Value = Convert.ToString(item.Enable);
+                    s.Attributes.Append(attribute);
+
+                    attribute = doc.CreateAttribute("attribute");
+                    attribute.Value = Convert.ToString(item.filterAttributeType);
+                    s.Attributes.Append(attribute);
+
+                    attribute = doc.CreateAttribute("relation");
+                    attribute.Value = Convert.ToString(item.filterRelationType);
+                    s.Attributes.Append(attribute);
 
 
-                attribute = doc.CreateAttribute("value");
-                attribute.Value = item.Value;
-                s.Attributes.Append(attribute);
+                    attribute = doc.CreateAttribute("value");
+                    attribute.Value = item.Value;
+                    s.Attributes.Append(attribute);
 
-                element.AppendChild(s);
+                    element.AppendChild(s);
+                }
+                doc.AppendChild(element);
+                doc.Save(settingspath);
             }
-            doc.AppendChild(element);
-            doc.Save(settingspath);
+            catch (Exception e)
+            {
+                Trace.WriteLine(string.Format("error loading SaveFilterXML: {0}", e.Message));
+            }
         }
 
         private string GetSettingsPath()
