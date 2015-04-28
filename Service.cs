@@ -769,7 +769,7 @@ namespace dvbseserviceview
             SortedSet<string> list = new SortedSet<string>();
             foreach (var s in this.streams)
             {
-                if (s.Type2 == "mhp" || s.Type2 == "ip" || s.Type2 == "mhp_oc" || s.Type2 == "mpe" || s.Type2 == "hbbtv" || s.Type2 == "ssu")
+                if (s.Type2 == "mhp" || s.Type2 == "ip" || s.Type2 == "mhp_oc" || s.Type2 == "mpe" || s.Type2 == "hbbtv" || s.Type2 == "ssu" || s.Type2 == "object_carousel" || s.Type2 == "data_carousel" || s.Type2 == "carousel")
                 {
                     list.Add(s.Type2);
                 }
