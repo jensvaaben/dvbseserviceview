@@ -163,8 +163,18 @@ namespace dvbseserviceview
                 // Groups of unique attribute type are AND'ed.
                 FilterAttributeType filterattributetype = enumurator.Current.filterAttributeType;
                 match = FilterMatch(s, enumurator.Current);
-                while ((moreitems = enumurator.MoveNext()) && filterattributetype == enumurator.Current.filterAttributeType && !match)
+
+                while ((moreitems = enumurator.MoveNext()) && filterattributetype == enumurator.Current.filterAttributeType)
                 {
+                    // if already match continue
+                    if (match) continue;
+
+                    //skip disabled items
+                    if (!enumurator.Current.Enable)
+                    {
+                        //moreitems = enumurator.MoveNext();
+                        continue;
+                    }
                     match = FilterMatch(s, enumurator.Current);
                 }
                 // if not at least match for unique attribute type retrurn false. Otherwise proceed with next attribute type
