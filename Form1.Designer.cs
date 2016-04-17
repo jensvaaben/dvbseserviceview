@@ -34,12 +34,27 @@
             this.openDVBCToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDVBTToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.openEITToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
             this.listView1 = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.listViewEIT = new System.Windows.Forms.ListView();
+            this.columnHeaderEventId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderVersionNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderTableId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderOriginalNetworkId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderTransportStreamId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderServiceId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderStartTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderEndTime = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderEventName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -47,6 +62,7 @@
             this.splitContainer1.SuspendLayout();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -66,7 +82,9 @@
             this.openToolStripMenuItem,
             this.openDVBCToolStripMenuItem,
             this.openDVBTToolStripMenuItem,
-            this.filterToolStripMenuItem});
+            this.filterToolStripMenuItem,
+            this.toolStripSeparator1,
+            this.openEITToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -74,30 +92,42 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.openToolStripMenuItem.Text = "Open DVB-S";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openDVBCToolStripMenuItem
             // 
             this.openDVBCToolStripMenuItem.Name = "openDVBCToolStripMenuItem";
-            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.openDVBCToolStripMenuItem.Text = "Open DVB-C";
             this.openDVBCToolStripMenuItem.Click += new System.EventHandler(this.openDVBCToolStripMenuItem_Click);
             // 
             // openDVBTToolStripMenuItem
             // 
             this.openDVBTToolStripMenuItem.Name = "openDVBTToolStripMenuItem";
-            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.openDVBTToolStripMenuItem.Text = "Open DVB-T";
             this.openDVBTToolStripMenuItem.Click += new System.EventHandler(this.openDVBTToolStripMenuItem_Click);
             // 
             // filterToolStripMenuItem
             // 
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.filterToolStripMenuItem.Text = "Filter...";
             this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator1
+            // 
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
+            // 
+            // openEITToolStripMenuItem
+            // 
+            this.openEITToolStripMenuItem.Name = "openEITToolStripMenuItem";
+            this.openEITToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openEITToolStripMenuItem.Text = "Open EIT";
+            this.openEITToolStripMenuItem.Click += new System.EventHandler(this.openEITToolStripMenuItem_Click);
             // 
             // aboutToolStripMenuItem
             // 
@@ -136,6 +166,7 @@
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listView1.FullRowSelect = true;
+            this.listView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.listView1.Location = new System.Drawing.Point(0, 0);
             this.listView1.Name = "listView1";
             this.listView1.Size = new System.Drawing.Size(510, 593);
@@ -146,6 +177,7 @@
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -163,6 +195,82 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Service";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.listViewEIT);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Size = new System.Drawing.Size(774, 599);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "EIT";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // listViewEIT
+            // 
+            this.listViewEIT.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.columnHeaderEventId,
+            this.columnHeaderVersionNumber,
+            this.columnHeaderTableId,
+            this.columnHeaderOriginalNetworkId,
+            this.columnHeaderTransportStreamId,
+            this.columnHeaderServiceId,
+            this.columnHeaderStartTime,
+            this.columnHeaderEndTime,
+            this.columnHeaderEventName,
+            this.columnHeaderEventText,
+            this.columnHeaderExtendedEventText});
+            this.listViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewEIT.Location = new System.Drawing.Point(0, 0);
+            this.listViewEIT.Name = "listViewEIT";
+            this.listViewEIT.Size = new System.Drawing.Size(774, 599);
+            this.listViewEIT.TabIndex = 0;
+            this.listViewEIT.UseCompatibleStateImageBehavior = false;
+            this.listViewEIT.View = System.Windows.Forms.View.Details;
+            // 
+            // columnHeaderEventId
+            // 
+            this.columnHeaderEventId.Text = "eventid";
+            // 
+            // columnHeaderVersionNumber
+            // 
+            this.columnHeaderVersionNumber.Text = "versionnumber";
+            // 
+            // columnHeaderTableId
+            // 
+            this.columnHeaderTableId.Text = "tableid";
+            // 
+            // columnHeaderOriginalNetworkId
+            // 
+            this.columnHeaderOriginalNetworkId.Text = "onid";
+            // 
+            // columnHeaderTransportStreamId
+            // 
+            this.columnHeaderTransportStreamId.Text = "tsid";
+            // 
+            // columnHeaderServiceId
+            // 
+            this.columnHeaderServiceId.Text = "sid";
+            // 
+            // columnHeaderStartTime
+            // 
+            this.columnHeaderStartTime.Text = "starttime";
+            // 
+            // columnHeaderEndTime
+            // 
+            this.columnHeaderEndTime.Text = "endtime";
+            // 
+            // columnHeaderEventName
+            // 
+            this.columnHeaderEventName.Text = "eventname";
+            // 
+            // columnHeaderEventText
+            // 
+            this.columnHeaderEventText.Text = "eventtext";
+            // 
+            // columnHeaderExtendedEventText
+            // 
+            this.columnHeaderExtendedEventText.Text = "extendedeventtext";
             // 
             // Form1
             // 
@@ -183,6 +291,7 @@
             this.splitContainer1.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -202,6 +311,21 @@
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.ToolStripMenuItem filterToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.ListView listViewEIT;
+        private System.Windows.Forms.ToolStripMenuItem openEITToolStripMenuItem;
+        private System.Windows.Forms.ColumnHeader columnHeaderEventId;
+        private System.Windows.Forms.ColumnHeader columnHeaderVersionNumber;
+        private System.Windows.Forms.ColumnHeader columnHeaderTableId;
+        private System.Windows.Forms.ColumnHeader columnHeaderOriginalNetworkId;
+        private System.Windows.Forms.ColumnHeader columnHeaderTransportStreamId;
+        private System.Windows.Forms.ColumnHeader columnHeaderServiceId;
+        private System.Windows.Forms.ColumnHeader columnHeaderStartTime;
+        private System.Windows.Forms.ColumnHeader columnHeaderEndTime;
+        private System.Windows.Forms.ColumnHeader columnHeaderEventName;
+        private System.Windows.Forms.ColumnHeader columnHeaderEventText;
+        private System.Windows.Forms.ColumnHeader columnHeaderExtendedEventText;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

@@ -66,6 +66,7 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Event.cs" />
     <Compile Include="Filter.cs" />
     <Compile Include="FilterForm.cs">
       <SubType>Form</SubType>

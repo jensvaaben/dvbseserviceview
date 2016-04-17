@@ -1248,5 +1248,88 @@ namespace dvbseserviceview
             }
         }
 
+        private void openEITToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog dlg = new OpenFileDialog();
+            dlg.FileName = Properties.Settings.Default.EITFile;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                Properties.Settings.Default.EITFile = dlg.FileName;
+                Properties.Settings.Default.Save();
+                LoadEITFile(dlg.FileName);
+            }
+        }
+
+        List<Event> eventlist = new System.Collections.Generic.List<Event>();
+
+        private void LoadEITFile(string file)
+        {
+            //this.listViewEIT.Clear();
+
+            using (System.IO.Stream f = new FileStream(file, FileMode.Open))
+            {
+                XmlReader reader = new XmlTextReader(f);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(reader);
+
+                this.eventlist = new System.Collections.Generic.List<Event>();
+
+                foreach (var _event in doc["eit"].ChildNodes)
+                {
+                    Event e = new Event();
+                    ExtractEvent((XmlNode)_event, e);
+                    this.eventlist.Add(e);
+                }
+                UpdateEventView();
+            }
+        }
+
+        void ExtractEvent(XmlNode l, Event e)
+        {
+            DateTime starttime, endtime;
+            e.Id = Convert.ToInt32(l.Attributes["eventid"].Value);
+            e.VersionNumber = Convert.ToInt32(l.Attributes["versionnumber"].Value);
+            e.TableId = Convert.ToInt32(l.Attributes["tableid"].Value);
+            e.Onid = Convert.ToInt32(l.Attributes["originalnetworkid"].Value);
+            e.Tsid = Convert.ToInt32(l.Attributes["transportstreamid"].Value);
+            e.Sid = Convert.ToInt32(l.Attributes["serviceid"].Value);
+            if(DateTime.TryParse(l.Attributes["starttime"].Value, out starttime))
+            {
+                e.StartTime = starttime;
+            }
+            if(DateTime.TryParse(l.Attributes["endtime"].Value, out endtime))
+            {
+                e.EndTime = endtime;
+            }
+            e.Name = l.Attributes["eventname"].Value;
+            e.Text = l.Attributes["eventtext"].Value;
+            e.ExtendedText = l.Attributes["extendedeventtext"].Value;
+        }
+
+        void UpdateEventView()
+        {
+            foreach(var _event in this.eventlist)
+            {
+                AddEvent(_event);
+            }
+        }
+        
+        void AddEvent(Event e)
+        {
+            ListViewItem i = new ListViewItem();
+            i.Text = Convert.ToString(e.Id);
+            i.SubItems.Add(Convert.ToString(e.VersionNumber));
+            i.SubItems.Add(Convert.ToString(e.TableId));
+            i.SubItems.Add(Convert.ToString(e.Onid));
+            i.SubItems.Add(Convert.ToString(e.Tsid));
+            i.SubItems.Add(Convert.ToString(e.Sid));
+            i.SubItems.Add(Convert.ToString(e.StartTime));
+            i.SubItems.Add(Convert.ToString(e.EndTime));
+            i.SubItems.Add(e.Name);
+            i.SubItems.Add(e.Text);
+            i.SubItems.Add(e.ExtendedText);
+            this.listViewEIT.Items.Add(i);
+        }
+
     }
 }
