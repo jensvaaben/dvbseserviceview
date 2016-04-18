@@ -1265,6 +1265,7 @@ namespace dvbseserviceview
         private void LoadEITFile(string file)
         {
             //this.listViewEIT.Clear();
+            this.listViewEIT.VirtualListSize = 0;
 
             using (System.IO.Stream f = new FileStream(file, FileMode.Open))
             {
@@ -1280,7 +1281,7 @@ namespace dvbseserviceview
                     ExtractEvent((XmlNode)_event, e);
                     this.eventlist.Add(e);
                 }
-                UpdateEventView();
+                this.listViewEIT.VirtualListSize = this.eventlist.Count();
             }
         }
 
@@ -1305,14 +1306,6 @@ namespace dvbseserviceview
             e.Text = l.Attributes["eventtext"].Value;
             e.ExtendedText = l.Attributes["extendedeventtext"].Value;
         }
-
-        void UpdateEventView()
-        {
-            foreach(var _event in this.eventlist)
-            {
-                AddEvent(_event);
-            }
-        }
         
         void AddEvent(Event e)
         {
@@ -1331,5 +1324,22 @@ namespace dvbseserviceview
             this.listViewEIT.Items.Add(i);
         }
 
+        private void listViewEIT_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            Event _e = this.eventlist[e.ItemIndex];
+            ListViewItem i = new ListViewItem();
+            i.Text = Convert.ToString(_e.Id);
+            i.SubItems.Add(Convert.ToString(_e.VersionNumber));
+            i.SubItems.Add(Convert.ToString(_e.TableId));
+            i.SubItems.Add(Convert.ToString(_e.Onid));
+            i.SubItems.Add(Convert.ToString(_e.Tsid));
+            i.SubItems.Add(Convert.ToString(_e.Sid));
+            i.SubItems.Add(Convert.ToString(_e.StartTime));
+            i.SubItems.Add(Convert.ToString(_e.EndTime));
+            i.SubItems.Add(_e.Name);
+            i.SubItems.Add(_e.Text);
+            i.SubItems.Add(_e.ExtendedText);
+            e.Item = i;
+        }
     }
 }

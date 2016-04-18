@@ -125,7 +125,7 @@
             // openEITToolStripMenuItem
             // 
             this.openEITToolStripMenuItem.Name = "openEITToolStripMenuItem";
-            this.openEITToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openEITToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.openEITToolStripMenuItem.Text = "Open EIT";
             this.openEITToolStripMenuItem.Click += new System.EventHandler(this.openEITToolStripMenuItem_Click);
             // 
@@ -227,6 +227,8 @@
             this.listViewEIT.TabIndex = 0;
             this.listViewEIT.UseCompatibleStateImageBehavior = false;
             this.listViewEIT.View = System.Windows.Forms.View.Details;
+            this.listViewEIT.VirtualMode = true;
+            this.listViewEIT.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewEIT_RetrieveVirtualItem);
             // 
             // columnHeaderEventId
             // 
