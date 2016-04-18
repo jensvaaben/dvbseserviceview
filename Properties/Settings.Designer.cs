@@ -130,5 +130,17 @@ namespace dvbseserviceview.Properties {
                 this["EITFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string EITColumnHeaderWidth {
+            get {
+                return ((string)(this["EITColumnHeaderWidth"]));
+            }
+            set {
+                this["EITColumnHeaderWidth"] = value;
+            }
+        }
     }
 }

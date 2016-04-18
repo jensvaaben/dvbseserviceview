@@ -193,6 +193,22 @@ namespace dvbseserviceview
                     this.dvbccolumn[n] = Convert.ToInt32(columnwidth[n]);
                 }
             }
+            if (Properties.Settings.Default.EITColumnHeaderWidth.Count() > 0)
+            {
+                string[] columnwidth = Properties.Settings.Default.EITColumnHeaderWidth.Split(new char[1] { ',' });
+                for (int n = 0; n < columnwidth.Count(); n++)
+                {
+                    this.eitcolumn[n] = Convert.ToInt32(columnwidth[n]);
+                }
+            }
+
+            if(this.eitcolumn.Count()==this.listViewEIT.Columns.Count)
+            {
+                for (int n = 0; n < eitcolumn.Count(); n++)
+                {
+                    this.listViewEIT.Columns[n].Width = this.eitcolumn[n];
+                }
+            }
 
             // intialize filter condition
             this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
@@ -216,9 +232,10 @@ namespace dvbseserviceview
         List<Service> servicelist = new List<Service>();
         List<Service> servicelistfiltered = new List<Service>();
 
-        private int[] dvbscolumn = new int[20] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbtcolumn = new int[19] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbccolumn = new int[19] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 }; 
+        private int[] dvbscolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] dvbtcolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] dvbccolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] eitcolumn = new int[] {50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150 };
 
         private void LoadServiceFile(string file, NetworkType networktype)
         {
@@ -1110,6 +1127,14 @@ namespace dvbseserviceview
                 }
             }
 
+            if(this.listViewEIT.Columns.Count==this.eitcolumn.Count())
+            {
+                for (int n = 0; n < this.listViewEIT.Columns.Count; n++)
+                {
+                    eitcolumn[n] = this.listViewEIT.Columns[n].Width;
+                }
+            }
+
             string str = "";
             for (int n = 0; n < this.dvbscolumn.Count(); n++)
             {
@@ -1133,6 +1158,14 @@ namespace dvbseserviceview
                 str += Convert.ToString(this.dvbccolumn[n]);
             }
             Properties.Settings.Default.DVBCColumnHeaderWidth = str;
+
+            str = "";
+            for (int n = 0; n < this.eitcolumn.Count(); n++)
+            {
+                if (n != 0) str += ",";
+                str += Convert.ToString(this.eitcolumn[n]);
+            }
+            Properties.Settings.Default.EITColumnHeaderWidth = str;
 
             Properties.Settings.Default.FilterOptionExclude = this.filterContext.Exclude;
 
