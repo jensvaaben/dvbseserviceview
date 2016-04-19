@@ -55,6 +55,8 @@
             this.columnHeaderEventName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.splitContainerEIT = new System.Windows.Forms.SplitContainer();
+            this.treeViewEIT = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -63,6 +65,10 @@
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEIT)).BeginInit();
+            this.splitContainerEIT.Panel1.SuspendLayout();
+            this.splitContainerEIT.Panel2.SuspendLayout();
+            this.splitContainerEIT.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -198,7 +204,7 @@
             // 
             // tabPage2
             // 
-            this.tabPage2.Controls.Add(this.listViewEIT);
+            this.tabPage2.Controls.Add(this.splitContainerEIT);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(774, 599);
@@ -223,7 +229,7 @@
             this.listViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewEIT.Location = new System.Drawing.Point(0, 0);
             this.listViewEIT.Name = "listViewEIT";
-            this.listViewEIT.Size = new System.Drawing.Size(774, 599);
+            this.listViewEIT.Size = new System.Drawing.Size(461, 599);
             this.listViewEIT.TabIndex = 0;
             this.listViewEIT.UseCompatibleStateImageBehavior = false;
             this.listViewEIT.View = System.Windows.Forms.View.Details;
@@ -274,6 +280,31 @@
             // 
             this.columnHeaderExtendedEventText.Text = "extendedeventtext";
             // 
+            // splitContainerEIT
+            // 
+            this.splitContainerEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEIT.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEIT.Name = "splitContainerEIT";
+            // 
+            // splitContainerEIT.Panel1
+            // 
+            this.splitContainerEIT.Panel1.Controls.Add(this.treeViewEIT);
+            // 
+            // splitContainerEIT.Panel2
+            // 
+            this.splitContainerEIT.Panel2.Controls.Add(this.listViewEIT);
+            this.splitContainerEIT.Size = new System.Drawing.Size(774, 599);
+            this.splitContainerEIT.SplitterDistance = 309;
+            this.splitContainerEIT.TabIndex = 1;
+            // 
+            // treeViewEIT
+            // 
+            this.treeViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewEIT.Location = new System.Drawing.Point(0, 0);
+            this.treeViewEIT.Name = "treeViewEIT";
+            this.treeViewEIT.Size = new System.Drawing.Size(309, 599);
+            this.treeViewEIT.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -294,6 +325,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.splitContainerEIT.Panel1.ResumeLayout(false);
+            this.splitContainerEIT.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainerEIT)).EndInit();
+            this.splitContainerEIT.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -328,6 +363,8 @@
         private System.Windows.Forms.ColumnHeader columnHeaderEventText;
         private System.Windows.Forms.ColumnHeader columnHeaderExtendedEventText;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.SplitContainer splitContainerEIT;
+        private System.Windows.Forms.TreeView treeViewEIT;
     }
 }
 
