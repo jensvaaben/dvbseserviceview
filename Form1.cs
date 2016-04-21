@@ -1333,11 +1333,11 @@ namespace dvbseserviceview
             e.Sid = Convert.ToInt32(l.Attributes["serviceid"].Value);
             if(DateTime.TryParse(l.Attributes["starttime"].Value, out starttime))
             {
-                e.StartTime = starttime;
+                e.StartTime = starttime.ToLocalTime();
             }
             if(DateTime.TryParse(l.Attributes["endtime"].Value, out endtime))
             {
-                e.EndTime = endtime;
+                e.EndTime = endtime.ToLocalTime();
             }
             e.Name = l.Attributes["eventname"].Value;
             e.Text = l.Attributes["eventtext"].Value;
