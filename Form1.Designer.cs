@@ -43,6 +43,8 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.splitContainerEIT = new System.Windows.Forms.SplitContainer();
+            this.treeViewEIT = new System.Windows.Forms.TreeView();
             this.listViewEIT = new System.Windows.Forms.ListView();
             this.columnHeaderEventId = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderVersionNumber = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -55,8 +57,6 @@
             this.columnHeaderEventName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.splitContainerEIT = new System.Windows.Forms.SplitContainer();
-            this.treeViewEIT = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -212,6 +212,32 @@
             this.tabPage2.Text = "EIT";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // splitContainerEIT
+            // 
+            this.splitContainerEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainerEIT.Location = new System.Drawing.Point(0, 0);
+            this.splitContainerEIT.Name = "splitContainerEIT";
+            // 
+            // splitContainerEIT.Panel1
+            // 
+            this.splitContainerEIT.Panel1.Controls.Add(this.treeViewEIT);
+            // 
+            // splitContainerEIT.Panel2
+            // 
+            this.splitContainerEIT.Panel2.Controls.Add(this.listViewEIT);
+            this.splitContainerEIT.Size = new System.Drawing.Size(774, 599);
+            this.splitContainerEIT.SplitterDistance = 309;
+            this.splitContainerEIT.TabIndex = 1;
+            // 
+            // treeViewEIT
+            // 
+            this.treeViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewEIT.Location = new System.Drawing.Point(0, 0);
+            this.treeViewEIT.Name = "treeViewEIT";
+            this.treeViewEIT.Size = new System.Drawing.Size(309, 599);
+            this.treeViewEIT.TabIndex = 0;
+            this.treeViewEIT.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewEIT_AfterSelect);
+            // 
             // listViewEIT
             // 
             this.listViewEIT.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
@@ -279,31 +305,6 @@
             // columnHeaderExtendedEventText
             // 
             this.columnHeaderExtendedEventText.Text = "extendedeventtext";
-            // 
-            // splitContainerEIT
-            // 
-            this.splitContainerEIT.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainerEIT.Location = new System.Drawing.Point(0, 0);
-            this.splitContainerEIT.Name = "splitContainerEIT";
-            // 
-            // splitContainerEIT.Panel1
-            // 
-            this.splitContainerEIT.Panel1.Controls.Add(this.treeViewEIT);
-            // 
-            // splitContainerEIT.Panel2
-            // 
-            this.splitContainerEIT.Panel2.Controls.Add(this.listViewEIT);
-            this.splitContainerEIT.Size = new System.Drawing.Size(774, 599);
-            this.splitContainerEIT.SplitterDistance = 309;
-            this.splitContainerEIT.TabIndex = 1;
-            // 
-            // treeViewEIT
-            // 
-            this.treeViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeViewEIT.Location = new System.Drawing.Point(0, 0);
-            this.treeViewEIT.Name = "treeViewEIT";
-            this.treeViewEIT.Size = new System.Drawing.Size(309, 599);
-            this.treeViewEIT.TabIndex = 0;
             // 
             // Form1
             // 

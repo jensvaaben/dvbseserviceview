@@ -982,7 +982,7 @@ namespace dvbseserviceview
             TreeNode selected = this.treeView1.SelectedNode;
             if (selected != null)
             {
-                listView1.Items.Clear();
+                this.listView1.Items.Clear();
                 TreeViewContext context = (TreeViewContext)selected.Tag;
                 if (context.NodeType == TreeViewNodeType.ServicesRoot)
                 {
@@ -1294,6 +1294,7 @@ namespace dvbseserviceview
         }
 
         List<Event> eventlist = new System.Collections.Generic.List<Event>();
+        List<Event> activeeventlist = null;
 
         private void LoadEITFile(string file)
         {
@@ -1314,7 +1315,10 @@ namespace dvbseserviceview
                     ExtractEvent((XmlNode)_event, e);
                     this.eventlist.Add(e);
                 }
-                this.listViewEIT.VirtualListSize = this.eventlist.Count();
+                BuildEventIdx();
+                CreateEITTree();
+                this.activeeventlist = this.eventlist;
+                this.listViewEIT.VirtualListSize = this.activeeventlist.Count();
             }
         }
 
@@ -1359,7 +1363,7 @@ namespace dvbseserviceview
 
         private void listViewEIT_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
         {
-            Event _e = this.eventlist[e.ItemIndex];
+            Event _e = this.activeeventlist[e.ItemIndex];
             ListViewItem i = new ListViewItem();
             i.Text = Convert.ToString(_e.Id);
             i.SubItems.Add(Convert.ToString(_e.VersionNumber));
@@ -1373,6 +1377,76 @@ namespace dvbseserviceview
             i.SubItems.Add(_e.Text);
             i.SubItems.Add(_e.ExtendedText);
             e.Item = i;
+        }
+
+        struct ServiceKey
+        {
+            public int onid;
+            public int tsid;
+            public int sid;
+        }
+
+        class ServiceKeyComparer : Comparer<ServiceKey>
+        {
+            public override int Compare(ServiceKey k1, ServiceKey k2)
+            {
+                if (k1.onid != k2.onid) return k1.onid.CompareTo(k2.onid);
+                else if (k1.tsid != k2.tsid) return k1.tsid.CompareTo(k2.tsid);
+                else return k1.sid.CompareTo(k2.sid);
+            }
+        }
+
+        private SortedDictionary<ServiceKey, List<Event>> eventidx = new SortedDictionary<ServiceKey, List<Event>>(new ServiceKeyComparer());
+
+        private void BuildEventIdx()
+        {
+            this.eventidx.Clear();
+            foreach(Event e in this.eventlist)
+            {
+                ServiceKey key = new ServiceKey();
+                key.onid = e.Onid;
+                key.tsid = e.Tsid;
+                key.sid = e.Sid;
+
+                if(!this.eventidx.Keys.Contains(key))
+                {
+                    List<Event> list = new List<Event>();
+                    this.eventidx.Add(key, list);
+                }
+                this.eventidx[key].Add(e);
+            }
+        }
+
+        struct EitTreeNode
+        {
+            public TreeNode root;
+        }
+
+
+        EitTreeNode eittreenode = new EitTreeNode();
+
+        private void CreateEITTree()
+        {
+            this.eittreenode.root = this.treeViewEIT.Nodes.Add("All");
+            this.eittreenode.root.Tag = this.eventlist;
+            foreach (ServiceKey key in this.eventidx.Keys)
+            {
+                string s = string.Format("{0}/{1}/{2}", key.onid, key.tsid, key.sid);
+                TreeNode item = new TreeNode(s);
+                item.Tag = this.eventidx[key];
+                this.eittreenode.root.Nodes.Add(item);
+            }
+        }
+
+        private void treeViewEIT_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            TreeNode selected = this.treeViewEIT.SelectedNode;
+            if (selected != null)
+            {
+                this.listViewEIT.VirtualListSize = 0;
+                this.activeeventlist = (List<Event>) selected.Tag;
+                this.listViewEIT.VirtualListSize = activeeventlist.Count();
+            }
         }
     }
 }
