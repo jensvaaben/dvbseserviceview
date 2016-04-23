@@ -695,14 +695,15 @@ namespace dvbseserviceview
         private void BuildIdx()
         {
             // clear all 
-            provideridx.Clear();
-            networknameidx.Clear();
-            networkidx.Clear();
-            originalnetworkidx.Clear();
-            bouquetidx.Clear();
-            satnameidx.Clear();
-            alphabeticidx.Clear();
-            allalphabeticidx.Clear();
+            this.provideridx.Clear();
+            this.networknameidx.Clear();
+            this.networkidx.Clear();
+            this.originalnetworkidx.Clear();
+            this.bouquetidx.Clear();
+            this.satnameidx.Clear();
+            this.alphabeticidx.Clear();
+            this.allalphabeticidx.Clear();
+            this.serviceidx.Clear();
 
             //provideridx
             BuildProviderIdx(this.servicelistfiltered, this.provideridx);
@@ -1450,6 +1451,7 @@ namespace dvbseserviceview
                 item.Tag = this.eventidx[key];
                 this.eitroot.Nodes.Add(item);
             }
+            this.eitroot.Expand();
         }
 
         private void treeViewEIT_AfterSelect(object sender, TreeViewEventArgs e)
@@ -1475,6 +1477,10 @@ namespace dvbseserviceview
                 if(this.serviceidx.Keys.Contains(key))
                 {
                     node.Text = this.serviceidx[key];
+                }
+                else
+                {
+                    node.Text = string.Format("{0}/{1}/{2}", key.onid, key.tsid, key.sid);
                 }
             }
         }
