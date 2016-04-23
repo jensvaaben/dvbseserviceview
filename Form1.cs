@@ -76,6 +76,29 @@ namespace dvbseserviceview
             }
         }
 
+        /*struct EitTreeNode
+        {
+            public TreeNode root;
+        }*/
+
+        struct ServiceKey
+        {
+            public int onid;
+            public int tsid;
+            public int sid;
+        }
+
+        class ServiceKeyComparer : Comparer<ServiceKey>
+        {
+            public override int Compare(ServiceKey k1, ServiceKey k2)
+            {
+                if (k1.onid != k2.onid) return k1.onid.CompareTo(k2.onid);
+                else if (k1.tsid != k2.tsid) return k1.tsid.CompareTo(k2.tsid);
+                else return k1.sid.CompareTo(k2.sid);
+            }
+        }
+
+
         class TreeViewContext
         {
             TreeViewNodeType nodetype = TreeViewNodeType.ServicesRoot;
@@ -153,7 +176,34 @@ namespace dvbseserviceview
             }
         }
 
-        FilterContext filterContext = new FilterContext();
+        private FilterContext filterContext = new FilterContext();
+        private SortedDictionary<ServiceKey, List<Event>> eventidx = new SortedDictionary<ServiceKey, List<Event>>(new ServiceKeyComparer());
+        private TreeNode eitroot = new TreeNode();
+        private List<Service> servicelist = new List<Service>();
+        private List<Service> servicelistfiltered = new List<Service>();
+        private int[] dvbscolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] dvbtcolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] dvbccolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
+        private int[] eitcolumn = new int[] { 50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150 };
+        private SortedDictionary<string, List<Service>> provideridx = new SortedDictionary<string, List<Service>>();
+        private SortedDictionary<string, SortedDictionary<int, List<Service>>> networknameidx = new SortedDictionary<string, SortedDictionary<int, List<Service>>>();
+        private SortedDictionary<int, SortedDictionary<int, List<Service>>> networkidx = new SortedDictionary<int, SortedDictionary<int, List<Service>>>();
+        private SortedDictionary<int, SortedDictionary<int, List<Service>>> originalnetworkidx = new SortedDictionary<int, SortedDictionary<int, List<Service>>>();
+        private SortedDictionary<BouquetKey, List<Service>> bouquetidx = new SortedDictionary<BouquetKey, List<Service>>(new BouquetKeyComparer());
+        private SortedDictionary<string, SortedDictionary<FrequencyKey, List<Service>>> satnameidx = new SortedDictionary<string, SortedDictionary<FrequencyKey, List<Service>>>();
+        private Dictionary<char, List<Service>> alphabeticidx = new Dictionary<char, List<Service>>();
+        private List<Service> allalphabeticidx = new List<Service>();
+        private TreeNode root = null;
+        private TreeNode position = null;
+        private TreeNode network = null;
+        private TreeNode original_network = null;
+        private TreeNode network_name = null;
+        private TreeNode provider = null;
+        private TreeNode bouquet = null;
+        private TreeNode alphabetic = null;
+        private SortedDictionary<ServiceKey, string> serviceidx = new SortedDictionary<ServiceKey, string>(new ServiceKeyComparer());
+        private List<Event> eventlist = new System.Collections.Generic.List<Event>();
+        private List<Event> activeeventlist = null;
 
         public Form1()
         {
@@ -229,14 +279,6 @@ namespace dvbseserviceview
             }
         }
 
-        List<Service> servicelist = new List<Service>();
-        List<Service> servicelistfiltered = new List<Service>();
-
-        private int[] dvbscolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbtcolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbccolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] eitcolumn = new int[] {50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150 };
-
         private void LoadServiceFile(string file, NetworkType networktype)
         {
             // save column state
@@ -289,6 +331,7 @@ namespace dvbseserviceview
                 CreateTree();
                 BuildIdx();
                 UpdateTreeView();
+                UpdateEITServiceNames();
                 this.treeView1.SelectedNode = this.root;
             }
         }
@@ -400,15 +443,6 @@ namespace dvbseserviceview
             b.Id = Convert.ToInt32(l.Attributes["id"].Value);
             b.Name = l.Attributes["name"].Value;
         }
-
-        TreeNode root = null;
-        TreeNode position = null;
-        TreeNode network = null;
-        TreeNode original_network = null;
-        TreeNode network_name = null;
-        TreeNode provider = null;
-        TreeNode bouquet = null;
-        TreeNode alphabetic = null;
 
         private void CreateTree()
         {
@@ -658,15 +692,6 @@ namespace dvbseserviceview
             }
         }
 
-        SortedDictionary<string, List<Service>> provideridx = new SortedDictionary<string, List<Service>>();
-        SortedDictionary<string, SortedDictionary<int, List<Service>>> networknameidx = new SortedDictionary<string, SortedDictionary<int, List<Service>>>();
-        SortedDictionary<int, SortedDictionary<int, List<Service>>> networkidx = new SortedDictionary<int, SortedDictionary<int, List<Service>>>();
-        SortedDictionary<int, SortedDictionary<int, List<Service>>> originalnetworkidx = new SortedDictionary<int, SortedDictionary<int, List<Service>>>();
-        SortedDictionary<BouquetKey, List<Service>> bouquetidx = new SortedDictionary<BouquetKey, List<Service>>(new BouquetKeyComparer());
-        SortedDictionary<string, SortedDictionary<FrequencyKey, List<Service>>> satnameidx = new SortedDictionary<string, SortedDictionary<FrequencyKey, List<Service>>>();
-        Dictionary<char, List<Service>> alphabeticidx = new Dictionary<char,List<Service>>();
-        List<Service> allalphabeticidx = new List<Service>();
-
         private void BuildIdx()
         {
             // clear all 
@@ -695,6 +720,8 @@ namespace dvbseserviceview
             BuildAllAlphabetic(this.servicelistfiltered, this.allalphabeticidx);
             //bouquetidx
             BuildBouquetIdx(this.servicelistfiltered, this.bouquetidx);
+            //service name ny onid/tsid/sid
+            BuildServiceNameIdx(this.servicelist, this.serviceidx);
         }
 
         private void BuildProviderIdx(List<Service> s,SortedDictionary<string, List<Service>> idx)
@@ -848,6 +875,21 @@ namespace dvbseserviceview
                 idx.Add(service);
             }
             idx.Sort(CompareServiceByName);
+        }
+
+        private void BuildServiceNameIdx(List<Service> servicelist, SortedDictionary<ServiceKey, string> idx)
+        {
+            foreach(Service s in servicelist)
+            {
+                ServiceKey key = new ServiceKey();
+                key.onid = s.Onid;
+                key.tsid = s.Tsid;
+                key.sid = s.Sid;
+                if (!idx.Keys.Contains(key))
+                {
+                    idx.Add(key, s.Name);
+                }
+            }
         }
 
         private void UpdateTreeView()
@@ -1293,9 +1335,6 @@ namespace dvbseserviceview
             }
         }
 
-        List<Event> eventlist = new System.Collections.Generic.List<Event>();
-        List<Event> activeeventlist = null;
-
         private void LoadEITFile(string file)
         {
             //this.listViewEIT.Clear();
@@ -1317,8 +1356,9 @@ namespace dvbseserviceview
                 }
                 BuildEventIdx();
                 CreateEITTree();
+                UpdateEITServiceNames();
                 this.activeeventlist = this.eventlist;
-                this.listViewEIT.VirtualListSize = this.activeeventlist.Count();
+                this.treeViewEIT.SelectedNode = this.eitroot;
             }
         }
 
@@ -1379,25 +1419,6 @@ namespace dvbseserviceview
             e.Item = i;
         }
 
-        struct ServiceKey
-        {
-            public int onid;
-            public int tsid;
-            public int sid;
-        }
-
-        class ServiceKeyComparer : Comparer<ServiceKey>
-        {
-            public override int Compare(ServiceKey k1, ServiceKey k2)
-            {
-                if (k1.onid != k2.onid) return k1.onid.CompareTo(k2.onid);
-                else if (k1.tsid != k2.tsid) return k1.tsid.CompareTo(k2.tsid);
-                else return k1.sid.CompareTo(k2.sid);
-            }
-        }
-
-        private SortedDictionary<ServiceKey, List<Event>> eventidx = new SortedDictionary<ServiceKey, List<Event>>(new ServiceKeyComparer());
-
         private void BuildEventIdx()
         {
             this.eventidx.Clear();
@@ -1417,24 +1438,17 @@ namespace dvbseserviceview
             }
         }
 
-        struct EitTreeNode
-        {
-            public TreeNode root;
-        }
-
-
-        EitTreeNode eittreenode = new EitTreeNode();
 
         private void CreateEITTree()
         {
-            this.eittreenode.root = this.treeViewEIT.Nodes.Add("All");
-            this.eittreenode.root.Tag = this.eventlist;
+            this.eitroot = this.treeViewEIT.Nodes.Add("All");
+            this.eitroot.Tag = this.eventlist;
             foreach (ServiceKey key in this.eventidx.Keys)
             {
                 string s = string.Format("{0}/{1}/{2}", key.onid, key.tsid, key.sid);
                 TreeNode item = new TreeNode(s);
                 item.Tag = this.eventidx[key];
-                this.eittreenode.root.Nodes.Add(item);
+                this.eitroot.Nodes.Add(item);
             }
         }
 
@@ -1446,6 +1460,22 @@ namespace dvbseserviceview
                 this.listViewEIT.VirtualListSize = 0;
                 this.activeeventlist = (List<Event>) selected.Tag;
                 this.listViewEIT.VirtualListSize = activeeventlist.Count();
+            }
+        }
+
+        private void UpdateEITServiceNames()
+        {
+            foreach(TreeNode node in this.eitroot.Nodes)
+            {
+                ServiceKey key = new ServiceKey();
+                List<Event> v = (List<Event>)node.Tag;
+                key.onid = v[0].Onid;
+                key.tsid = v[0].Tsid;
+                key.sid = v[0].Sid;
+                if(this.serviceidx.Keys.Contains(key))
+                {
+                    node.Text = this.serviceidx[key];
+                }
             }
         }
     }
