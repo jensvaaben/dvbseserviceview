@@ -57,6 +57,8 @@
             this.columnHeaderEventName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.compareServicesFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -90,7 +92,9 @@
             this.openDVBTToolStripMenuItem,
             this.filterToolStripMenuItem,
             this.toolStripSeparator1,
-            this.openEITToolStripMenuItem});
+            this.openEITToolStripMenuItem,
+            this.toolStripSeparator2,
+            this.compareServicesFilesToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -98,40 +102,40 @@
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.openToolStripMenuItem.Text = "Open DVB-S";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // openDVBCToolStripMenuItem
             // 
             this.openDVBCToolStripMenuItem.Name = "openDVBCToolStripMenuItem";
-            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openDVBCToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.openDVBCToolStripMenuItem.Text = "Open DVB-C";
             this.openDVBCToolStripMenuItem.Click += new System.EventHandler(this.openDVBCToolStripMenuItem_Click);
             // 
             // openDVBTToolStripMenuItem
             // 
             this.openDVBTToolStripMenuItem.Name = "openDVBTToolStripMenuItem";
-            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openDVBTToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.openDVBTToolStripMenuItem.Text = "Open DVB-T";
             this.openDVBTToolStripMenuItem.Click += new System.EventHandler(this.openDVBTToolStripMenuItem_Click);
             // 
             // filterToolStripMenuItem
             // 
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.filterToolStripMenuItem.Text = "Filter...";
             this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(138, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(197, 6);
             // 
             // openEITToolStripMenuItem
             // 
             this.openEITToolStripMenuItem.Name = "openEITToolStripMenuItem";
-            this.openEITToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
+            this.openEITToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
             this.openEITToolStripMenuItem.Text = "Open EIT";
             this.openEITToolStripMenuItem.Click += new System.EventHandler(this.openEITToolStripMenuItem_Click);
             // 
@@ -306,6 +310,18 @@
             // 
             this.columnHeaderExtendedEventText.Text = "extendedeventtext";
             // 
+            // compareServicesFilesToolStripMenuItem
+            // 
+            this.compareServicesFilesToolStripMenuItem.Name = "compareServicesFilesToolStripMenuItem";
+            this.compareServicesFilesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.compareServicesFilesToolStripMenuItem.Text = "Compare services files...";
+            this.compareServicesFilesToolStripMenuItem.Click += new System.EventHandler(this.compareServicesFilesToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,6 +382,8 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.SplitContainer splitContainerEIT;
         private System.Windows.Forms.TreeView treeViewEIT;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+        private System.Windows.Forms.ToolStripMenuItem compareServicesFilesToolStripMenuItem;
     }
 }
 

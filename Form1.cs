@@ -1484,5 +1484,11 @@ namespace dvbseserviceview
                 }
             }
         }
+
+        private void compareServicesFilesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ServiceDiffForm dlg = new ServiceDiffForm();
+            DialogResult res = dlg.ShowDialog();
+        }
     }
 }
