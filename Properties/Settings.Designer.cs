@@ -142,5 +142,41 @@ namespace dvbseserviceview.Properties {
                 this["EITColumnHeaderWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string servicedifferentialfile1 {
+            get {
+                return ((string)(this["servicedifferentialfile1"]));
+            }
+            set {
+                this["servicedifferentialfile1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string servicedifferentialfile2 {
+            get {
+                return ((string)(this["servicedifferentialfile2"]));
+            }
+            set {
+                this["servicedifferentialfile2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string servicedifferentialnetworktype {
+            get {
+                return ((string)(this["servicedifferentialnetworktype"]));
+            }
+            set {
+                this["servicedifferentialnetworktype"] = value;
+            }
+        }
     }
 }

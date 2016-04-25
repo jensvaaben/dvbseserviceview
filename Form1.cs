@@ -204,6 +204,9 @@ namespace dvbseserviceview
         private SortedDictionary<ServiceKey, string> serviceidx = new SortedDictionary<ServiceKey, string>(new ServiceKeyComparer());
         private List<Event> eventlist = new System.Collections.Generic.List<Event>();
         private List<Event> activeeventlist = null;
+        private string servicedifferentialfile1 = "";
+        private string servicedifferentialfile2 = "";
+        private ServiceDiffForm.NetworkType servicediffnetworktype = ServiceDiffForm.NetworkType.DVBS;
 
         public Form1()
         {
@@ -262,6 +265,29 @@ namespace dvbseserviceview
 
             // intialize filter condition
             this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
+
+            this.servicedifferentialfile1 = Properties.Settings.Default.servicedifferentialfile1;
+            this.servicedifferentialfile2 = Properties.Settings.Default.servicedifferentialfile2;
+            string v = Properties.Settings.Default.servicedifferentialnetworktype;
+            if (v == "DVBS")
+            {
+                this.servicediffnetworktype = ServiceDiffForm.NetworkType.DVBS;
+            }
+            else if (v == "DVBT")
+            {
+                this.servicediffnetworktype = ServiceDiffForm.NetworkType.DVBT;
+            }
+            else if (v == "DVBC")
+            {
+                this.servicediffnetworktype = ServiceDiffForm.NetworkType.DVBC;
+            }
+            else
+            {
+                this.servicediffnetworktype = ServiceDiffForm.NetworkType.DVBS;
+            }
+
+
+            //this.servicediffnetworktype = Properties.Settings.Default.servicedifferentialnetworktype;
 
         }
 
@@ -1211,6 +1237,21 @@ namespace dvbseserviceview
             Properties.Settings.Default.EITColumnHeaderWidth = str;
 
             Properties.Settings.Default.FilterOptionExclude = this.filterContext.Exclude;
+            Properties.Settings.Default.servicedifferentialfile1 = this.servicedifferentialfile1;
+            Properties.Settings.Default.servicedifferentialfile2 = this.servicedifferentialfile2;
+
+            if (this.servicediffnetworktype == ServiceDiffForm.NetworkType.DVBS)
+            {
+                Properties.Settings.Default.servicedifferentialnetworktype = "DVBS";
+            }
+            else if (this.servicediffnetworktype == ServiceDiffForm.NetworkType.DVBT)
+            {
+                Properties.Settings.Default.servicedifferentialnetworktype = "DVBT";
+            }
+            else if (this.servicediffnetworktype == ServiceDiffForm.NetworkType.DVBC)
+            {
+                Properties.Settings.Default.servicedifferentialnetworktype = "DVBC";
+            }
 
             Properties.Settings.Default.Save();
         }
@@ -1439,7 +1480,6 @@ namespace dvbseserviceview
             }
         }
 
-
         private void CreateEITTree()
         {
             this.eitroot = this.treeViewEIT.Nodes.Add("All");
@@ -1488,7 +1528,16 @@ namespace dvbseserviceview
         private void compareServicesFilesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ServiceDiffForm dlg = new ServiceDiffForm();
+            dlg.File1 = this.servicedifferentialfile1;
+            dlg.File2 = this.servicedifferentialfile2;
+            dlg.networkType = this.servicediffnetworktype;
             DialogResult res = dlg.ShowDialog();
+            if (res == DialogResult.OK)
+            {
+                this.servicedifferentialfile1 = dlg.File1;
+                this.servicedifferentialfile2 = dlg.File1;
+                this.servicediffnetworktype = dlg.networkType;
+            }
         }
     }
 }
