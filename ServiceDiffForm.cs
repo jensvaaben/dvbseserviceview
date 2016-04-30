@@ -15,16 +15,16 @@ namespace dvbseserviceview
         private string file1 = "";
         private string file2 = "";
 
-        public enum NetworkType
-        {
-            DVBS,
-            DVBT,
-            DVBC
-        }
+        //public enum NetworkType
+        //{
+        //    DVBS,
+        //    DVBT,
+        //    DVBC
+        //}
 
-        NetworkType networktype = NetworkType.DVBS;
+        Form1.NetworkType networktype = Form1.NetworkType.DVBS;
 
-        public NetworkType networkType
+        public Form1.NetworkType networkType
         {
             get
             {
@@ -71,15 +71,15 @@ namespace dvbseserviceview
             this.file2 = this.textBoxFile2.Text;
             if((string)this.comboBoxNetworkType.SelectedItem=="DVB-S")
             {
-                this.networktype = NetworkType.DVBS;
+                this.networktype = Form1.NetworkType.DVBS;
             }
             else if ((string)this.comboBoxNetworkType.SelectedItem == "DVB-T")
             {
-                this.networktype = NetworkType.DVBT;
+                this.networktype = Form1.NetworkType.DVBT;
             }
             else if ((string)this.comboBoxNetworkType.SelectedItem == "DVB-C")
             {
-                this.networktype = NetworkType.DVBC;
+                this.networktype = Form1.NetworkType.DVBC;
             }
         }
 
@@ -88,15 +88,15 @@ namespace dvbseserviceview
             this.textBoxFile1.Text = this.file1;
             this.textBoxFile2.Text = this.file2;
 
-            if (this.networktype == NetworkType.DVBS)
+            if (this.networktype == Form1.NetworkType.DVBS)
             {
                 this.comboBoxNetworkType.SelectedItem = "DVB-S";
             }
-            else if (this.networktype == NetworkType.DVBT)
+            else if (this.networktype == Form1.NetworkType.DVBT)
             {
                 this.comboBoxNetworkType.SelectedItem = "DVB-T";
             }
-            else if (this.networktype == NetworkType.DVBC)
+            else if (this.networktype == Form1.NetworkType.DVBC)
             {
                 this.comboBoxNetworkType.SelectedItem = "DVB-C";
             }

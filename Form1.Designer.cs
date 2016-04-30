@@ -36,6 +36,8 @@
             this.filterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.openEITToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.compareServicesFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -57,8 +59,8 @@
             this.columnHeaderEventName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.compareServicesFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.tabPageMuxDiff = new System.Windows.Forms.TabPage();
+            this.treeViewMuxDiff = new System.Windows.Forms.TreeView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -71,6 +73,7 @@
             this.splitContainerEIT.Panel1.SuspendLayout();
             this.splitContainerEIT.Panel2.SuspendLayout();
             this.splitContainerEIT.SuspendLayout();
+            this.tabPageMuxDiff.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -139,6 +142,18 @@
             this.openEITToolStripMenuItem.Text = "Open EIT";
             this.openEITToolStripMenuItem.Click += new System.EventHandler(this.openEITToolStripMenuItem_Click);
             // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
+            // 
+            // compareServicesFilesToolStripMenuItem
+            // 
+            this.compareServicesFilesToolStripMenuItem.Name = "compareServicesFilesToolStripMenuItem";
+            this.compareServicesFilesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
+            this.compareServicesFilesToolStripMenuItem.Text = "Compare services files...";
+            this.compareServicesFilesToolStripMenuItem.Click += new System.EventHandler(this.compareServicesFilesToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -188,6 +203,7 @@
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Controls.Add(this.tabPageMuxDiff);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -310,17 +326,23 @@
             // 
             this.columnHeaderExtendedEventText.Text = "extendedeventtext";
             // 
-            // compareServicesFilesToolStripMenuItem
+            // tabPageMuxDiff
             // 
-            this.compareServicesFilesToolStripMenuItem.Name = "compareServicesFilesToolStripMenuItem";
-            this.compareServicesFilesToolStripMenuItem.Size = new System.Drawing.Size(200, 22);
-            this.compareServicesFilesToolStripMenuItem.Text = "Compare services files...";
-            this.compareServicesFilesToolStripMenuItem.Click += new System.EventHandler(this.compareServicesFilesToolStripMenuItem_Click);
+            this.tabPageMuxDiff.Controls.Add(this.treeViewMuxDiff);
+            this.tabPageMuxDiff.Location = new System.Drawing.Point(4, 22);
+            this.tabPageMuxDiff.Name = "tabPageMuxDiff";
+            this.tabPageMuxDiff.Size = new System.Drawing.Size(774, 599);
+            this.tabPageMuxDiff.TabIndex = 2;
+            this.tabPageMuxDiff.Text = "MUX Diff";
+            this.tabPageMuxDiff.UseVisualStyleBackColor = true;
             // 
-            // toolStripSeparator2
+            // treeViewMuxDiff
             // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(197, 6);
+            this.treeViewMuxDiff.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewMuxDiff.Location = new System.Drawing.Point(0, 0);
+            this.treeViewMuxDiff.Name = "treeViewMuxDiff";
+            this.treeViewMuxDiff.Size = new System.Drawing.Size(774, 599);
+            this.treeViewMuxDiff.TabIndex = 0;
             // 
             // Form1
             // 
@@ -346,6 +368,7 @@
             this.splitContainerEIT.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEIT)).EndInit();
             this.splitContainerEIT.ResumeLayout(false);
+            this.tabPageMuxDiff.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -384,6 +407,8 @@
         private System.Windows.Forms.TreeView treeViewEIT;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripMenuItem compareServicesFilesToolStripMenuItem;
+        private System.Windows.Forms.TabPage tabPageMuxDiff;
+        private System.Windows.Forms.TreeView treeViewMuxDiff;
     }
 }
 
