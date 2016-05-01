@@ -187,22 +187,23 @@
             this.splitContainer1.SplitterDistance = 254;
             this.splitContainer1.TabIndex = 1;
             // 
-            // treeView1
+            // treeViewService
             // 
             this.treeViewService.Dock = System.Windows.Forms.DockStyle.Fill;
             this.treeViewService.Location = new System.Drawing.Point(0, 0);
-            this.treeViewService.Name = "treeView1";
+            this.treeViewService.Name = "treeViewService";
             this.treeViewService.Size = new System.Drawing.Size(254, 593);
             this.treeViewService.TabIndex = 0;
             this.treeViewService.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewService_AfterSelect);
             // 
-            // listView1
+            // listViewService
             // 
             this.listViewService.Dock = System.Windows.Forms.DockStyle.Fill;
             this.listViewService.FullRowSelect = true;
             this.listViewService.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.listViewService.Location = new System.Drawing.Point(0, 0);
-            this.listViewService.Name = "listView1";
+            this.listViewService.MultiSelect = false;
+            this.listViewService.Name = "listViewService";
             this.listViewService.Size = new System.Drawing.Size(510, 593);
             this.listViewService.TabIndex = 0;
             this.listViewService.UseCompatibleStateImageBehavior = false;
@@ -283,6 +284,7 @@
             this.columnHeaderEventText,
             this.columnHeaderExtendedEventText});
             this.listViewEIT.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewEIT.FullRowSelect = true;
             this.listViewEIT.Location = new System.Drawing.Point(0, 0);
             this.listViewEIT.Name = "listViewEIT";
             this.listViewEIT.Size = new System.Drawing.Size(461, 599);
@@ -393,6 +395,7 @@
             // listViewServiceDiff
             // 
             this.listViewServiceDiff.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewServiceDiff.FullRowSelect = true;
             this.listViewServiceDiff.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.listViewServiceDiff.Location = new System.Drawing.Point(0, 0);
             this.listViewServiceDiff.Name = "listViewServiceDiff";

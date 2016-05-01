@@ -397,6 +397,7 @@ namespace dvbseserviceview
             imageListSmall.Images.Add(Properties.Resources.audioser);
             imageListSmall.Images.Add(Properties.Resources.dataserv);
             this.listViewService.SmallImageList = imageListSmall;
+            this.listViewServiceDiff.SmallImageList = imageListSmall;
 
             LoadFilterXML();
 
@@ -478,6 +479,7 @@ namespace dvbseserviceview
                 Properties.Settings.Default.ServiceFileDVBS = dlg.FileName;
                 Properties.Settings.Default.Save();
                 LoadServiceFile(dlg.FileName,NetworkType.DVBS);
+                this.tabControl1.SelectedIndex = 0;
             }
         }
 
@@ -876,6 +878,7 @@ namespace dvbseserviceview
                 Properties.Settings.Default.ServiceFileDVBC = dlg.FileName;
                 Properties.Settings.Default.Save();
                 LoadServiceFile(dlg.FileName, NetworkType.DVBC);
+                this.tabControl1.SelectedIndex = 0;
             }
         }
 
@@ -890,6 +893,7 @@ namespace dvbseserviceview
                 Properties.Settings.Default.ServiceFileDVBT = dlg.FileName;
                 Properties.Settings.Default.Save();
                 LoadServiceFile(dlg.FileName, NetworkType.DVBT);
+                this.tabControl1.SelectedIndex = 0;
             }
         }
 
@@ -1549,6 +1553,7 @@ namespace dvbseserviceview
                 Properties.Settings.Default.EITFile = dlg.FileName;
                 Properties.Settings.Default.Save();
                 LoadEITFile(dlg.FileName);
+                this.tabControl1.SelectedIndex = 1;
             }
         }
 
@@ -1728,6 +1733,7 @@ namespace dvbseserviceview
             // update UI
             UpdateMuxDiffUi();
             UpdateServiceDiffUi();
+            this.tabControl1.SelectedIndex = 2;
         }
 
         private void LoadDiffFile(string file, ref SortedSet<MuxKey> muxlist, ref SortedDictionary<ServiceDiffKey, Service> servicelist, NetworkType networktype)
@@ -2002,8 +2008,13 @@ namespace dvbseserviceview
 
         private bool IsServiceEqual(Service s1, Service s2)
         {
-            return s1.Name == s1.Name && s1.Provider == s2.Provider && s1.VideoPidListString == s2.VideoPidListString;
+            return s1.Name == s1.Name && s1.Provider == s2.Provider && s1.VideoPidListString == s2.VideoPidListString && s1.AudioPidListString == s2.AudioPidListString &&
+                s1.BouquetListString == s2.BouquetListString && s1.CaSystemIdListString == s2.CaSystemIdListString && s1.FeatureList == s2.FeatureList &&
+                s1.FreeCaMode == s2.FreeCaMode && s1.Lcn == s2.Lcn && s1.Pcr == s2.Pcr && s1.Pmt == s2.Pmt && s1.Type == s2.Type && s1.Onid == s2.Onid;
+
         }
+
+        delegate void UpdateServiceDiffListView();
 
         struct DiffTreeContext
         {
@@ -2016,7 +2027,7 @@ namespace dvbseserviceview
 
             this.treeViewServiceDiff.Nodes.Clear();
             this.listViewServiceDiff.VirtualListSize = 0;
-            this.listViewServiceDiff.Clear();
+            this.listViewServiceDiff.Columns.Clear();
             DiffTreeContext difftreecontext;
 
             AddDvbColoumns(this.listViewServiceDiff, this.servicediffnetworktype);
@@ -2036,8 +2047,6 @@ namespace dvbseserviceview
 
             treeViewServiceDiff.SelectedNode = only1;
         }
-
-        delegate void UpdateServiceDiffListView();
 
         void UpdateServiceDiffListViewOnly1()
         {
@@ -2099,6 +2108,7 @@ namespace dvbseserviceview
         {
             Service s = this.servicedifflist[e.ItemIndex];
             ListViewItem i = new ListViewItem();
+            i.ImageIndex = GetServiceTypeImage(s.Type);
             i.Text = Convert.ToString(s.No);
 
             i.SubItems.Add(s.Name);
