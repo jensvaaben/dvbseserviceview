@@ -236,6 +236,114 @@ namespace dvbseserviceview
             }
         }
 
+
+        class ServiceDiffKey
+        {
+            private string position = "";
+            private Int64 frequency = -1;
+            private string polarity = "";
+            private int sid = -1;
+            private int tsid = -1;
+            private int nid = -1;
+
+            public string Position
+            {
+                get
+                {
+                    return this.position;
+                }
+                set
+                {
+                    this.position = value;
+                }
+            }
+            public string Polarity
+            {
+                get
+                {
+                    return this.polarity;
+                }
+                set
+                {
+                    this.polarity = value;
+                }
+            }
+            public Int64 Frequency
+            {
+                get
+                {
+                    return this.frequency;
+                }
+                set
+                {
+                    this.frequency = value;
+                }
+            }
+            public int Sid
+            {
+                get
+                {
+                    return this.sid;
+                }
+                set
+                {
+                    this.sid = value;
+                }
+            }
+            public int Tsid
+            {
+                get
+                {
+                    return this.tsid;
+                }
+                set
+                {
+                    this.tsid = value;
+                }
+            }
+            public int Nid
+            {
+                get
+                {
+                    return this.nid;
+                }
+                set
+                {
+                    this.nid = value;
+                }
+            }
+        }
+
+        class ServiceDvbSComparer : Comparer<ServiceDiffKey>
+        {
+            public override int Compare(ServiceDiffKey x, ServiceDiffKey y)
+            {
+                if (x.Position != y.Position) return x.Position.CompareTo(y.Position);
+                else if (x.Frequency != y.Frequency) return x.Frequency.CompareTo(y.Frequency);
+                else if (x.Polarity != y.Polarity) return x.Polarity.CompareTo(y.Polarity);
+                else if (x.Nid != y.Nid) return x.Nid.CompareTo(y.Nid);
+                else if (x.Tsid != y.Tsid) return x.Tsid.CompareTo(y.Tsid);
+                else return x.Sid.CompareTo(y.Sid);
+            }
+        }
+
+        class ServiceDvbCTComparer : Comparer<ServiceDiffKey>
+        {
+            public override int Compare(ServiceDiffKey x, ServiceDiffKey y)
+            {
+                if (x.Frequency != y.Frequency) return x.Frequency.CompareTo(y.Frequency);
+                else if (x.Nid != y.Nid) return x.Nid.CompareTo(y.Nid);
+                else if (x.Tsid != y.Tsid) return x.Tsid.CompareTo(y.Tsid);
+                else return x.Sid.CompareTo(y.Sid);
+            }
+        }
+
+        struct ChanngedService
+        {
+            public Service s1;
+            public Service s2;
+        }
+
         private FilterContext filterContext = new FilterContext();
         private SortedDictionary<ServiceKey, List<Event>> eventidx = new SortedDictionary<ServiceKey, List<Event>>(new ServiceKeyComparer());
         private TreeNode eitroot = new TreeNode();
@@ -267,11 +375,18 @@ namespace dvbseserviceview
         private string servicedifferentialfile1 = "";
         private string servicedifferentialfile2 = "";
         private NetworkType servicediffnetworktype = NetworkType.DVBS;
-        private SortedSet<MuxKey> servicediffmux1 = null;
-        private SortedSet<MuxKey> servicediffmux2 = null;
-        private SortedSet<MuxKey> onlylist1 = null;
-        private SortedSet<MuxKey> onlylist2 = null;
-        private SortedSet<MuxKey> bothlists = null;
+        private SortedSet<MuxKey> muxdiff1 = null;
+        private SortedSet<MuxKey> muxdiff2 = null;
+        private SortedSet<MuxKey> muxonlylist1 = null;
+        private SortedSet<MuxKey> muxonlylist2 = null;
+        private SortedSet<MuxKey> muxbothlists = null;
+        private SortedDictionary<ServiceDiffKey, Service> servicediff1 = null;
+        private SortedDictionary<ServiceDiffKey, Service> servicediff2 = null;
+        private SortedDictionary<ServiceDiffKey, Service> serviceonlylist1 = null;
+        private SortedDictionary<ServiceDiffKey, Service> serviceonlylist2 = null;
+        private SortedDictionary<ServiceDiffKey, Service> servicediffunchanged = null;
+        private SortedDictionary<ServiceDiffKey, ChanngedService> servicediffchanged = null;
+        private List<Service> servicedifflist = null;
 
         public Form1()
         {
@@ -281,7 +396,7 @@ namespace dvbseserviceview
             imageListSmall.Images.Add(Properties.Resources.video);
             imageListSmall.Images.Add(Properties.Resources.audioser);
             imageListSmall.Images.Add(Properties.Resources.dataserv);
-            this.listView1.SmallImageList = imageListSmall;
+            this.listViewService.SmallImageList = imageListSmall;
 
             LoadFilterXML();
 
@@ -369,33 +484,33 @@ namespace dvbseserviceview
         private void LoadServiceFile(string file, NetworkType networktype)
         {
             // save column state
-            if (this.listView1.Columns.Count > 0)
+            if (this.listViewService.Columns.Count > 0)
             {
                 if (oldnetworktype == NetworkType.DVBS)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbscolumn[n] = this.listView1.Columns[n].Width;
+                        dvbscolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
                 else if (oldnetworktype == NetworkType.DVBT)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbtcolumn[n] = this.listView1.Columns[n].Width;
+                        dvbtcolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
                 else if (oldnetworktype == NetworkType.DVBC)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbccolumn[n] = this.listView1.Columns[n].Width;
+                        dvbccolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
             }
 
-            this.treeView1.Nodes.Clear();
-            this.listView1.Clear();
+            this.treeViewService.Nodes.Clear();
+            this.listViewService.Clear();
             this.servicelist.Clear();
 
             using (System.IO.Stream f = new FileStream(file, FileMode.Open))
@@ -414,12 +529,12 @@ namespace dvbseserviceview
                     servicelist.Add(s);
                 }
                 this.filterContext.ApplyFilter(this.servicelist, this.servicelistfiltered);
-                AddDvbColoumns(networktype);
+                AddDvbColoumns(this.listViewService, networktype);
                 CreateTree();
                 BuildIdx();
                 UpdateTreeView();
                 UpdateEITServiceNames();
-                this.treeView1.SelectedNode = this.root;
+                this.treeViewService.SelectedNode = this.root;
             }
         }
 
@@ -543,7 +658,7 @@ namespace dvbseserviceview
             this.alphabetic = null;
             TreeViewContext context = null;
 
-            this.root = this.treeView1.Nodes.Add("DVB Services");
+            this.root = this.treeViewService.Nodes.Add("DVB Services");
             context = new TreeViewContext();
             context.NodeType = TreeViewNodeType.ServicesRoot;
             this.root.Tag = context;
@@ -613,63 +728,62 @@ namespace dvbseserviceview
 
         }
 
-        private void AddDvbColoumns(NetworkType networktype)
+        private void AddDvbColoumns(ListView listview, NetworkType networktype)
         {
             if (networktype == NetworkType.DVBS)
             {
-                this.listView1.Columns.Add("No.", 30, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Name", 100, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Provider", 100, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Position", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
+                listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("Position", 100, HorizontalAlignment.Left);
             }
             else //DVB-T or DVB-C
             {
-                this.listView1.Columns.Add("No.", 30, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Name", 100, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Provider", 100, HorizontalAlignment.Left);
-                this.listView1.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
+                listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
+                listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
             }
 
-            this.listView1.Columns.Add("Network", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("SID", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("TSID", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("NID", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("ONID", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("Video", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("Audio", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("PMT", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("PCR", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("free_CA_mode", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("CA_system_ID", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("lcn", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("bouquet", 100, HorizontalAlignment.Left);
-            this.listView1.Columns.Add("features", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("Network", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("SID", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("TSID", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("NID", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("ONID", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("Video", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("Audio", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("PMT", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("PCR", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("Type", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("free_CA_mode", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("CA_system_ID", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("lcn", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("bouquet", 100, HorizontalAlignment.Left);
+            listview.Columns.Add("features", 100, HorizontalAlignment.Left);
 
             //adjust column width
             if (networktype == NetworkType.DVBS)
             {
                 for (int n = 0; n < this.dvbscolumn.Count(); n++)
                 {
-                    this.listView1.Columns[n].Width = this.dvbscolumn[n];
+                    listview.Columns[n].Width = this.dvbscolumn[n];
                 }
             }
             else if (networktype == NetworkType.DVBT)
             {
                 for (int n = 0; n < this.dvbtcolumn.Count(); n++)
                 {
-                    this.listView1.Columns[n].Width = this.dvbtcolumn[n];
+                    listview.Columns[n].Width = this.dvbtcolumn[n];
                 }
             }
             else if (networktype == NetworkType.DVBC)
             {
                 for (int n = 0; n < this.dvbccolumn.Count(); n++)
                 {
-                    this.listView1.Columns[n].Width = this.dvbccolumn[n];
+                    listview.Columns[n].Width = this.dvbccolumn[n];
                 }
             }
-
         }
 
         private void UpdateList(List<Service> l, NetworkType networktype)
@@ -699,7 +813,7 @@ namespace dvbseserviceview
             }
 
             AddDvbValues(service, i);
-            this.listView1.Items.Add(i);
+            this.listViewService.Items.Add(i);
         }
 
         private void AddDvbValues(Service service, ListViewItem i)
@@ -1107,12 +1221,12 @@ namespace dvbseserviceview
             }
         }
 
-        private void treeView1_AfterSelect(object sender, TreeViewEventArgs e)
+        private void treeViewService_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeNode selected = this.treeView1.SelectedNode;
+            TreeNode selected = this.treeViewService.SelectedNode;
             if (selected != null)
             {
-                this.listView1.Items.Clear();
+                this.listViewService.Items.Clear();
                 TreeViewContext context = (TreeViewContext)selected.Tag;
                 if (context.NodeType == TreeViewNodeType.ServicesRoot)
                 {
@@ -1232,27 +1346,27 @@ namespace dvbseserviceview
             SaveFilterXML();
 
             //save column width state
-            if (this.listView1.Columns.Count > 0)
+            if (this.listViewService.Columns.Count > 0)
             {
                 if (networktype == NetworkType.DVBS)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbscolumn[n] = this.listView1.Columns[n].Width;
+                        dvbscolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
                 else if (networktype == NetworkType.DVBT)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbtcolumn[n] = this.listView1.Columns[n].Width;
+                        dvbtcolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
                 else if (networktype == NetworkType.DVBC)
                 {
-                    for (int n = 0; n < this.listView1.Columns.Count; n++)
+                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
                     {
-                        dvbccolumn[n] = this.listView1.Columns[n].Width;
+                        dvbccolumn[n] = this.listViewService.Columns[n].Width;
                     }
                 }
             }
@@ -1328,12 +1442,12 @@ namespace dvbseserviceview
 
         private void RefreshView()
         {
-            this.treeView1.Nodes.Clear();
-            this.listView1.Items.Clear();
+            this.treeViewService.Nodes.Clear();
+            this.listViewService.Items.Clear();
             CreateTree();
             BuildIdx();
             UpdateTreeView();
-            this.treeView1.SelectedNode = this.root;
+            this.treeViewService.SelectedNode = this.root;
         }
 
         private void LoadFilterXML()
@@ -1606,29 +1720,33 @@ namespace dvbseserviceview
         {
             // clear any items in UI
             // load and index files
-            LoadDiffFile(this.servicedifferentialfile1, ref this.servicediffmux1, this.servicediffnetworktype);
-            LoadDiffFile(this.servicedifferentialfile2, ref this.servicediffmux2, this.servicediffnetworktype);
+            LoadDiffFile(this.servicedifferentialfile1, ref this.muxdiff1, ref this.servicediff1, this.servicediffnetworktype);
+            LoadDiffFile(this.servicedifferentialfile2, ref this.muxdiff2, ref this.servicediff2, this.servicediffnetworktype);
             // create comparison reports
-            CompareDiff(this.servicediffmux1, this.servicediffmux2, ref this.onlylist1, ref this.onlylist2, ref this.bothlists, this.servicediffnetworktype);
+            CompareMuxDiff(this.muxdiff1, this.muxdiff2, ref this.muxonlylist1, ref this.muxonlylist2, ref this.muxbothlists, this.servicediffnetworktype);
+            CompareServiceDiff(this.servicediff1, this.servicediff2, ref this.serviceonlylist1, ref this.serviceonlylist2, ref this.servicediffchanged, ref this.servicediffunchanged, this.servicediffnetworktype);
             // update UI
-            UpdateDiffUI();
+            UpdateMuxDiffUi();
+            UpdateServiceDiffUi();
         }
 
-        private void LoadDiffFile(string file, ref SortedSet<MuxKey> muxlist, NetworkType networktype)
+        private void LoadDiffFile(string file, ref SortedSet<MuxKey> muxlist, ref SortedDictionary<ServiceDiffKey, Service> servicelist, NetworkType networktype)
         {
             if(networktype==NetworkType.DVBS)
             {
                 muxlist = new SortedSet<MuxKey>(new MuxSKeyComparer());
-                LoadDiffFileS(file, muxlist);
+                servicelist = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbSComparer());
+                LoadDiffFileS(file, muxlist, servicelist);
             }
             else if (networktype == NetworkType.DVBT || networktype == NetworkType.DVBC)
             {
                 muxlist = new SortedSet<MuxKey>(new MuxTCKeyComparer());
-                LoadDiffFileCT(file, muxlist);
+                servicelist = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbSComparer());
+                LoadDiffFileCT(file, muxlist, servicelist);
             }
         }
 
-        private void LoadDiffFileS(string file, SortedSet<MuxKey> muxlist)
+        private void LoadDiffFileS(string file, SortedSet<MuxKey> muxlist, SortedDictionary<ServiceDiffKey, Service> servicelist)
         {
             using (System.IO.Stream f = new FileStream(file, FileMode.Open))
             {
@@ -1649,11 +1767,24 @@ namespace dvbseserviceview
                     {
                         muxlist.Add(muxkey);
                     }
+
+                    ServiceDiffKey key = new ServiceDiffKey();
+                    key.Position = s.Position;
+                    key.Frequency = s.DvbSTuner.Frequency;
+                    key.Polarity = s.DvbSTuner.Polarity;
+                    key.Nid = s.Nid;
+                    key.Tsid = s.Tsid;
+                    key.Sid = s.Sid;
+
+                    if (!servicelist.Keys.Contains(key))
+                    {
+                        servicelist.Add(key,s);
+                    }
                 }
             }
         }
 
-        private void LoadDiffFileCT(string file, SortedSet<MuxKey> muxlist)
+        private void LoadDiffFileCT(string file, SortedSet<MuxKey> muxlist, SortedDictionary<ServiceDiffKey, Service> servicelist)
         {
             using (System.IO.Stream f = new FileStream(file, FileMode.Open))
             {
@@ -1663,7 +1794,7 @@ namespace dvbseserviceview
                 foreach (var service in doc["services"].ChildNodes)
                 {
                     Service s = new Service();
-                    ExtractService((XmlNode)service, s, NetworkType.DVBT);
+                    ExtractService((XmlNode)service, s, NetworkType.DVBS);
 
                     MuxKey muxkey = new MuxKey();
                     muxkey.Frequency = s.DvbCTTuner.Frequency;
@@ -1672,23 +1803,36 @@ namespace dvbseserviceview
                     {
                         muxlist.Add(muxkey);
                     }
+
+                    ServiceDiffKey key = new ServiceDiffKey();
+                    key.Position = s.Position;
+                    key.Frequency = s.DvbSTuner.Frequency;
+                    key.Polarity = s.DvbSTuner.Polarity;
+                    key.Nid = s.Nid;
+                    key.Tsid = s.Tsid;
+                    key.Sid = s.Sid;
+
+                    if (!servicelist.Keys.Contains(key))
+                    {
+                        servicelist.Add(key, s);
+                    }
                 }
             }
         }
 
-        private void CompareDiff(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common, NetworkType networktype)
+        private void CompareMuxDiff(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common, NetworkType networktype)
         {
             if (networktype == NetworkType.DVBS)
             {
-                CompareDiffS(list1, list2, ref onlylist1, ref onlylist2, ref common);
+                CompareMuxDiffS(list1, list2, ref onlylist1, ref onlylist2, ref common);
             }
             else if (networktype == NetworkType.DVBT || networktype == NetworkType.DVBT)
             {
-                CompareDiffCT(list1, list2, ref onlylist1, ref onlylist2, ref common);
+                CompareMuxDiffCT(list1, list2, ref onlylist1, ref onlylist2, ref common);
             }
         }
 
-        private void CompareDiffS(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common)
+        private void CompareMuxDiffS(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common)
         {
             onlylist1 = new SortedSet<MuxKey>(new MuxSKeyComparer());
             onlylist2 = new SortedSet<MuxKey>(new MuxSKeyComparer());
@@ -1714,7 +1858,7 @@ namespace dvbseserviceview
             }
         }
 
-        private void CompareDiffCT(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common)
+        private void CompareMuxDiffCT(SortedSet<MuxKey> list1, SortedSet<MuxKey> list2, ref SortedSet<MuxKey> onlylist1, ref SortedSet<MuxKey> onlylist2, ref SortedSet<MuxKey> common)
         {
             onlylist1 = new SortedSet<MuxKey>(new MuxTCKeyComparer());
             onlylist2 = new SortedSet<MuxKey>(new MuxTCKeyComparer());
@@ -1740,7 +1884,7 @@ namespace dvbseserviceview
             }
         }
 
-        private void UpdateDiffUI()
+        private void UpdateMuxDiffUi()
         {
             if (this.servicediffnetworktype == NetworkType.DVBS)
             {
@@ -1759,17 +1903,17 @@ namespace dvbseserviceview
             TreeNode only2 = this.treeViewMuxDiff.Nodes.Add(string.Format("Only in {0}", this.servicedifferentialfile2));
             TreeNode common = this.treeViewMuxDiff.Nodes.Add("common");
 
-            foreach (MuxKey k in this.onlylist1)
+            foreach (MuxKey k in this.muxonlylist1)
             {
                 only1.Nodes.Add(string.Format("'{0}' {1}{2}", k.Position, k.Frequency, k.Polarity));
             }
 
-            foreach (MuxKey k in this.onlylist2)
+            foreach (MuxKey k in this.muxonlylist2)
             {
                 only2.Nodes.Add(string.Format("'{0}' {1}{2}", k.Position, k.Frequency, k.Polarity));
             }
 
-            foreach (MuxKey k in this.bothlists)
+            foreach (MuxKey k in this.muxbothlists)
             {
                 common.Nodes.Add(string.Format("'{0}' {1}{2}", k.Position, k.Frequency, k.Polarity));
             }
@@ -1782,20 +1926,197 @@ namespace dvbseserviceview
             TreeNode only2 = this.treeViewMuxDiff.Nodes.Add(string.Format("Only in {0}", this.servicedifferentialfile2));
             TreeNode common = this.treeViewMuxDiff.Nodes.Add("common");
 
-            foreach (MuxKey k in this.onlylist1)
+            foreach (MuxKey k in this.muxonlylist1)
             {
                 only1.Nodes.Add(string.Format("{0}", k.Frequency));
             }
 
-            foreach (MuxKey k in this.onlylist2)
+            foreach (MuxKey k in this.muxonlylist2)
             {
                 only2.Nodes.Add(string.Format("{0}", k.Frequency));
             }
 
-            foreach (MuxKey k in this.bothlists)
+            foreach (MuxKey k in this.muxbothlists)
             {
                 common.Nodes.Add(string.Format("{0}", k.Frequency));
             }
+        }
+
+        private void CompareServiceDiff(SortedDictionary<ServiceDiffKey, Service> list1, SortedDictionary<ServiceDiffKey, Service> list2, ref SortedDictionary<ServiceDiffKey, Service> only1, ref SortedDictionary<ServiceDiffKey, Service> only2, ref SortedDictionary<ServiceDiffKey, ChanngedService> changed, ref SortedDictionary<ServiceDiffKey, Service> unchanged, NetworkType networktype)
+        {
+            if(networktype == NetworkType.DVBS)
+            {
+                CompareServiceDiffS(list1, list2, ref only1, ref only2, ref changed, ref unchanged);
+            }
+            else if (networktype == NetworkType.DVBT || networktype == NetworkType.DVBC)
+            {
+                CompareServiceDiffCT(list1, list2, ref only1, ref only2, ref changed, ref unchanged);
+            }
+        }
+
+        private void CompareServiceDiffS(SortedDictionary<ServiceDiffKey, Service> list1, SortedDictionary<ServiceDiffKey, Service> list2, ref SortedDictionary<ServiceDiffKey, Service> only1, ref SortedDictionary<ServiceDiffKey, Service> only2, ref SortedDictionary<ServiceDiffKey, ChanngedService> changed, ref SortedDictionary<ServiceDiffKey, Service> unchanged)
+        {
+            only1 = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbSComparer());
+            only2 = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbSComparer());
+            changed = new SortedDictionary<ServiceDiffKey, ChanngedService>(new ServiceDvbSComparer());
+            unchanged = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbSComparer());
+
+            foreach(ServiceDiffKey key in list1.Keys)
+            {
+                if(!list2.Keys.Contains(key))
+                {
+                    only1.Add(key,list1[key]);
+                }
+                else
+                {
+                    if (IsServiceEqual(list1[key],list2[key]))
+                    {
+                        unchanged.Add(key, list1[key]);
+                    }
+                    else
+                    {
+                        ChanngedService channgedservice;
+                        channgedservice.s1 = list1[key];
+                        channgedservice.s2 = list2[key];
+                        changed.Add(key, channgedservice);
+                    }
+                }
+            }
+
+            foreach (ServiceDiffKey key in list2.Keys)
+            {
+                if (!list1.Keys.Contains(key))
+                {
+                    only2.Add(key, list2[key]);
+                }
+            }
+        }
+
+        private void CompareServiceDiffCT(SortedDictionary<ServiceDiffKey, Service> list1, SortedDictionary<ServiceDiffKey, Service> list2, ref SortedDictionary<ServiceDiffKey, Service> only1, ref SortedDictionary<ServiceDiffKey, Service> only2, ref SortedDictionary<ServiceDiffKey, ChanngedService> changed, ref SortedDictionary<ServiceDiffKey, Service> unchanged)
+        {
+            only1 = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbCTComparer());
+            only2 = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbCTComparer());
+            changed = new SortedDictionary<ServiceDiffKey, ChanngedService>(new ServiceDvbCTComparer());
+            unchanged = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbCTComparer());
+        }
+
+        private bool IsServiceEqual(Service s1, Service s2)
+        {
+            return s1.Name == s1.Name && s1.Provider == s2.Provider && s1.VideoPidListString == s2.VideoPidListString;
+        }
+
+        struct DiffTreeContext
+        {
+            public UpdateServiceDiffListView update;
+        }
+
+        private void UpdateServiceDiffUi()
+        {
+            this.servicedifflist = new List<Service>();
+
+            this.treeViewServiceDiff.Nodes.Clear();
+            this.listViewServiceDiff.VirtualListSize = 0;
+            this.listViewServiceDiff.Clear();
+            DiffTreeContext difftreecontext;
+
+            AddDvbColoumns(this.listViewServiceDiff, this.servicediffnetworktype);
+
+            TreeNode only1 = this.treeViewServiceDiff.Nodes.Add(string.Format("Only in {0}", this.servicedifferentialfile1));
+            difftreecontext.update = UpdateServiceDiffListViewOnly1;
+            only1.Tag = difftreecontext;
+            TreeNode only2 = this.treeViewServiceDiff.Nodes.Add(string.Format("Only in {0}", this.servicedifferentialfile2));
+            difftreecontext.update = UpdateServiceDiffListViewOnly2;
+            only2.Tag = difftreecontext;
+            TreeNode changed = this.treeViewServiceDiff.Nodes.Add("changed");
+            difftreecontext.update = UpdateServiceDiffListViewChanged;
+            changed.Tag = difftreecontext;
+            TreeNode unchanged = this.treeViewServiceDiff.Nodes.Add("unchanged");
+            difftreecontext.update = UpdateServiceDiffListViewUnchanged;
+            unchanged.Tag = difftreecontext;
+
+            treeViewServiceDiff.SelectedNode = only1;
+        }
+
+        delegate void UpdateServiceDiffListView();
+
+        void UpdateServiceDiffListViewOnly1()
+        {
+            this.servicedifflist.Clear();
+            int idx = 0;
+            foreach (ServiceDiffKey k in this.serviceonlylist1.Keys)
+            {
+                this.serviceonlylist1[k].No = idx++;
+                this.servicedifflist.Add(this.serviceonlylist1[k]);
+            }
+            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+        }
+
+        void UpdateServiceDiffListViewOnly2()
+        {
+            this.servicedifflist.Clear();
+            int idx = 0;
+            foreach (ServiceDiffKey k in this.serviceonlylist2.Keys)
+            {
+                this.serviceonlylist2[k].No = idx++;
+                this.servicedifflist.Add(this.serviceonlylist2[k]);
+            }
+            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+        }
+
+        void UpdateServiceDiffListViewChanged()
+        {
+            this.servicedifflist.Clear();
+            int idx = 0;
+            foreach (ServiceDiffKey k in this.servicediffchanged.Keys)
+            {
+                this.servicediffchanged[k].s1.No = idx++;
+                this.servicedifflist.Add(this.servicediffchanged[k].s1);
+                this.servicediffchanged[k].s2.No = idx++;
+                this.servicedifflist.Add(this.servicediffchanged[k].s2);
+            }
+            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+        }
+
+        void UpdateServiceDiffListViewUnchanged()
+        {
+            this.servicedifflist.Clear();
+            int idx = 0;
+            foreach (ServiceDiffKey k in this.servicediffunchanged.Keys)
+            {
+                this.servicediffunchanged[k].No = idx++;
+                this.servicedifflist.Add(this.servicediffunchanged[k]);
+            }
+            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+        }
+
+        private void treeViewServiceDiff_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            DiffTreeContext ctx = (DiffTreeContext) e.Node.Tag;
+            ctx.update();
+        }
+
+        private void listViewServiceDiff_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            Service s = this.servicedifflist[e.ItemIndex];
+            ListViewItem i = new ListViewItem();
+            i.Text = Convert.ToString(s.No);
+
+            i.SubItems.Add(s.Name);
+            i.SubItems.Add(s.Provider);
+
+            if (this.servicediffnetworktype==NetworkType.DVBS)
+            {
+                i.SubItems.Add(GetTunerString(s.DvbSTuner));
+                i.SubItems.Add(s.DvbSTuner.Position);
+            }
+            else //DVB-T or DVB-C
+            {
+                i.SubItems.Add(GetTunerString(s.DvbCTTuner));
+            }
+
+            AddDvbValues(s, i);
+
+            e.Item = i;
         }
     }
 }

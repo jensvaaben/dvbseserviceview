@@ -40,8 +40,8 @@
             this.compareServicesFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.treeView1 = new System.Windows.Forms.TreeView();
-            this.listView1 = new System.Windows.Forms.ListView();
+            this.treeViewService = new System.Windows.Forms.TreeView();
+            this.listViewService = new System.Windows.Forms.ListView();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -61,6 +61,10 @@
             this.columnHeaderExtendedEventText = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.tabPageMuxDiff = new System.Windows.Forms.TabPage();
             this.treeViewMuxDiff = new System.Windows.Forms.TreeView();
+            this.tabPageServiceDIff = new System.Windows.Forms.TabPage();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.treeViewServiceDiff = new System.Windows.Forms.TreeView();
+            this.listViewServiceDiff = new System.Windows.Forms.ListView();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -74,6 +78,11 @@
             this.splitContainerEIT.Panel2.SuspendLayout();
             this.splitContainerEIT.SuspendLayout();
             this.tabPageMuxDiff.SuspendLayout();
+            this.tabPageServiceDIff.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -169,41 +178,42 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel1.Controls.Add(this.treeViewService);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.listView1);
+            this.splitContainer1.Panel2.Controls.Add(this.listViewService);
             this.splitContainer1.Size = new System.Drawing.Size(768, 593);
             this.splitContainer1.SplitterDistance = 254;
             this.splitContainer1.TabIndex = 1;
             // 
             // treeView1
             // 
-            this.treeView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.treeView1.Location = new System.Drawing.Point(0, 0);
-            this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(254, 593);
-            this.treeView1.TabIndex = 0;
-            this.treeView1.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterSelect);
+            this.treeViewService.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewService.Location = new System.Drawing.Point(0, 0);
+            this.treeViewService.Name = "treeView1";
+            this.treeViewService.Size = new System.Drawing.Size(254, 593);
+            this.treeViewService.TabIndex = 0;
+            this.treeViewService.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewService_AfterSelect);
             // 
             // listView1
             // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.FullRowSelect = true;
-            this.listView1.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(510, 593);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.Details;
+            this.listViewService.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewService.FullRowSelect = true;
+            this.listViewService.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.listViewService.Location = new System.Drawing.Point(0, 0);
+            this.listViewService.Name = "listView1";
+            this.listViewService.Size = new System.Drawing.Size(510, 593);
+            this.listViewService.TabIndex = 0;
+            this.listViewService.UseCompatibleStateImageBehavior = false;
+            this.listViewService.View = System.Windows.Forms.View.Details;
             // 
             // tabControl1
             // 
             this.tabControl1.Controls.Add(this.tabPage1);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPageMuxDiff);
+            this.tabControl1.Controls.Add(this.tabPageServiceDIff);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
@@ -344,6 +354,55 @@
             this.treeViewMuxDiff.Size = new System.Drawing.Size(774, 599);
             this.treeViewMuxDiff.TabIndex = 0;
             // 
+            // tabPageServiceDIff
+            // 
+            this.tabPageServiceDIff.Controls.Add(this.splitContainer2);
+            this.tabPageServiceDIff.Location = new System.Drawing.Point(4, 22);
+            this.tabPageServiceDIff.Name = "tabPageServiceDIff";
+            this.tabPageServiceDIff.Size = new System.Drawing.Size(774, 599);
+            this.tabPageServiceDIff.TabIndex = 3;
+            this.tabPageServiceDIff.Text = "Service Diff";
+            this.tabPageServiceDIff.UseVisualStyleBackColor = true;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.treeViewServiceDiff);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.listViewServiceDiff);
+            this.splitContainer2.Size = new System.Drawing.Size(774, 599);
+            this.splitContainer2.SplitterDistance = 258;
+            this.splitContainer2.TabIndex = 0;
+            // 
+            // treeViewServiceDiff
+            // 
+            this.treeViewServiceDiff.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.treeViewServiceDiff.Location = new System.Drawing.Point(0, 0);
+            this.treeViewServiceDiff.Name = "treeViewServiceDiff";
+            this.treeViewServiceDiff.Size = new System.Drawing.Size(258, 599);
+            this.treeViewServiceDiff.TabIndex = 0;
+            this.treeViewServiceDiff.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewServiceDiff_AfterSelect);
+            // 
+            // listViewServiceDiff
+            // 
+            this.listViewServiceDiff.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listViewServiceDiff.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
+            this.listViewServiceDiff.Location = new System.Drawing.Point(0, 0);
+            this.listViewServiceDiff.Name = "listViewServiceDiff";
+            this.listViewServiceDiff.Size = new System.Drawing.Size(512, 599);
+            this.listViewServiceDiff.TabIndex = 0;
+            this.listViewServiceDiff.UseCompatibleStateImageBehavior = false;
+            this.listViewServiceDiff.View = System.Windows.Forms.View.Details;
+            this.listViewServiceDiff.VirtualMode = true;
+            this.listViewServiceDiff.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewServiceDiff_RetrieveVirtualItem);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -369,6 +428,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainerEIT)).EndInit();
             this.splitContainerEIT.ResumeLayout(false);
             this.tabPageMuxDiff.ResumeLayout(false);
+            this.tabPageServiceDIff.ResumeLayout(false);
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -380,8 +444,8 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
         private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.TreeView treeView1;
-        private System.Windows.Forms.ListView listView1;
+        private System.Windows.Forms.TreeView treeViewService;
+        private System.Windows.Forms.ListView listViewService;
         private System.Windows.Forms.ToolStripMenuItem openDVBCToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openDVBTToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
@@ -409,6 +473,10 @@
         private System.Windows.Forms.ToolStripMenuItem compareServicesFilesToolStripMenuItem;
         private System.Windows.Forms.TabPage tabPageMuxDiff;
         private System.Windows.Forms.TreeView treeViewMuxDiff;
+        private System.Windows.Forms.TabPage tabPageServiceDIff;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TreeView treeViewServiceDiff;
+        private System.Windows.Forms.ListView listViewServiceDiff;
     }
 }
 
