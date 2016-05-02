@@ -2128,5 +2128,11 @@ namespace dvbseserviceview
 
             e.Item = i;
         }
+
+        private void comparisonPreferencesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ComparisonPreferencesForm dlg = new ComparisonPreferencesForm();
+            DialogResult r = dlg.ShowDialog();
+        }
     }
 }
