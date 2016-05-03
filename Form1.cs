@@ -387,6 +387,7 @@ namespace dvbseserviceview
         private SortedDictionary<ServiceDiffKey, Service> servicediffunchanged = null;
         private SortedDictionary<ServiceDiffKey, ChanngedService> servicediffchanged = null;
         private List<Service> servicedifflist = null;
+        private ServiceDiffSettings DiffSettings = new ServiceDiffSettings();
 
         public Form1()
         {
@@ -443,6 +444,8 @@ namespace dvbseserviceview
                     this.listViewEIT.Columns[n].Width = this.eitcolumn[n];
                 }
             }
+
+            this.DiffSettings.Load();
 
             // intialize filter condition
             this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
@@ -1432,6 +1435,8 @@ namespace dvbseserviceview
                 Properties.Settings.Default.servicedifferentialnetworktype = "DVBC";
             }
 
+            this.DiffSettings.Save();
+
             Properties.Settings.Default.Save();
         }
 
@@ -2132,6 +2137,7 @@ namespace dvbseserviceview
         private void comparisonPreferencesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ComparisonPreferencesForm dlg = new ComparisonPreferencesForm();
+            dlg.DiffSettings = this.DiffSettings;
             DialogResult r = dlg.ShowDialog();
         }
     }

@@ -178,5 +178,185 @@ namespace dvbseserviceview.Properties {
                 this["servicedifferentialnetworktype"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpName {
+            get {
+                return ((bool)(this["cmpName"]));
+            }
+            set {
+                this["cmpName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpProvider {
+            get {
+                return ((bool)(this["cmpProvider"]));
+            }
+            set {
+                this["cmpProvider"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpNetwork {
+            get {
+                return ((bool)(this["cmpNetwork"]));
+            }
+            set {
+                this["cmpNetwork"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpOnid {
+            get {
+                return ((bool)(this["cmpOnid"]));
+            }
+            set {
+                this["cmpOnid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpVideo {
+            get {
+                return ((bool)(this["cmpVideo"]));
+            }
+            set {
+                this["cmpVideo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpAudio {
+            get {
+                return ((bool)(this["cmpAudio"]));
+            }
+            set {
+                this["cmpAudio"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpPmt {
+            get {
+                return ((bool)(this["cmpPmt"]));
+            }
+            set {
+                this["cmpPmt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpPcr {
+            get {
+                return ((bool)(this["cmpPcr"]));
+            }
+            set {
+                this["cmpPcr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpType {
+            get {
+                return ((bool)(this["cmpType"]));
+            }
+            set {
+                this["cmpType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpFreeCaMode {
+            get {
+                return ((bool)(this["cmpFreeCaMode"]));
+            }
+            set {
+                this["cmpFreeCaMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpCaSystemId {
+            get {
+                return ((bool)(this["cmpCaSystemId"]));
+            }
+            set {
+                this["cmpCaSystemId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpLcn {
+            get {
+                return ((bool)(this["cmpLcn"]));
+            }
+            set {
+                this["cmpLcn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpBouquet {
+            get {
+                return ((bool)(this["cmpBouquet"]));
+            }
+            set {
+                this["cmpBouquet"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool cmpFeatures {
+            get {
+                return ((bool)(this["cmpFeatures"]));
+            }
+            set {
+                this["cmpFeatures"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool cmpOnlyCompareCommonMux {
+            get {
+                return ((bool)(this["cmpOnlyCompareCommonMux"]));
+            }
+            set {
+                this["cmpOnlyCompareCommonMux"] = value;
+            }
+        }
     }
 }

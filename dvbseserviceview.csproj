@@ -95,8 +95,12 @@
     <Compile Include="ServiceDiffForm.Designer.cs">
       <DependentUpon>ServiceDiffForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="ServiceDiffSettings.cs" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComparisonPreferencesForm.resx">
+      <DependentUpon>ComparisonPreferencesForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FilterForm.resx">
       <DependentUpon>FilterForm.cs</DependentUpon>
