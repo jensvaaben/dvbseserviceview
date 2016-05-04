@@ -1732,13 +1732,18 @@ namespace dvbseserviceview
             // load and index files
             LoadDiffFile(this.servicedifferentialfile1, ref this.muxdiff1, ref this.servicediff1, this.servicediffnetworktype);
             LoadDiffFile(this.servicedifferentialfile2, ref this.muxdiff2, ref this.servicediff2, this.servicediffnetworktype);
+            CreateDiffReports();
+            this.tabControl1.SelectedIndex = 2;
+        }
+
+        private void CreateDiffReports()
+        {
             // create comparison reports
             CompareMuxDiff(this.muxdiff1, this.muxdiff2, ref this.muxonlylist1, ref this.muxonlylist2, ref this.muxbothlists, this.servicediffnetworktype);
             CompareServiceDiff(this.servicediff1, this.servicediff2, ref this.serviceonlylist1, ref this.serviceonlylist2, ref this.servicediffchanged, ref this.servicediffunchanged, this.servicediffnetworktype);
             // update UI
             UpdateMuxDiffUi();
             UpdateServiceDiffUi();
-            this.tabControl1.SelectedIndex = 2;
         }
 
         private void LoadDiffFile(string file, ref SortedSet<MuxKey> muxlist, ref SortedDictionary<ServiceDiffKey, Service> servicelist, NetworkType networktype)
@@ -2163,6 +2168,8 @@ namespace dvbseserviceview
             ComparisonPreferencesForm dlg = new ComparisonPreferencesForm();
             dlg.DiffSettings = this.DiffSettings;
             DialogResult r = dlg.ShowDialog();
+            if (r == DialogResult.OK)
+                CreateDiffReports();
         }
     }
 }
