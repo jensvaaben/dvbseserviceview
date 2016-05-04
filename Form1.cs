@@ -2013,10 +2013,34 @@ namespace dvbseserviceview
 
         private bool IsServiceEqual(Service s1, Service s2)
         {
-            return s1.Name == s1.Name && s1.Provider == s2.Provider && s1.VideoPidListString == s2.VideoPidListString && s1.AudioPidListString == s2.AudioPidListString &&
-                s1.BouquetListString == s2.BouquetListString && s1.CaSystemIdListString == s2.CaSystemIdListString && s1.FeatureList == s2.FeatureList &&
-                s1.FreeCaMode == s2.FreeCaMode && s1.Lcn == s2.Lcn && s1.Pcr == s2.Pcr && s1.Pmt == s2.Pmt && s1.Type == s2.Type && s1.Onid == s2.Onid;
-
+            if (this.DiffSettings.Name && s1.Name != s2.Name)
+                return false;
+            else if (this.DiffSettings.Provider && s1.Provider != s2.Provider)
+                return false;
+            else if (this.DiffSettings.Video && s1.VideoPidListString != s2.VideoPidListString)
+                return false;
+            else if (this.DiffSettings.Audio && s1.AudioPidListString != s2.AudioPidListString)
+                return false;
+            else if (this.DiffSettings.Bouquet && s1.BouquetListString != s2.BouquetListString)
+                return false;
+            else if (this.DiffSettings.CaSystemId && s1.CaSystemIdListString != s2.CaSystemIdListString)
+                return false;
+            else if (this.DiffSettings.Features && s1.FeatureList != s2.FeatureList)
+                return false;
+            else if (this.DiffSettings.FreeCaMode && s1.FreeCaMode != s2.FreeCaMode)
+                return false;
+            else if (this.DiffSettings.Lcn && s1.Lcn != s2.Lcn)
+                return false;
+            else if (this.DiffSettings.Pcr && s1.Pcr != s2.Pcr)
+                return false;
+            else if (this.DiffSettings.Pmt && s1.Pmt != s2.Pmt)
+                return false;
+            else if (this.DiffSettings.SericeType && s1.Type != s2.Type)
+                return false;
+            else if (this.DiffSettings.Onid && s1.Onid != s2.Onid)
+                return false;
+            else
+                return true;
         }
 
         delegate void UpdateServiceDiffListView();
