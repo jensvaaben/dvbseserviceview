@@ -1739,11 +1739,14 @@ namespace dvbseserviceview
         private void CreateDiffReports()
         {
             // create comparison reports
-            CompareMuxDiff(this.muxdiff1, this.muxdiff2, ref this.muxonlylist1, ref this.muxonlylist2, ref this.muxbothlists, this.servicediffnetworktype);
-            CompareServiceDiff(this.servicediff1, this.servicediff2, ref this.serviceonlylist1, ref this.serviceonlylist2, ref this.servicediffchanged, ref this.servicediffunchanged, this.servicediffnetworktype);
-            // update UI
-            UpdateMuxDiffUi();
-            UpdateServiceDiffUi();
+            if(this.muxdiff1!=null && this.muxdiff2!=null)
+            {
+                CompareMuxDiff(this.muxdiff1, this.muxdiff2, ref this.muxonlylist1, ref this.muxonlylist2, ref this.muxbothlists, this.servicediffnetworktype);
+                CompareServiceDiff(this.servicediff1, this.servicediff2, ref this.serviceonlylist1, ref this.serviceonlylist2, ref this.servicediffchanged, ref this.servicediffunchanged, this.servicediffnetworktype);
+                // update UI
+                UpdateMuxDiffUi();
+                UpdateServiceDiffUi();
+            }
         }
 
         private void LoadDiffFile(string file, ref SortedSet<MuxKey> muxlist, ref SortedDictionary<ServiceDiffKey, Service> servicelist, NetworkType networktype)
@@ -1979,7 +1982,19 @@ namespace dvbseserviceview
 
             foreach(ServiceDiffKey key in list1.Keys)
             {
-                if(!list2.Keys.Contains(key))
+                if(this.DiffSettings.OnlyCompareCommonMux)
+                {
+                    //Check if service is in a common MUX and if not skip it.
+                    MuxKey muxkey = new MuxKey();
+                    muxkey.Frequency = list1[key].DvbSTuner.Frequency;
+                    muxkey.Position = list1[key].Position;
+                    muxkey.Polarity = list1[key].DvbSTuner.Polarity;
+
+                    if (!this.muxbothlists.Contains(muxkey))
+                        continue;
+                }
+
+                if (!list2.Keys.Contains(key))
                 {
                     only1.Add(key,list1[key]);
                 }
@@ -2001,6 +2016,18 @@ namespace dvbseserviceview
 
             foreach (ServiceDiffKey key in list2.Keys)
             {
+                if (this.DiffSettings.OnlyCompareCommonMux)
+                {
+                    //Check if service is in a common MUX and if not skip it.
+                    MuxKey muxkey = new MuxKey();
+                    muxkey.Frequency = list2[key].DvbSTuner.Frequency;
+                    muxkey.Position = list2[key].Position;
+                    muxkey.Polarity = list2[key].DvbSTuner.Polarity;
+
+                    if (!this.muxbothlists.Contains(muxkey))
+                        continue;
+                }
+
                 if (!list1.Keys.Contains(key))
                 {
                     only2.Add(key, list2[key]);
@@ -2014,6 +2041,56 @@ namespace dvbseserviceview
             only2 = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbCTComparer());
             changed = new SortedDictionary<ServiceDiffKey, ChanngedService>(new ServiceDvbCTComparer());
             unchanged = new SortedDictionary<ServiceDiffKey, Service>(new ServiceDvbCTComparer());
+
+            foreach (ServiceDiffKey key in list1.Keys)
+            {
+                if (this.DiffSettings.OnlyCompareCommonMux)
+                {
+                    //Check if service is in a common MUX and if not skip it.
+                    MuxKey muxkey = new MuxKey();
+                    muxkey.Frequency = list1[key].DvbCTTuner.Frequency;
+
+                    if (!this.muxbothlists.Contains(muxkey))
+                        continue;
+                }
+
+                if (!list2.Keys.Contains(key))
+                {
+                    only1.Add(key, list1[key]);
+                }
+                else
+                {
+                    if (IsServiceEqual(list1[key], list2[key]))
+                    {
+                        unchanged.Add(key, list1[key]);
+                    }
+                    else
+                    {
+                        ChanngedService channgedservice;
+                        channgedservice.s1 = list1[key];
+                        channgedservice.s2 = list2[key];
+                        changed.Add(key, channgedservice);
+                    }
+                }
+            }
+
+            foreach (ServiceDiffKey key in list2.Keys)
+            {
+                if (this.DiffSettings.OnlyCompareCommonMux)
+                {
+                    //Check if service is in a common MUX and if not skip it.
+                    MuxKey muxkey = new MuxKey();
+                    muxkey.Frequency = list2[key].DvbCTTuner.Frequency;
+
+                    if (!this.muxbothlists.Contains(muxkey))
+                        continue;
+                }
+
+                if (!list1.Keys.Contains(key))
+                {
+                    only2.Add(key, list2[key]);
+                }
+            }
         }
 
         private bool IsServiceEqual(Service s1, Service s2)
