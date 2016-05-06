@@ -1813,7 +1813,7 @@ namespace dvbseserviceview
                 foreach (var service in doc["services"].ChildNodes)
                 {
                     Service s = new Service();
-                    ExtractService((XmlNode)service, s, NetworkType.DVBS);
+                    ExtractService((XmlNode)service, s, NetworkType.DVBT);
 
                     MuxKey muxkey = new MuxKey();
                     muxkey.Frequency = s.DvbCTTuner.Frequency;
