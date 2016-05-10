@@ -66,6 +66,12 @@
     <Compile Include="AboutBox1.Designer.cs">
       <DependentUpon>AboutBox1.cs</DependentUpon>
     </Compile>
+    <Compile Include="ColumnSelectorForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColumnSelectorForm.Designer.cs">
+      <DependentUpon>ColumnSelectorForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="ComparisonPreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -98,6 +104,9 @@
     <Compile Include="ServiceDiffSettings.cs" />
     <EmbeddedResource Include="AboutBox1.resx">
       <DependentUpon>AboutBox1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColumnSelectorForm.resx">
+      <DependentUpon>ColumnSelectorForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ComparisonPreferencesForm.resx">
       <DependentUpon>ComparisonPreferencesForm.cs</DependentUpon>

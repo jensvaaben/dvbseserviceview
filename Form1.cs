@@ -2248,5 +2248,11 @@ namespace dvbseserviceview
             if (r == DialogResult.OK)
                 CreateDiffReports();
         }
+
+        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            ColumnSelectorForm dlg = new ColumnSelectorForm();
+            DialogResult r = dlg.ShowDialog();
+        }
     }
 }
