@@ -388,7 +388,8 @@ namespace dvbseserviceview
         private SortedDictionary<ServiceDiffKey, ChanngedService> servicediffchanged = null;
         private List<Service> servicedifflist = null;
         private ServiceDiffSettings DiffSettings = new ServiceDiffSettings();
-
+        private ColumnSettings columnSettings = new ColumnSettings();
+ 
         public Form1()
         {
             InitializeComponent();
@@ -446,6 +447,7 @@ namespace dvbseserviceview
             }
 
             this.DiffSettings.Load();
+            this.columnSettings.Load();
 
             // intialize filter condition
             this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
@@ -1436,6 +1438,7 @@ namespace dvbseserviceview
             }
 
             this.DiffSettings.Save();
+            this.columnSettings.Save();
 
             Properties.Settings.Default.Save();
         }
@@ -2252,7 +2255,12 @@ namespace dvbseserviceview
         private void toolStripMenuItem1_Click(object sender, EventArgs e)
         {
             ColumnSelectorForm dlg = new ColumnSelectorForm();
+            dlg.Settings = this.columnSettings;
             DialogResult r = dlg.ShowDialog();
+            if(r == DialogResult.OK)
+            {
+                // redraw columns
+            }
         }
     }
 }
