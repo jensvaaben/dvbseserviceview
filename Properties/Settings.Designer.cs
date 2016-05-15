@@ -358,5 +358,245 @@ namespace dvbseserviceview.Properties {
                 this["cmpOnlyCompareCommonMux"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnNumber {
+            get {
+                return ((bool)(this["columnNumber"]));
+            }
+            set {
+                this["columnNumber"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnName {
+            get {
+                return ((bool)(this["columnName"]));
+            }
+            set {
+                this["columnName"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnProvider {
+            get {
+                return ((bool)(this["columnProvider"]));
+            }
+            set {
+                this["columnProvider"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnFrequency {
+            get {
+                return ((bool)(this["columnFrequency"]));
+            }
+            set {
+                this["columnFrequency"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnPosition {
+            get {
+                return ((bool)(this["columnPosition"]));
+            }
+            set {
+                this["columnPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnNetwork {
+            get {
+                return ((bool)(this["columnNetwork"]));
+            }
+            set {
+                this["columnNetwork"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnSid {
+            get {
+                return ((bool)(this["columnSid"]));
+            }
+            set {
+                this["columnSid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnTsid {
+            get {
+                return ((bool)(this["columnTsid"]));
+            }
+            set {
+                this["columnTsid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnNid {
+            get {
+                return ((bool)(this["columnNid"]));
+            }
+            set {
+                this["columnNid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnOnid {
+            get {
+                return ((bool)(this["columnOnid"]));
+            }
+            set {
+                this["columnOnid"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnVideo {
+            get {
+                return ((bool)(this["columnVideo"]));
+            }
+            set {
+                this["columnVideo"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnAudio {
+            get {
+                return ((bool)(this["columnAudio"]));
+            }
+            set {
+                this["columnAudio"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnPmt {
+            get {
+                return ((bool)(this["columnPmt"]));
+            }
+            set {
+                this["columnPmt"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnPcr {
+            get {
+                return ((bool)(this["columnPcr"]));
+            }
+            set {
+                this["columnPcr"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnType {
+            get {
+                return ((bool)(this["columnType"]));
+            }
+            set {
+                this["columnType"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnFreeCaMode {
+            get {
+                return ((bool)(this["columnFreeCaMode"]));
+            }
+            set {
+                this["columnFreeCaMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnCaSystemId {
+            get {
+                return ((bool)(this["columnCaSystemId"]));
+            }
+            set {
+                this["columnCaSystemId"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnLcn {
+            get {
+                return ((bool)(this["columnLcn"]));
+            }
+            set {
+                this["columnLcn"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnBouquet {
+            get {
+                return ((bool)(this["columnBouquet"]));
+            }
+            set {
+                this["columnBouquet"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnFeatures {
+            get {
+                return ((bool)(this["columnFeatures"]));
+            }
+            set {
+                this["columnFeatures"] = value;
+            }
+        }
     }
 }

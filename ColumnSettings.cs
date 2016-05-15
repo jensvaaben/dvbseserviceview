@@ -251,11 +251,49 @@ namespace dvbseserviceview
         }
         public void Load()
         {
-
+            this.number = Properties.Settings.Default.columnNumber;
+            this.name = Properties.Settings.Default.columnName;
+            this.provider = Properties.Settings.Default.columnProvider;
+            this.frequency = Properties.Settings.Default.columnFrequency;
+            this.position = Properties.Settings.Default.columnPosition;
+            this.network = Properties.Settings.Default.columnNetwork;
+            this.sid = Properties.Settings.Default.columnSid;
+            this.tsid = Properties.Settings.Default.columnTsid;
+            this.nid = Properties.Settings.Default.columnNid;
+            this.onid = Properties.Settings.Default.columnOnid;
+            this.video = Properties.Settings.Default.columnVideo;
+            this.audio = Properties.Settings.Default.columnAudio;
+            this.pmt = Properties.Settings.Default.columnPmt;
+            this.pcr = Properties.Settings.Default.columnPcr;
+            this.type = Properties.Settings.Default.columnType;
+            this.free_ca_mode = Properties.Settings.Default.columnFreeCaMode;
+            this.ca_system_id = Properties.Settings.Default.columnCaSystemId;
+            this.lcn = Properties.Settings.Default.columnLcn;
+            this.bouquet = Properties.Settings.Default.columnBouquet;
+            this.features = Properties.Settings.Default.columnFeatures;
         }
         public void Save()
         {
-
+            Properties.Settings.Default.columnNumber = this.number;
+            Properties.Settings.Default.columnName = this.name;
+            Properties.Settings.Default.columnProvider = this.provider;
+            Properties.Settings.Default.columnFrequency = this.frequency;
+            Properties.Settings.Default.columnPosition = this.position;
+            Properties.Settings.Default.columnNetwork = this.network;
+            Properties.Settings.Default.columnSid = this.sid;
+            Properties.Settings.Default.columnTsid = this.tsid;
+            Properties.Settings.Default.columnNid = this.nid;
+            Properties.Settings.Default.columnOnid = this.onid;
+            Properties.Settings.Default.columnVideo = this.video;
+            Properties.Settings.Default.columnAudio = this.audio;
+            Properties.Settings.Default.columnPmt = this.pmt;
+            Properties.Settings.Default.columnPcr = this.pcr;
+            Properties.Settings.Default.columnType = this.type;
+            Properties.Settings.Default.columnFreeCaMode = this.free_ca_mode;
+            Properties.Settings.Default.columnCaSystemId = this.ca_system_id;
+            Properties.Settings.Default.columnLcn = this.lcn;
+            Properties.Settings.Default.columnBouquet = this.bouquet;
+            Properties.Settings.Default.columnFeatures = this.features;
         }
     }
 }
