@@ -536,7 +536,7 @@ namespace dvbseserviceview
                     servicelist.Add(s);
                 }
                 this.filterContext.ApplyFilter(this.servicelist, this.servicelistfiltered);
-                AddDvbColoumns(this.listViewService, networktype);
+                AddDvbColoumns(this.listViewService, networktype, this.columnSettings);
                 CreateTree();
                 BuildIdx();
                 UpdateTreeView();
@@ -735,62 +735,56 @@ namespace dvbseserviceview
 
         }
 
-        private void AddDvbColoumns(ListView listview, NetworkType networktype)
+        private void AddDvbColoumns(ListView listview, NetworkType networktype, ColumnSettings columnsettings)
         {
+            listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
+            if (columnsettings.Name) listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
+            if (columnsettings.Provider) listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
+            if (columnsettings.Frequency) listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
+
             if (networktype == NetworkType.DVBS)
             {
-                listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
-                listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
-                listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
-                listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
-                listview.Columns.Add("Position", 100, HorizontalAlignment.Left);
-            }
-            else //DVB-T or DVB-C
-            {
-                listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
-                listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
-                listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
-                listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
+                if (columnsettings.Position) listview.Columns.Add("Position", 100, HorizontalAlignment.Left);
             }
 
-            listview.Columns.Add("Network", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("SID", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("TSID", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("NID", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("ONID", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("Video", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("Audio", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("PMT", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("PCR", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("free_CA_mode", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("CA_system_ID", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("lcn", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("bouquet", 100, HorizontalAlignment.Left);
-            listview.Columns.Add("features", 100, HorizontalAlignment.Left);
+            if (columnsettings.Network) listview.Columns.Add("Network", 100, HorizontalAlignment.Left);
+            if (columnsettings.Sid) listview.Columns.Add("SID", 100, HorizontalAlignment.Left);
+            if (columnsettings.Tsid) listview.Columns.Add("TSID", 100, HorizontalAlignment.Left);
+            if (columnsettings.Nid) listview.Columns.Add("NID", 100, HorizontalAlignment.Left);
+            if (columnsettings.Onid) listview.Columns.Add("ONID", 100, HorizontalAlignment.Left);
+            if (columnsettings.Video) listview.Columns.Add("Video", 100, HorizontalAlignment.Left);
+            if (columnsettings.Audio) listview.Columns.Add("Audio", 100, HorizontalAlignment.Left);
+            if (columnsettings.Pmt) listview.Columns.Add("PMT", 100, HorizontalAlignment.Left);
+            if (columnsettings.Pcr) listview.Columns.Add("PCR", 100, HorizontalAlignment.Left);
+            if (columnsettings.Type) listview.Columns.Add("Type", 100, HorizontalAlignment.Left);
+            if (columnsettings.FreeCaMode) listview.Columns.Add("free_CA_mode", 100, HorizontalAlignment.Left);
+            if (columnsettings.CaSystemId) listview.Columns.Add("CA_system_ID", 100, HorizontalAlignment.Left);
+            if (columnsettings.Lcn) listview.Columns.Add("lcn", 100, HorizontalAlignment.Left);
+            if (columnsettings.Bouquet) listview.Columns.Add("bouquet", 100, HorizontalAlignment.Left);
+            if (columnsettings.Features) listview.Columns.Add("features", 100, HorizontalAlignment.Left);
 
             //adjust column width
-            if (networktype == NetworkType.DVBS)
-            {
-                for (int n = 0; n < this.dvbscolumn.Count(); n++)
-                {
-                    listview.Columns[n].Width = this.dvbscolumn[n];
-                }
-            }
-            else if (networktype == NetworkType.DVBT)
-            {
-                for (int n = 0; n < this.dvbtcolumn.Count(); n++)
-                {
-                    listview.Columns[n].Width = this.dvbtcolumn[n];
-                }
-            }
-            else if (networktype == NetworkType.DVBC)
-            {
-                for (int n = 0; n < this.dvbccolumn.Count(); n++)
-                {
-                    listview.Columns[n].Width = this.dvbccolumn[n];
-                }
-            }
+            //if (networktype == NetworkType.DVBS)
+            //{
+            //    for (int n = 0; n < this.dvbscolumn.Count(); n++)
+            //    {
+            //        listview.Columns[n].Width = this.dvbscolumn[n];
+            //    }
+            //}
+            //else if (networktype == NetworkType.DVBT)
+            //{
+            //    for (int n = 0; n < this.dvbtcolumn.Count(); n++)
+            //    {
+            //        listview.Columns[n].Width = this.dvbtcolumn[n];
+            //    }
+            //}
+            //else if (networktype == NetworkType.DVBC)
+            //{
+            //    for (int n = 0; n < this.dvbccolumn.Count(); n++)
+            //    {
+            //        listview.Columns[n].Width = this.dvbccolumn[n];
+            //    }
+            //}
         }
 
         private void UpdateList(List<Service> l, NetworkType networktype)
@@ -825,21 +819,21 @@ namespace dvbseserviceview
 
         private void AddDvbValues(Service service, ListViewItem i)
         {
-            i.SubItems.Add(service.NetworkName);
-            i.SubItems.Add(Convert.ToString(service.Sid));
-            i.SubItems.Add(Convert.ToString(service.Tsid));
-            i.SubItems.Add(Convert.ToString(service.Nid));
-            i.SubItems.Add(Convert.ToString(service.Onid));
-            i.SubItems.Add(service.VideoPidListString); //VPID
-            i.SubItems.Add(service.AudioPidListString); //APID
-            i.SubItems.Add(Convert.ToString(service.Pmt));
-            i.SubItems.Add(Convert.ToString(service.Pcr));
-            i.SubItems.Add(Convert.ToString(service.Type));
-            i.SubItems.Add(service.FreeCaMode ? "1" : "0");
-            i.SubItems.Add(service.CaSystemIdListString); //CA_system_ID
-            i.SubItems.Add(service.Lcn!=-1 ? Convert.ToString(service.Lcn) : "n/a");
-            i.SubItems.Add(service.BouquetListString); //bouquet
-            i.SubItems.Add(service.FeatureList); //features
+            if (this.columnSettings.Network) i.SubItems.Add(service.NetworkName);
+            if (this.columnSettings.Sid) i.SubItems.Add(Convert.ToString(service.Sid));
+            if (this.columnSettings.Tsid) i.SubItems.Add(Convert.ToString(service.Tsid));
+            if (this.columnSettings.Nid) i.SubItems.Add(Convert.ToString(service.Nid));
+            if (this.columnSettings.Onid) i.SubItems.Add(Convert.ToString(service.Onid));
+            if (this.columnSettings.Video) i.SubItems.Add(service.VideoPidListString); //VPID
+            if (this.columnSettings.Audio) i.SubItems.Add(service.AudioPidListString); //APID
+            if (this.columnSettings.Pmt) i.SubItems.Add(Convert.ToString(service.Pmt));
+            if (this.columnSettings.Pcr) i.SubItems.Add(Convert.ToString(service.Pcr));
+            if (this.columnSettings.Type) i.SubItems.Add(Convert.ToString(service.Type));
+            if (this.columnSettings.FreeCaMode) i.SubItems.Add(service.FreeCaMode ? "1" : "0");
+            if (this.columnSettings.CaSystemId) i.SubItems.Add(service.CaSystemIdListString); //CA_system_ID
+            if (this.columnSettings.Lcn) i.SubItems.Add(service.Lcn!=-1 ? Convert.ToString(service.Lcn) : "n/a");
+            if (this.columnSettings.Bouquet) i.SubItems.Add(service.BouquetListString); //bouquet
+            if (this.columnSettings.Features) i.SubItems.Add(service.FeatureList); //features
         }
 
         private int GetServiceTypeImage(int type)
@@ -2144,7 +2138,7 @@ namespace dvbseserviceview
             this.listViewServiceDiff.Columns.Clear();
             DiffTreeContext difftreecontext;
 
-            AddDvbColoumns(this.listViewServiceDiff, this.servicediffnetworktype);
+            AddDvbColoumns(this.listViewServiceDiff, this.servicediffnetworktype, this.columnSettings);
 
             TreeNode only1 = this.treeViewServiceDiff.Nodes.Add(string.Format("Only in {0}", this.servicedifferentialfile1));
             difftreecontext.update = UpdateServiceDiffListViewOnly1;
@@ -2225,17 +2219,17 @@ namespace dvbseserviceview
             i.ImageIndex = GetServiceTypeImage(s.Type);
             i.Text = Convert.ToString(s.No);
 
-            i.SubItems.Add(s.Name);
-            i.SubItems.Add(s.Provider);
+            if (this.columnSettings.Name) i.SubItems.Add(s.Name);
+            if (this.columnSettings.Provider) i.SubItems.Add(s.Provider);
 
             if (this.servicediffnetworktype==NetworkType.DVBS)
             {
-                i.SubItems.Add(GetTunerString(s.DvbSTuner));
-                i.SubItems.Add(s.DvbSTuner.Position);
+                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbSTuner));
+                if (this.columnSettings.Position) i.SubItems.Add(s.DvbSTuner.Position);
             }
             else //DVB-T or DVB-C
             {
-                i.SubItems.Add(GetTunerString(s.DvbCTTuner));
+                if (this.columnSettings.Frequency) if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbCTTuner));
             }
 
             AddDvbValues(s, i);
@@ -2260,6 +2254,7 @@ namespace dvbseserviceview
             if(r == DialogResult.OK)
             {
                 // redraw columns
+                UpdateServiceDiffUi();
             }
         }
     }
