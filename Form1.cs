@@ -412,6 +412,7 @@ namespace dvbseserviceview
         private ColumnSettings columnSettings = new ColumnSettings();
         private List<Service> CurrentServiceList = null;
         private ColumnWidthSettings columnWidthSettings = new ColumnWidthSettings();
+        private bool disablecolumnwidthchangeevent = false;
 
         public Form1()
         {
@@ -2297,12 +2298,16 @@ namespace dvbseserviceview
 
         private void listViewService_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
         {
+            if (disablecolumnwidthchangeevent) return;
             ColumnWidthChanged(this.listViewService);
+            UpdateColumnWidthChanged(this.listViewServiceDiff);
         }
 
         private void listViewServiceDiff_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
         {
+            if (disablecolumnwidthchangeevent) return;
             ColumnWidthChanged(this.listViewServiceDiff);
+            UpdateColumnWidthChanged(this.listViewService);
         }
 
         private void ColumnWidthChanged(ListView lv)
@@ -2379,5 +2384,80 @@ namespace dvbseserviceview
             }
         }
 
+        private void UpdateColumnWidthChanged(ListView lv)
+        {
+            disablecolumnwidthchangeevent = true;
+            if (lv.Columns.Count > 0)
+            {
+                for (int n = 0; n < lv.Columns.Count; n++)
+                {
+                    if (lv.Columns[n].Tag == null) return;
+                    switch ((Columns)lv.Columns[n].Tag)
+                    {
+                        case Columns.Number:
+                            lv.Columns[n].Width = this.columnWidthSettings.Number;
+                            break;
+                        case Columns.Name:
+                            lv.Columns[n].Width = this.columnWidthSettings.Name;
+                            break;
+                        case Columns.Provider:
+                            lv.Columns[n].Width = this.columnWidthSettings.Provider;
+                            break;
+                        case Columns.Frequency:
+                            lv.Columns[n].Width = this.columnWidthSettings.Frequency;
+                            break;
+                        case Columns.Position:
+                            lv.Columns[n].Width = this.columnWidthSettings.Position;
+                            break;
+                        case Columns.Network:
+                            lv.Columns[n].Width = this.columnWidthSettings.Network;
+                            break;
+                        case Columns.Sid:
+                            lv.Columns[n].Width = this.columnWidthSettings.Sid;
+                            break;
+                        case Columns.Tsid:
+                            lv.Columns[n].Width = this.columnWidthSettings.Tsid;
+                            break;
+                        case Columns.Nid:
+                            lv.Columns[n].Width = this.columnWidthSettings.Nid;
+                            break;
+                        case Columns.Onid:
+                            lv.Columns[n].Width = this.columnWidthSettings.Onid;
+                            break;
+                        case Columns.Video:
+                            lv.Columns[n].Width = this.columnWidthSettings.Video;
+                            break;
+                        case Columns.Pmt:
+                            lv.Columns[n].Width = this.columnWidthSettings.Pmt;
+                            break;
+                        case Columns.Audio:
+                            lv.Columns[n].Width = this.columnWidthSettings.Audio;
+                            break;
+                        case Columns.Pcr:
+                            lv.Columns[n].Width = this.columnWidthSettings.Pcr;
+                            break;
+                        case Columns.Type:
+                            lv.Columns[n].Width = this.columnWidthSettings.Type;
+                            break;
+                        case Columns.FreeCaMode:
+                            lv.Columns[n].Width = this.columnWidthSettings.FreeCaMode;
+                            break;
+                        case Columns.CaSystemId:
+                            lv.Columns[n].Width = this.columnWidthSettings.CaSystemId;
+                            break;
+                        case Columns.Lcn:
+                            lv.Columns[n].Width = this.columnWidthSettings.Lcn;
+                            break;
+                        case Columns.Bouquet:
+                            lv.Columns[n].Width = this.columnWidthSettings.Bouquet;
+                            break;
+                        case Columns.Features:
+                            lv.Columns[n].Width = this.columnWidthSettings.Features;
+                            break;
+                    }
+                }
+            }
+            disablecolumnwidthchangeevent = false;
+        }
     }
 }
