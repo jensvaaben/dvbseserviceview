@@ -39,6 +39,8 @@
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.compareServicesFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.comparisonPreferencesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.ColumnSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.treeViewService = new System.Windows.Forms.TreeView();
@@ -66,8 +68,6 @@
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.treeViewServiceDiff = new System.Windows.Forms.TreeView();
             this.listViewServiceDiff = new System.Windows.Forms.ListView();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.ColumnSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -176,6 +176,18 @@
             this.comparisonPreferencesToolStripMenuItem.Text = "Comparison preferences...";
             this.comparisonPreferencesToolStripMenuItem.Click += new System.EventHandler(this.comparisonPreferencesToolStripMenuItem_Click);
             // 
+            // toolStripSeparator3
+            // 
+            this.toolStripSeparator3.Name = "toolStripSeparator3";
+            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
+            // 
+            // ColumnSelectToolStripMenuItem
+            // 
+            this.ColumnSelectToolStripMenuItem.Name = "ColumnSelectToolStripMenuItem";
+            this.ColumnSelectToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.ColumnSelectToolStripMenuItem.Text = "Select service columns...";
+            this.ColumnSelectToolStripMenuItem.Click += new System.EventHandler(this.ColumnSelectToolStripMenuItem_Click);
+            // 
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
@@ -221,6 +233,8 @@
             this.listViewService.TabIndex = 0;
             this.listViewService.UseCompatibleStateImageBehavior = false;
             this.listViewService.View = System.Windows.Forms.View.Details;
+            this.listViewService.VirtualMode = true;
+            this.listViewService.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewService_RetrieveVirtualItem);
             // 
             // tabControl1
             // 
@@ -418,18 +432,6 @@
             this.listViewServiceDiff.View = System.Windows.Forms.View.Details;
             this.listViewServiceDiff.VirtualMode = true;
             this.listViewServiceDiff.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewServiceDiff_RetrieveVirtualItem);
-            // 
-            // toolStripSeparator3
-            // 
-            this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(209, 6);
-            // 
-            // toolStripMenuItem1
-            // 
-            this.ColumnSelectToolStripMenuItem.Name = "ColumnSelectToolStripMenuItem";
-            this.ColumnSelectToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
-            this.ColumnSelectToolStripMenuItem.Text = "Select service columns...";
-            this.ColumnSelectToolStripMenuItem.Click += new System.EventHandler(this.ColumnSelectToolStripMenuItem_Click);
             // 
             // Form1
             // 

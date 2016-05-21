@@ -389,7 +389,8 @@ namespace dvbseserviceview
         private List<Service> servicedifflist = null;
         private ServiceDiffSettings DiffSettings = new ServiceDiffSettings();
         private ColumnSettings columnSettings = new ColumnSettings();
- 
+        private List<Service> CurrentServiceList = null;
+
         public Form1()
         {
             InitializeComponent();
@@ -491,30 +492,30 @@ namespace dvbseserviceview
         private void LoadServiceFile(string file, NetworkType networktype)
         {
             // save column state
-            if (this.listViewService.Columns.Count > 0)
-            {
-                if (oldnetworktype == NetworkType.DVBS)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbscolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-                else if (oldnetworktype == NetworkType.DVBT)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbtcolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-                else if (oldnetworktype == NetworkType.DVBC)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbccolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-            }
+            //if (this.listViewService.Columns.Count > 0)
+            //{
+            //    if (oldnetworktype == NetworkType.DVBS)
+            //    {
+            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
+            //        {
+            //            dvbscolumn[n] = this.listViewService.Columns[n].Width;
+            //        }
+            //    }
+            //    else if (oldnetworktype == NetworkType.DVBT)
+            //    {
+            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
+            //        {
+            //            dvbtcolumn[n] = this.listViewService.Columns[n].Width;
+            //        }
+            //    }
+            //    else if (oldnetworktype == NetworkType.DVBC)
+            //    {
+            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
+            //        {
+            //            dvbccolumn[n] = this.listViewService.Columns[n].Width;
+            //        }
+            //    }
+            //}
 
             this.treeViewService.Nodes.Clear();
             this.listViewService.Clear();
@@ -785,36 +786,6 @@ namespace dvbseserviceview
             //        listview.Columns[n].Width = this.dvbccolumn[n];
             //    }
             //}
-        }
-
-        private void UpdateList(List<Service> l, NetworkType networktype)
-        {
-            foreach (var service in l)
-            {
-                AddService(service, networktype);
-            }
-        }
-
-        private void AddService(Service service, NetworkType networktype)
-        {
-            ListViewItem i = new ListViewItem();
-            i.ImageIndex = GetServiceTypeImage(service.Type);
-            i.Text = Convert.ToString(service.No);
-            if (this.columnSettings.Name) i.SubItems.Add(service.Name);
-            if (this.columnSettings.Provider) i.SubItems.Add(service.Provider);
-
-            if (networktype == NetworkType.DVBS)
-            {
-                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(service.DvbSTuner));
-                if (this.columnSettings.Position) i.SubItems.Add(service.DvbSTuner.Position);
-            }
-            else  //DVB-T or DVB-C
-            {
-                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(service.DvbCTTuner));
-            }
-
-            AddDvbValues(service, i);
-            this.listViewService.Items.Add(i);
         }
 
         private void AddDvbValues(Service service, ListViewItem i)
@@ -1226,97 +1197,115 @@ namespace dvbseserviceview
 
         private void treeViewService_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            TreeNode selected = this.treeViewService.SelectedNode;
-            if (selected != null)
-            {
-                this.listViewService.Items.Clear();
-                TreeViewContext context = (TreeViewContext)selected.Tag;
-                if (context.NodeType == TreeViewNodeType.ServicesRoot)
-                {
-                    UpdateList(this.servicelistfiltered, this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.Provider)
-                {
-                    UpdateList(this.provideridx[context.Name], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.NetworkName)
-                {
-                    foreach (var tsitem in this.networknameidx[context.Name].Keys)
-                    {
-                        foreach (var service in this.networknameidx[context.Name][tsitem])
-                        {
-                            AddService(service, this.networktype);
-                        }
-                    }
-                }
-                else if (context.NodeType == TreeViewNodeType.TransportStreamNetworkname)
-                {
-                    UpdateList(this.networknameidx[context.Name][context.TsId], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.Network)
-                {
-                    foreach (var tsitem in this.networkidx[context.Int1].Keys)
-                    {
-                        foreach (var service in this.networkidx[context.Int1][tsitem])
-                        {
-                            AddService(service, this.networktype);
-                        }
-                    }
-                }
-                else if (context.NodeType == TreeViewNodeType.TransportStreamNid)
-                {
-                    UpdateList(this.networkidx[context.Int1][context.TsId], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.OriginalNetworkId)
-                {
-                    foreach (var tsitem in this.originalnetworkidx[context.Int1].Keys)
-                    {
-                        foreach (var service in this.originalnetworkidx[context.Int1][tsitem])
-                        {
-                            AddService(service, this.networktype);
-                        }
-                    }
-                }
-                else if (context.NodeType == TreeViewNodeType.TransportStreamOnid)
-                {
-                    UpdateList(this.originalnetworkidx[context.Int1][context.TsId], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.Bouquet)
-                {
-                    BouquetKey b = new BouquetKey();
-                    b.id = context.Int1;
-                    b.name = context.Name;
-                    UpdateList(this.bouquetidx[b], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.Position)
-                {
-                    foreach (var tsitem in this.satnameidx[context.Name].Keys)
-                    {
-                        foreach (var service in this.satnameidx[context.Name][tsitem])
-                        {
-                            AddService(service, this.networktype);
-                        }
-                    }
-                }
-                else if (context.NodeType == TreeViewNodeType.OneMuxByPosition)
-                {
-                    FrequencyKey key = new FrequencyKey();
-                    key.frequency = context.Int1;
-                    key.polarity = context.String1;
-                    UpdateList(this.satnameidx[context.Name][key], this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.AlphabeticRoot)
-                {
-                    UpdateList(this.allalphabeticidx, this.networktype);
-                }
-                else if (context.NodeType == TreeViewNodeType.Letter)
-                {
-                    if (this.alphabeticidx.Keys.Contains(context.Letter))
-                    {
-                        UpdateList(this.alphabeticidx[context.Letter], this.networktype);
-                    }
-                }
-            }
+            UpdateServiceListFromTreeView();
+            //TreeNode selected = this.treeViewService.SelectedNode;
+            //if (selected != null)
+            //{
+            //    this.listViewService.Items.Clear();
+            //    TreeViewContext context = (TreeViewContext)selected.Tag;
+            //    if (context.NodeType == TreeViewNodeType.ServicesRoot)
+            //    {
+            //        CurrentServiceList = this.servicelistfiltered;
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.Provider)
+            //    {
+            //        CurrentServiceList = this.provideridx[context.Name];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.NetworkName)
+            //    {
+            //        this.CurrentServiceList = new List<Service>();
+            //        foreach (var tsitem in this.networknameidx[context.Name].Keys)
+            //        {
+            //            foreach (var service in this.networknameidx[context.Name][tsitem])
+            //            {
+            //                CurrentServiceList.Add(service);
+            //            }
+            //        }
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.TransportStreamNetworkname)
+            //    {
+            //        CurrentServiceList = this.networknameidx[context.Name][context.TsId];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.Network)
+            //    {
+            //        this.CurrentServiceList = new List<Service>();
+            //        foreach (var tsitem in this.networkidx[context.Int1].Keys)
+            //        {
+            //            foreach (var service in this.networkidx[context.Int1][tsitem])
+            //            {
+            //                CurrentServiceList.Add(service);
+            //            }
+            //        }
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.TransportStreamNid)
+            //    {
+            //        CurrentServiceList = this.networkidx[context.Int1][context.TsId];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.OriginalNetworkId)
+            //    {
+            //        this.CurrentServiceList = new List<Service>();
+            //        foreach (var tsitem in this.originalnetworkidx[context.Int1].Keys)
+            //        {
+            //            foreach (var service in this.originalnetworkidx[context.Int1][tsitem])
+            //            {
+            //                CurrentServiceList.Add(service);
+            //            }
+            //        }
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.TransportStreamOnid)
+            //    {
+            //        CurrentServiceList = this.originalnetworkidx[context.Int1][context.TsId];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.Bouquet)
+            //    {
+            //        BouquetKey b = new BouquetKey();
+            //        b.id = context.Int1;
+            //        b.name = context.Name;
+            //        CurrentServiceList = this.bouquetidx[b];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.Position)
+            //    {
+            //        this.CurrentServiceList = new List<Service>();
+            //        foreach (var tsitem in this.satnameidx[context.Name].Keys)
+            //        {
+            //            foreach (var service in this.satnameidx[context.Name][tsitem])
+            //            {
+            //                CurrentServiceList.Add(service);
+            //            }
+            //        }
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.OneMuxByPosition)
+            //    {
+            //        FrequencyKey key = new FrequencyKey();
+            //        key.frequency = context.Int1;
+            //        key.polarity = context.String1;
+            //        CurrentServiceList = this.satnameidx[context.Name][key];
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.AlphabeticRoot)
+            //    {
+            //        CurrentServiceList = this.allalphabeticidx;
+            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //    }
+            //    else if (context.NodeType == TreeViewNodeType.Letter)
+            //    {
+            //        if (this.alphabeticidx.Keys.Contains(context.Letter))
+            //        {
+            //            CurrentServiceList = this.alphabeticidx[context.Letter];
+            //            this.listViewService.VirtualListSize = CurrentServiceList.Count;
+            //        }
+            //    }
+            //}
         }
 
         private string GetTunerString(DvbCTTuner tuner)
@@ -2159,51 +2148,79 @@ namespace dvbseserviceview
         void UpdateServiceDiffListViewOnly1()
         {
             this.servicedifflist.Clear();
-            int idx = 0;
-            foreach (ServiceDiffKey k in this.serviceonlylist1.Keys)
+            if(this.serviceonlylist1!=null)
             {
-                this.serviceonlylist1[k].No = idx++;
-                this.servicedifflist.Add(this.serviceonlylist1[k]);
+                int idx = 0;
+                foreach (ServiceDiffKey k in this.serviceonlylist1.Keys)
+                {
+                    this.serviceonlylist1[k].No = idx++;
+                    this.servicedifflist.Add(this.serviceonlylist1[k]);
+                }
+                this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
             }
-            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+            else
+            {
+                this.listViewServiceDiff.VirtualListSize = 0;
+            }
         }
 
         void UpdateServiceDiffListViewOnly2()
         {
             this.servicedifflist.Clear();
-            int idx = 0;
-            foreach (ServiceDiffKey k in this.serviceonlylist2.Keys)
+            if(this.serviceonlylist2!=null)
             {
-                this.serviceonlylist2[k].No = idx++;
-                this.servicedifflist.Add(this.serviceonlylist2[k]);
+                int idx = 0;
+                foreach (ServiceDiffKey k in this.serviceonlylist2.Keys)
+                {
+                    this.serviceonlylist2[k].No = idx++;
+                    this.servicedifflist.Add(this.serviceonlylist2[k]);
+                }
+                this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
             }
-            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+            else
+            {
+                this.listViewServiceDiff.VirtualListSize = 0;
+            }
         }
 
         void UpdateServiceDiffListViewChanged()
         {
             this.servicedifflist.Clear();
-            int idx = 0;
-            foreach (ServiceDiffKey k in this.servicediffchanged.Keys)
+            if (this.servicediffchanged != null)
             {
-                this.servicediffchanged[k].s1.No = idx++;
-                this.servicedifflist.Add(this.servicediffchanged[k].s1);
-                this.servicediffchanged[k].s2.No = idx++;
-                this.servicedifflist.Add(this.servicediffchanged[k].s2);
+                int idx = 0;
+                foreach (ServiceDiffKey k in this.servicediffchanged.Keys)
+                {
+                    this.servicediffchanged[k].s1.No = idx++;
+                    this.servicedifflist.Add(this.servicediffchanged[k].s1);
+                    this.servicediffchanged[k].s2.No = idx++;
+                    this.servicedifflist.Add(this.servicediffchanged[k].s2);
+                }
+                this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
             }
-            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+            else
+            {
+                this.listViewServiceDiff.VirtualListSize = 0;
+            }
         }
 
         void UpdateServiceDiffListViewUnchanged()
         {
             this.servicedifflist.Clear();
-            int idx = 0;
-            foreach (ServiceDiffKey k in this.servicediffunchanged.Keys)
+            if(this.servicediffunchanged!=null)
             {
-                this.servicediffunchanged[k].No = idx++;
-                this.servicedifflist.Add(this.servicediffunchanged[k]);
+                int idx = 0;
+                foreach (ServiceDiffKey k in this.servicediffunchanged.Keys)
+                {
+                    this.servicediffunchanged[k].No = idx++;
+                    this.servicedifflist.Add(this.servicediffunchanged[k]);
+                }
+                this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
             }
-            this.listViewServiceDiff.VirtualListSize = this.servicedifflist.Count();
+            else
+            {
+                this.listViewServiceDiff.VirtualListSize = 0;
+            }
         }
 
         private void treeViewServiceDiff_AfterSelect(object sender, TreeViewEventArgs e)
@@ -2277,90 +2294,132 @@ namespace dvbseserviceview
                 TreeViewContext context = (TreeViewContext)selected.Tag;
                 if (context.NodeType == TreeViewNodeType.ServicesRoot)
                 {
-                    UpdateList(this.servicelistfiltered, this.networktype);
+                    CurrentServiceList = this.servicelistfiltered;
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.Provider)
                 {
-                    UpdateList(this.provideridx[context.Name], this.networktype);
+                    CurrentServiceList = this.provideridx[context.Name];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.NetworkName)
                 {
+                    this.CurrentServiceList = new List<Service>();
                     foreach (var tsitem in this.networknameidx[context.Name].Keys)
                     {
                         foreach (var service in this.networknameidx[context.Name][tsitem])
                         {
-                            AddService(service, this.networktype);
+                            CurrentServiceList.Add(service);
                         }
                     }
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.TransportStreamNetworkname)
                 {
-                    UpdateList(this.networknameidx[context.Name][context.TsId], this.networktype);
+                    CurrentServiceList = this.networknameidx[context.Name][context.TsId];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.Network)
                 {
+                    this.CurrentServiceList = new List<Service>();
                     foreach (var tsitem in this.networkidx[context.Int1].Keys)
                     {
                         foreach (var service in this.networkidx[context.Int1][tsitem])
                         {
-                            AddService(service, this.networktype);
+                            CurrentServiceList.Add(service);
                         }
                     }
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.TransportStreamNid)
                 {
-                    UpdateList(this.networkidx[context.Int1][context.TsId], this.networktype);
+                    CurrentServiceList = this.networkidx[context.Int1][context.TsId];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.OriginalNetworkId)
                 {
+                    this.CurrentServiceList = new List<Service>();
                     foreach (var tsitem in this.originalnetworkidx[context.Int1].Keys)
                     {
                         foreach (var service in this.originalnetworkidx[context.Int1][tsitem])
                         {
-                            AddService(service, this.networktype);
+                            CurrentServiceList.Add(service);
                         }
                     }
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.TransportStreamOnid)
                 {
-                    UpdateList(this.originalnetworkidx[context.Int1][context.TsId], this.networktype);
+                    CurrentServiceList = this.originalnetworkidx[context.Int1][context.TsId];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.Bouquet)
                 {
                     BouquetKey b = new BouquetKey();
                     b.id = context.Int1;
                     b.name = context.Name;
-                    UpdateList(this.bouquetidx[b], this.networktype);
+                    CurrentServiceList = this.bouquetidx[b];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.Position)
                 {
+                    this.CurrentServiceList = new List<Service>();
                     foreach (var tsitem in this.satnameidx[context.Name].Keys)
                     {
                         foreach (var service in this.satnameidx[context.Name][tsitem])
                         {
-                            AddService(service, this.networktype);
+                            CurrentServiceList.Add(service);
                         }
                     }
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.OneMuxByPosition)
                 {
                     FrequencyKey key = new FrequencyKey();
                     key.frequency = context.Int1;
                     key.polarity = context.String1;
-                    UpdateList(this.satnameidx[context.Name][key], this.networktype);
+                    CurrentServiceList = this.satnameidx[context.Name][key];
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.AlphabeticRoot)
                 {
-                    UpdateList(this.allalphabeticidx, this.networktype);
+                    CurrentServiceList = this.allalphabeticidx;
+                    this.listViewService.VirtualListSize = CurrentServiceList.Count;
                 }
                 else if (context.NodeType == TreeViewNodeType.Letter)
                 {
                     if (this.alphabeticidx.Keys.Contains(context.Letter))
                     {
-                        UpdateList(this.alphabeticidx[context.Letter], this.networktype);
+                        CurrentServiceList = this.alphabeticidx[context.Letter];
+                        this.listViewService.VirtualListSize = CurrentServiceList.Count;
                     }
                 }
             }
+        }
+
+        private void listViewService_RetrieveVirtualItem(object sender, RetrieveVirtualItemEventArgs e)
+        {
+            Service s = this.CurrentServiceList[e.ItemIndex];
+            ListViewItem i = new ListViewItem();
+            i.ImageIndex = GetServiceTypeImage(s.Type);
+            i.Text = Convert.ToString(s.No);
+
+            if (this.columnSettings.Name) i.SubItems.Add(s.Name);
+            if (this.columnSettings.Provider) i.SubItems.Add(s.Provider);
+
+            if (this.servicediffnetworktype == NetworkType.DVBS)
+            {
+                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbSTuner));
+                if (this.columnSettings.Position) i.SubItems.Add(s.DvbSTuner.Position);
+            }
+            else //DVB-T or DVB-C
+            {
+                if (this.columnSettings.Frequency) if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbCTTuner));
+            }
+
+            AddDvbValues(s, i);
+
+            e.Item = i;
         }
     }
 }
