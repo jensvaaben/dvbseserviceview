@@ -800,17 +800,17 @@ namespace dvbseserviceview
             ListViewItem i = new ListViewItem();
             i.ImageIndex = GetServiceTypeImage(service.Type);
             i.Text = Convert.ToString(service.No);
-            i.SubItems.Add(service.Name);
-            i.SubItems.Add(service.Provider);
+            if (this.columnSettings.Name) i.SubItems.Add(service.Name);
+            if (this.columnSettings.Provider) i.SubItems.Add(service.Provider);
 
             if (networktype == NetworkType.DVBS)
             {
-                i.SubItems.Add(GetTunerString(service.DvbSTuner));
-                i.SubItems.Add(service.DvbSTuner.Position);
+                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(service.DvbSTuner));
+                if (this.columnSettings.Position) i.SubItems.Add(service.DvbSTuner.Position);
             }
             else  //DVB-T or DVB-C
             {
-                i.SubItems.Add(GetTunerString(service.DvbCTTuner));
+                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(service.DvbCTTuner));
             }
 
             AddDvbValues(service, i);
@@ -2255,6 +2255,111 @@ namespace dvbseserviceview
             {
                 // redraw columns
                 UpdateServiceDiffUi();
+                UpdateServiceList();
+            }
+        }
+
+       
+
+        private void UpdateServiceList()
+        {
+            this.listViewService.Clear();
+            AddDvbColoumns(this.listViewService, this.networktype, this.columnSettings);
+            UpdateServiceListFromTreeView();
+        }
+
+        private void UpdateServiceListFromTreeView()
+        {
+            TreeNode selected = this.treeViewService.SelectedNode;
+            if (selected != null)
+            {
+                this.listViewService.Items.Clear();
+                TreeViewContext context = (TreeViewContext)selected.Tag;
+                if (context.NodeType == TreeViewNodeType.ServicesRoot)
+                {
+                    UpdateList(this.servicelistfiltered, this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.Provider)
+                {
+                    UpdateList(this.provideridx[context.Name], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.NetworkName)
+                {
+                    foreach (var tsitem in this.networknameidx[context.Name].Keys)
+                    {
+                        foreach (var service in this.networknameidx[context.Name][tsitem])
+                        {
+                            AddService(service, this.networktype);
+                        }
+                    }
+                }
+                else if (context.NodeType == TreeViewNodeType.TransportStreamNetworkname)
+                {
+                    UpdateList(this.networknameidx[context.Name][context.TsId], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.Network)
+                {
+                    foreach (var tsitem in this.networkidx[context.Int1].Keys)
+                    {
+                        foreach (var service in this.networkidx[context.Int1][tsitem])
+                        {
+                            AddService(service, this.networktype);
+                        }
+                    }
+                }
+                else if (context.NodeType == TreeViewNodeType.TransportStreamNid)
+                {
+                    UpdateList(this.networkidx[context.Int1][context.TsId], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.OriginalNetworkId)
+                {
+                    foreach (var tsitem in this.originalnetworkidx[context.Int1].Keys)
+                    {
+                        foreach (var service in this.originalnetworkidx[context.Int1][tsitem])
+                        {
+                            AddService(service, this.networktype);
+                        }
+                    }
+                }
+                else if (context.NodeType == TreeViewNodeType.TransportStreamOnid)
+                {
+                    UpdateList(this.originalnetworkidx[context.Int1][context.TsId], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.Bouquet)
+                {
+                    BouquetKey b = new BouquetKey();
+                    b.id = context.Int1;
+                    b.name = context.Name;
+                    UpdateList(this.bouquetidx[b], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.Position)
+                {
+                    foreach (var tsitem in this.satnameidx[context.Name].Keys)
+                    {
+                        foreach (var service in this.satnameidx[context.Name][tsitem])
+                        {
+                            AddService(service, this.networktype);
+                        }
+                    }
+                }
+                else if (context.NodeType == TreeViewNodeType.OneMuxByPosition)
+                {
+                    FrequencyKey key = new FrequencyKey();
+                    key.frequency = context.Int1;
+                    key.polarity = context.String1;
+                    UpdateList(this.satnameidx[context.Name][key], this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.AlphabeticRoot)
+                {
+                    UpdateList(this.allalphabeticidx, this.networktype);
+                }
+                else if (context.NodeType == TreeViewNodeType.Letter)
+                {
+                    if (this.alphabeticidx.Keys.Contains(context.Letter))
+                    {
+                        UpdateList(this.alphabeticidx[context.Letter], this.networktype);
+                    }
+                }
             }
         }
     }
