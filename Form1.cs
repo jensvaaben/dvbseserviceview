@@ -2297,76 +2297,87 @@ namespace dvbseserviceview
 
         private void listViewService_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
         {
-            if (this.listViewService.Columns.Count > 0)
+            ColumnWidthChanged(this.listViewService);
+        }
+
+        private void listViewServiceDiff_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            ColumnWidthChanged(this.listViewServiceDiff);
+        }
+
+        private void ColumnWidthChanged(ListView lv)
+        {
+            if (lv.Columns.Count > 0)
             {
-                for (int n = 0; n < this.listViewService.Columns.Count; n++)
+                for (int n = 0; n < lv.Columns.Count; n++)
                 {
-                    if (this.listViewService.Columns[n].Tag == null) return;
-                    switch ((Columns)this.listViewService.Columns[n].Tag)
+                    if (lv.Columns[n].Tag == null) return;
+                    switch ((Columns)lv.Columns[n].Tag)
                     {
                         case Columns.Number:
-                            this.columnWidthSettings.Number = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Number = lv.Columns[n].Width;
                             break;
                         case Columns.Name:
-                            this.columnWidthSettings.Name = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Name = lv.Columns[n].Width;
                             break;
                         case Columns.Provider:
-                            this.columnWidthSettings.Provider = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Provider = lv.Columns[n].Width;
                             break;
                         case Columns.Frequency:
-                            this.columnWidthSettings.Frequency = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Frequency = lv.Columns[n].Width;
                             break;
                         case Columns.Position:
-                            this.columnWidthSettings.Position = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Position = lv.Columns[n].Width;
                             break;
                         case Columns.Network:
-                            this.columnWidthSettings.Network = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Network = lv.Columns[n].Width;
                             break;
                         case Columns.Sid:
-                            this.columnWidthSettings.Sid = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Sid = lv.Columns[n].Width;
                             break;
                         case Columns.Tsid:
-                            this.columnWidthSettings.Tsid = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Tsid = lv.Columns[n].Width;
                             break;
                         case Columns.Nid:
-                            this.columnWidthSettings.Nid = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Nid = lv.Columns[n].Width;
                             break;
                         case Columns.Onid:
-                            this.columnWidthSettings.Onid = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Onid = lv.Columns[n].Width;
                             break;
                         case Columns.Video:
-                            this.columnWidthSettings.Video = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Video = lv.Columns[n].Width;
                             break;
                         case Columns.Pmt:
-                            this.columnWidthSettings.Pmt = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Pmt = lv.Columns[n].Width;
                             break;
                         case Columns.Audio:
-                            this.columnWidthSettings.Audio = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Audio = lv.Columns[n].Width;
                             break;
                         case Columns.Pcr:
-                            this.columnWidthSettings.Pcr = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Pcr = lv.Columns[n].Width;
                             break;
                         case Columns.Type:
-                            this.columnWidthSettings.Type = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Type = lv.Columns[n].Width;
                             break;
                         case Columns.FreeCaMode:
-                            this.columnWidthSettings.FreeCaMode = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.FreeCaMode = lv.Columns[n].Width;
                             break;
                         case Columns.CaSystemId:
-                            this.columnWidthSettings.CaSystemId = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.CaSystemId = lv.Columns[n].Width;
                             break;
                         case Columns.Lcn:
-                            this.columnWidthSettings.Lcn = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Lcn = lv.Columns[n].Width;
                             break;
                         case Columns.Bouquet:
-                            this.columnWidthSettings.Bouquet = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Bouquet = lv.Columns[n].Width;
                             break;
                         case Columns.Features:
-                            this.columnWidthSettings.Features = this.listViewService.Columns[n].Width;
+                            this.columnWidthSettings.Features = lv.Columns[n].Width;
                             break;
                     }
                 }
             }
         }
+
     }
 }

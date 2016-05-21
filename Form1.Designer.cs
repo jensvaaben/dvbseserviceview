@@ -432,6 +432,7 @@
             this.listViewServiceDiff.UseCompatibleStateImageBehavior = false;
             this.listViewServiceDiff.View = System.Windows.Forms.View.Details;
             this.listViewServiceDiff.VirtualMode = true;
+            this.listViewServiceDiff.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.listViewServiceDiff_ColumnWidthChanged);
             this.listViewServiceDiff.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewServiceDiff_RetrieveVirtualItem);
             // 
             // Form1
