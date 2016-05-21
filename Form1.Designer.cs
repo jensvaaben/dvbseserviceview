@@ -234,6 +234,7 @@
             this.listViewService.UseCompatibleStateImageBehavior = false;
             this.listViewService.View = System.Windows.Forms.View.Details;
             this.listViewService.VirtualMode = true;
+            this.listViewService.ColumnWidthChanged += new System.Windows.Forms.ColumnWidthChangedEventHandler(this.listViewService_ColumnWidthChanged);
             this.listViewService.RetrieveVirtualItem += new System.Windows.Forms.RetrieveVirtualItemEventHandler(this.listViewService_RetrieveVirtualItem);
             // 
             // tabControl1

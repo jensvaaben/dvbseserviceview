@@ -73,6 +73,7 @@
       <DependentUpon>ColumnSelectorForm.cs</DependentUpon>
     </Compile>
     <Compile Include="ColumnSettings.cs" />
+    <Compile Include="ColumnWidthSettings.cs" />
     <Compile Include="ComparisonPreferencesForm.cs">
       <SubType>Form</SubType>
     </Compile>

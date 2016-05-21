@@ -47,6 +47,30 @@ namespace dvbseserviceview
             Bouquet
         }
 
+        enum Columns
+        {
+            Number =0,
+            Name,
+            Provider,
+            Frequency,
+            Position,
+            Network,
+            Sid,
+            Tsid,
+            Nid,
+            Onid,
+            Video,
+            Audio,
+            Pmt,
+            Pcr,
+            Type,
+            FreeCaMode,
+            CaSystemId,
+            Lcn,
+            Bouquet,
+            Features
+        }
+
         struct BouquetKey
         {
             public int id;
@@ -349,9 +373,6 @@ namespace dvbseserviceview
         private TreeNode eitroot = new TreeNode();
         private List<Service> servicelist = new List<Service>();
         private List<Service> servicelistfiltered = new List<Service>();
-        private int[] dvbscolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbtcolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
-        private int[] dvbccolumn = new int[] { 70, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100 };
         private int[] eitcolumn = new int[] { 50, 50, 50, 50, 50, 50, 150, 150, 150, 150, 150 };
         private SortedDictionary<string, List<Service>> provideridx = new SortedDictionary<string, List<Service>>();
         private SortedDictionary<string, SortedDictionary<int, List<Service>>> networknameidx = new SortedDictionary<string, SortedDictionary<int, List<Service>>>();
@@ -390,6 +411,7 @@ namespace dvbseserviceview
         private ServiceDiffSettings DiffSettings = new ServiceDiffSettings();
         private ColumnSettings columnSettings = new ColumnSettings();
         private List<Service> CurrentServiceList = null;
+        private ColumnWidthSettings columnWidthSettings = new ColumnWidthSettings();
 
         public Form1()
         {
@@ -406,30 +428,6 @@ namespace dvbseserviceview
 
             //initialize column header width
             // no validation of array sizes.
-            if (Properties.Settings.Default.DVBSColumnHeaderWidth.Count() > 0)
-            {
-                string[] columnwidth = Properties.Settings.Default.DVBSColumnHeaderWidth.Split(new char[1] { ',' });
-                for (int n = 0; n < columnwidth.Count(); n++)
-                {
-                    this.dvbscolumn[n] = Convert.ToInt32(columnwidth[n]);
-                }
-            }
-            if (Properties.Settings.Default.DVBTColumnHeaderWidth.Count() > 0)
-            {
-                string[] columnwidth = Properties.Settings.Default.DVBTColumnHeaderWidth.Split(new char[1] { ',' });
-                for (int n = 0; n < columnwidth.Count(); n++)
-                {
-                    this.dvbtcolumn[n] = Convert.ToInt32(columnwidth[n]);
-                }
-            }
-            if (Properties.Settings.Default.DVBCColumnHeaderWidth.Count() > 0)
-            {
-                string[] columnwidth = Properties.Settings.Default.DVBCColumnHeaderWidth.Split(new char[1] { ',' });
-                for (int n = 0; n < columnwidth.Count(); n++)
-                {
-                    this.dvbccolumn[n] = Convert.ToInt32(columnwidth[n]);
-                }
-            }
             if (Properties.Settings.Default.EITColumnHeaderWidth.Count() > 0)
             {
                 string[] columnwidth = Properties.Settings.Default.EITColumnHeaderWidth.Split(new char[1] { ',' });
@@ -449,6 +447,7 @@ namespace dvbseserviceview
 
             this.DiffSettings.Load();
             this.columnSettings.Load();
+            this.columnWidthSettings.Load();
 
             // intialize filter condition
             this.filterContext.Exclude = Properties.Settings.Default.FilterOptionExclude;
@@ -491,31 +490,6 @@ namespace dvbseserviceview
 
         private void LoadServiceFile(string file, NetworkType networktype)
         {
-            // save column state
-            //if (this.listViewService.Columns.Count > 0)
-            //{
-            //    if (oldnetworktype == NetworkType.DVBS)
-            //    {
-            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
-            //        {
-            //            dvbscolumn[n] = this.listViewService.Columns[n].Width;
-            //        }
-            //    }
-            //    else if (oldnetworktype == NetworkType.DVBT)
-            //    {
-            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
-            //        {
-            //            dvbtcolumn[n] = this.listViewService.Columns[n].Width;
-            //        }
-            //    }
-            //    else if (oldnetworktype == NetworkType.DVBC)
-            //    {
-            //        for (int n = 0; n < this.listViewService.Columns.Count; n++)
-            //        {
-            //            dvbccolumn[n] = this.listViewService.Columns[n].Width;
-            //        }
-            //    }
-            //}
 
             this.treeViewService.Nodes.Clear();
             this.listViewService.Clear();
@@ -738,54 +712,109 @@ namespace dvbseserviceview
 
         private void AddDvbColoumns(ListView listview, NetworkType networktype, ColumnSettings columnsettings)
         {
-            listview.Columns.Add("No.", 30, HorizontalAlignment.Left);
-            if (columnsettings.Name) listview.Columns.Add("Name", 100, HorizontalAlignment.Left);
-            if (columnsettings.Provider) listview.Columns.Add("Provider", 100, HorizontalAlignment.Left);
-            if (columnsettings.Frequency) listview.Columns.Add("Frequency", 100, HorizontalAlignment.Left);
+            ColumnHeader h = null;
+            h = listview.Columns.Add("No.", this.columnWidthSettings.Number, HorizontalAlignment.Left);
+            h.Tag = Columns.Number;
+            if (columnsettings.Name)
+            {
+                h = listview.Columns.Add("Name", this.columnWidthSettings.Name, HorizontalAlignment.Left);
+                h.Tag = Columns.Number;
+            }
+            if (columnsettings.Provider)
+            {
+                h = listview.Columns.Add("Provider", this.columnWidthSettings.Provider, HorizontalAlignment.Left);
+                h.Tag = Columns.Provider;
+            }
+            if (columnsettings.Frequency)
+            {
+                h = listview.Columns.Add("Frequency", this.columnWidthSettings.Frequency, HorizontalAlignment.Left);
+                h.Tag = Columns.Frequency;
+            }
 
             if (networktype == NetworkType.DVBS)
             {
-                if (columnsettings.Position) listview.Columns.Add("Position", 100, HorizontalAlignment.Left);
+                if (columnsettings.Position)
+                {
+                    h = listview.Columns.Add("Position", this.columnWidthSettings.Position, HorizontalAlignment.Left);
+                    h.Tag = Columns.Position;
+                }
             }
 
-            if (columnsettings.Network) listview.Columns.Add("Network", 100, HorizontalAlignment.Left);
-            if (columnsettings.Sid) listview.Columns.Add("SID", 100, HorizontalAlignment.Left);
-            if (columnsettings.Tsid) listview.Columns.Add("TSID", 100, HorizontalAlignment.Left);
-            if (columnsettings.Nid) listview.Columns.Add("NID", 100, HorizontalAlignment.Left);
-            if (columnsettings.Onid) listview.Columns.Add("ONID", 100, HorizontalAlignment.Left);
-            if (columnsettings.Video) listview.Columns.Add("Video", 100, HorizontalAlignment.Left);
-            if (columnsettings.Audio) listview.Columns.Add("Audio", 100, HorizontalAlignment.Left);
-            if (columnsettings.Pmt) listview.Columns.Add("PMT", 100, HorizontalAlignment.Left);
-            if (columnsettings.Pcr) listview.Columns.Add("PCR", 100, HorizontalAlignment.Left);
-            if (columnsettings.Type) listview.Columns.Add("Type", 100, HorizontalAlignment.Left);
-            if (columnsettings.FreeCaMode) listview.Columns.Add("free_CA_mode", 100, HorizontalAlignment.Left);
-            if (columnsettings.CaSystemId) listview.Columns.Add("CA_system_ID", 100, HorizontalAlignment.Left);
-            if (columnsettings.Lcn) listview.Columns.Add("lcn", 100, HorizontalAlignment.Left);
-            if (columnsettings.Bouquet) listview.Columns.Add("bouquet", 100, HorizontalAlignment.Left);
-            if (columnsettings.Features) listview.Columns.Add("features", 100, HorizontalAlignment.Left);
-
-            //adjust column width
-            //if (networktype == NetworkType.DVBS)
-            //{
-            //    for (int n = 0; n < this.dvbscolumn.Count(); n++)
-            //    {
-            //        listview.Columns[n].Width = this.dvbscolumn[n];
-            //    }
-            //}
-            //else if (networktype == NetworkType.DVBT)
-            //{
-            //    for (int n = 0; n < this.dvbtcolumn.Count(); n++)
-            //    {
-            //        listview.Columns[n].Width = this.dvbtcolumn[n];
-            //    }
-            //}
-            //else if (networktype == NetworkType.DVBC)
-            //{
-            //    for (int n = 0; n < this.dvbccolumn.Count(); n++)
-            //    {
-            //        listview.Columns[n].Width = this.dvbccolumn[n];
-            //    }
-            //}
+            if (columnsettings.Network)
+            {
+                h = listview.Columns.Add("Network", this.columnWidthSettings.Network, HorizontalAlignment.Left);
+                h.Tag = Columns.Network;
+            }
+            if (columnsettings.Sid)
+            {
+                h = listview.Columns.Add("SID", this.columnWidthSettings.Sid, HorizontalAlignment.Left);
+                h.Tag = Columns.Sid;
+            }
+            if (columnsettings.Tsid)
+            {
+                h = listview.Columns.Add("TSID", this.columnWidthSettings.Tsid, HorizontalAlignment.Left);
+                h.Tag = Columns.Tsid;
+            }
+            if (columnsettings.Nid)
+            {
+                h = listview.Columns.Add("NID", this.columnWidthSettings.Nid, HorizontalAlignment.Left);
+                h.Tag = Columns.Nid;
+            }
+            if (columnsettings.Onid)
+            {
+                h = listview.Columns.Add("ONID", this.columnWidthSettings.Onid, HorizontalAlignment.Left);
+                h.Tag = Columns.Onid;
+            }
+            if (columnsettings.Video)
+            {
+                h = listview.Columns.Add("Video", this.columnWidthSettings.Video, HorizontalAlignment.Left);
+                h.Tag = Columns.Video;
+            }
+            if (columnsettings.Audio)
+            {
+                h = listview.Columns.Add("Audio", this.columnWidthSettings.Audio, HorizontalAlignment.Left);
+                h.Tag = Columns.Audio;
+            }
+            if (columnsettings.Pmt)
+            {
+                h = listview.Columns.Add("PMT", this.columnWidthSettings.Pmt, HorizontalAlignment.Left);
+                h.Tag = Columns.Pmt;
+            }
+            if (columnsettings.Pcr)
+            {
+                h = listview.Columns.Add("PCR", this.columnWidthSettings.Pcr, HorizontalAlignment.Left);
+                h.Tag = Columns.Pcr;
+            }
+            if (columnsettings.Type)
+            {
+                h = listview.Columns.Add("Type", this.columnWidthSettings.Type, HorizontalAlignment.Left);
+                h.Tag = Columns.Type;
+            }
+            if (columnsettings.FreeCaMode)
+            {
+                h = listview.Columns.Add("free_CA_mode", this.columnWidthSettings.FreeCaMode, HorizontalAlignment.Left);
+                h.Tag = Columns.FreeCaMode;
+            }
+            if (columnsettings.CaSystemId)
+            {
+                h = listview.Columns.Add("CA_system_ID", this.columnWidthSettings.CaSystemId, HorizontalAlignment.Left);
+                h.Tag = Columns.CaSystemId;
+            }
+            if (columnsettings.Lcn)
+            {
+                h = listview.Columns.Add("lcn", this.columnWidthSettings.Lcn, HorizontalAlignment.Left);
+                h.Tag = Columns.Lcn;
+            }
+            if (columnsettings.Bouquet)
+            {
+                h = listview.Columns.Add("bouquet", this.columnWidthSettings.Bouquet, HorizontalAlignment.Left);
+                h.Tag = Columns.Bouquet;
+            }
+            if (columnsettings.Features)
+            {
+                h = listview.Columns.Add("features", this.columnWidthSettings.Features, HorizontalAlignment.Left);
+                h.Tag = Columns.Features;
+            }
         }
 
         private void AddDvbValues(Service service, ListViewItem i)
@@ -1198,114 +1227,6 @@ namespace dvbseserviceview
         private void treeViewService_AfterSelect(object sender, TreeViewEventArgs e)
         {
             UpdateServiceListFromTreeView();
-            //TreeNode selected = this.treeViewService.SelectedNode;
-            //if (selected != null)
-            //{
-            //    this.listViewService.Items.Clear();
-            //    TreeViewContext context = (TreeViewContext)selected.Tag;
-            //    if (context.NodeType == TreeViewNodeType.ServicesRoot)
-            //    {
-            //        CurrentServiceList = this.servicelistfiltered;
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.Provider)
-            //    {
-            //        CurrentServiceList = this.provideridx[context.Name];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.NetworkName)
-            //    {
-            //        this.CurrentServiceList = new List<Service>();
-            //        foreach (var tsitem in this.networknameidx[context.Name].Keys)
-            //        {
-            //            foreach (var service in this.networknameidx[context.Name][tsitem])
-            //            {
-            //                CurrentServiceList.Add(service);
-            //            }
-            //        }
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.TransportStreamNetworkname)
-            //    {
-            //        CurrentServiceList = this.networknameidx[context.Name][context.TsId];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.Network)
-            //    {
-            //        this.CurrentServiceList = new List<Service>();
-            //        foreach (var tsitem in this.networkidx[context.Int1].Keys)
-            //        {
-            //            foreach (var service in this.networkidx[context.Int1][tsitem])
-            //            {
-            //                CurrentServiceList.Add(service);
-            //            }
-            //        }
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.TransportStreamNid)
-            //    {
-            //        CurrentServiceList = this.networkidx[context.Int1][context.TsId];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.OriginalNetworkId)
-            //    {
-            //        this.CurrentServiceList = new List<Service>();
-            //        foreach (var tsitem in this.originalnetworkidx[context.Int1].Keys)
-            //        {
-            //            foreach (var service in this.originalnetworkidx[context.Int1][tsitem])
-            //            {
-            //                CurrentServiceList.Add(service);
-            //            }
-            //        }
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.TransportStreamOnid)
-            //    {
-            //        CurrentServiceList = this.originalnetworkidx[context.Int1][context.TsId];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.Bouquet)
-            //    {
-            //        BouquetKey b = new BouquetKey();
-            //        b.id = context.Int1;
-            //        b.name = context.Name;
-            //        CurrentServiceList = this.bouquetidx[b];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.Position)
-            //    {
-            //        this.CurrentServiceList = new List<Service>();
-            //        foreach (var tsitem in this.satnameidx[context.Name].Keys)
-            //        {
-            //            foreach (var service in this.satnameidx[context.Name][tsitem])
-            //            {
-            //                CurrentServiceList.Add(service);
-            //            }
-            //        }
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.OneMuxByPosition)
-            //    {
-            //        FrequencyKey key = new FrequencyKey();
-            //        key.frequency = context.Int1;
-            //        key.polarity = context.String1;
-            //        CurrentServiceList = this.satnameidx[context.Name][key];
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.AlphabeticRoot)
-            //    {
-            //        CurrentServiceList = this.allalphabeticidx;
-            //        this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //    }
-            //    else if (context.NodeType == TreeViewNodeType.Letter)
-            //    {
-            //        if (this.alphabeticidx.Keys.Contains(context.Letter))
-            //        {
-            //            CurrentServiceList = this.alphabeticidx[context.Letter];
-            //            this.listViewService.VirtualListSize = CurrentServiceList.Count;
-            //        }
-            //    }
-            //}
         }
 
         private string GetTunerString(DvbCTTuner tuner)
@@ -1337,32 +1258,6 @@ namespace dvbseserviceview
         {
             SaveFilterXML();
 
-            //save column width state
-            if (this.listViewService.Columns.Count > 0)
-            {
-                if (networktype == NetworkType.DVBS)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbscolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-                else if (networktype == NetworkType.DVBT)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbtcolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-                else if (networktype == NetworkType.DVBC)
-                {
-                    for (int n = 0; n < this.listViewService.Columns.Count; n++)
-                    {
-                        dvbccolumn[n] = this.listViewService.Columns[n].Width;
-                    }
-                }
-            }
-
             if(this.listViewEIT.Columns.Count==this.eitcolumn.Count())
             {
                 for (int n = 0; n < this.listViewEIT.Columns.Count; n++)
@@ -1372,30 +1267,7 @@ namespace dvbseserviceview
             }
 
             string str = "";
-            for (int n = 0; n < this.dvbscolumn.Count(); n++)
-            {
-                if (n != 0) str += ",";
-                str += Convert.ToString(this.dvbscolumn[n]);
-            }
-            Properties.Settings.Default.DVBSColumnHeaderWidth = str;
 
-            str = "";
-            for (int n = 0; n < this.dvbtcolumn.Count(); n++)
-            {
-                if (n != 0) str += ",";
-                str += Convert.ToString(this.dvbtcolumn[n]);
-            }
-            Properties.Settings.Default.DVBTColumnHeaderWidth = str;
-
-            str = "";
-            for (int n = 0; n < this.dvbccolumn.Count(); n++)
-            {
-                if (n != 0) str += ",";
-                str += Convert.ToString(this.dvbccolumn[n]);
-            }
-            Properties.Settings.Default.DVBCColumnHeaderWidth = str;
-
-            str = "";
             for (int n = 0; n < this.eitcolumn.Count(); n++)
             {
                 if (n != 0) str += ",";
@@ -1422,6 +1294,7 @@ namespace dvbseserviceview
 
             this.DiffSettings.Save();
             this.columnSettings.Save();
+            this.columnWidthSettings.Save();
 
             Properties.Settings.Default.Save();
         }
@@ -2420,6 +2293,80 @@ namespace dvbseserviceview
             AddDvbValues(s, i);
 
             e.Item = i;
+        }
+
+        private void listViewService_ColumnWidthChanged(object sender, ColumnWidthChangedEventArgs e)
+        {
+            if (this.listViewService.Columns.Count > 0)
+            {
+                for (int n = 0; n < this.listViewService.Columns.Count; n++)
+                {
+                    if (this.listViewService.Columns[n].Tag == null) return;
+                    switch ((Columns)this.listViewService.Columns[n].Tag)
+                    {
+                        case Columns.Number:
+                            this.columnWidthSettings.Number = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Name:
+                            this.columnWidthSettings.Name = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Provider:
+                            this.columnWidthSettings.Provider = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Frequency:
+                            this.columnWidthSettings.Frequency = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Position:
+                            this.columnWidthSettings.Position = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Network:
+                            this.columnWidthSettings.Network = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Sid:
+                            this.columnWidthSettings.Sid = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Tsid:
+                            this.columnWidthSettings.Tsid = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Nid:
+                            this.columnWidthSettings.Nid = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Onid:
+                            this.columnWidthSettings.Onid = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Video:
+                            this.columnWidthSettings.Video = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Pmt:
+                            this.columnWidthSettings.Pmt = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Audio:
+                            this.columnWidthSettings.Audio = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Pcr:
+                            this.columnWidthSettings.Pcr = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Type:
+                            this.columnWidthSettings.Type = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.FreeCaMode:
+                            this.columnWidthSettings.FreeCaMode = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.CaSystemId:
+                            this.columnWidthSettings.CaSystemId = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Lcn:
+                            this.columnWidthSettings.Lcn = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Bouquet:
+                            this.columnWidthSettings.Bouquet = this.listViewService.Columns[n].Width;
+                            break;
+                        case Columns.Features:
+                            this.columnWidthSettings.Features = this.listViewService.Columns[n].Width;
+                            break;
+                    }
+                }
+            }
         }
     }
 }
