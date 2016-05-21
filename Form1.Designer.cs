@@ -67,7 +67,7 @@
             this.treeViewServiceDiff = new System.Windows.Forms.TreeView();
             this.listViewServiceDiff = new System.Windows.Forms.ListView();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ColumnSelectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -112,7 +112,7 @@
             this.compareServicesFilesToolStripMenuItem,
             this.comparisonPreferencesToolStripMenuItem,
             this.toolStripSeparator3,
-            this.toolStripMenuItem1});
+            this.ColumnSelectToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -426,10 +426,10 @@
             // 
             // toolStripMenuItem1
             // 
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(212, 22);
-            this.toolStripMenuItem1.Text = "Select service columns...";
-            this.toolStripMenuItem1.Click += new System.EventHandler(this.toolStripMenuItem1_Click);
+            this.ColumnSelectToolStripMenuItem.Name = "ColumnSelectToolStripMenuItem";
+            this.ColumnSelectToolStripMenuItem.Size = new System.Drawing.Size(212, 22);
+            this.ColumnSelectToolStripMenuItem.Text = "Select service columns...";
+            this.ColumnSelectToolStripMenuItem.Click += new System.EventHandler(this.ColumnSelectToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -507,7 +507,7 @@
         private System.Windows.Forms.ListView listViewServiceDiff;
         private System.Windows.Forms.ToolStripMenuItem comparisonPreferencesToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ColumnSelectToolStripMenuItem;
     }
 }
 

@@ -2252,7 +2252,7 @@ namespace dvbseserviceview
                 CreateDiffReports();
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e)
+        private void ColumnSelectToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColumnSelectorForm dlg = new ColumnSelectorForm();
             dlg.Settings = this.columnSettings;
