@@ -52,6 +52,7 @@ namespace dvbseserviceview
             this.checkBoxLcn.Checked = this.columnsettings.Lcn;
             this.checkBoxBouquet.Checked = this.columnsettings.Bouquet;
             this.checkBoxFeatures.Checked = this.columnsettings.Features;
+            this.checkBoxData.Checked = this.columnsettings.Data;
         }
 
         private void buttonOk_Click(object sender, EventArgs e)
@@ -77,6 +78,7 @@ namespace dvbseserviceview
             this.columnsettings.Lcn = this.checkBoxLcn.Checked;
             this.columnsettings.Bouquet = this.checkBoxBouquet.Checked;
             this.columnsettings.Features = this.checkBoxFeatures.Checked;
+            this.columnsettings.Data = this.checkBoxData.Checked;
             this.DialogResult = DialogResult.OK;
             Close();
         }
