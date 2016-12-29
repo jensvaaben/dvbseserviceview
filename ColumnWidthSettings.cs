@@ -28,6 +28,7 @@ namespace dvbseserviceview
         private int lcn = 100;
         private int bouquet = 100;
         private int features = 100;
+        private int data = 100;
 
         public int Number
         {
@@ -161,6 +162,17 @@ namespace dvbseserviceview
                 this.audio = value;
             }
         }
+        public int Data
+        {
+            get
+            {
+                return this.data;
+            }
+            set
+            {
+                this.data = value;
+            }
+        }
         public int Pmt
         {
             get
@@ -272,6 +284,7 @@ namespace dvbseserviceview
             this.lcn = Properties.Settings.Default.columnWidthLcn;
             this.bouquet = Properties.Settings.Default.columnWidthBouquet;
             this.features = Properties.Settings.Default.columnWidthFeatures;
+            this.data = Properties.Settings.Default.columnWidthData;
         }
 
         public void Save()
@@ -296,6 +309,7 @@ namespace dvbseserviceview
             Properties.Settings.Default.columnWidthLcn = this.lcn;
             Properties.Settings.Default.columnWidthBouquet = this.bouquet;
             Properties.Settings.Default.columnWidthFeatures = this.features;
+            Properties.Settings.Default.columnWidthData = this.data;
         }
 
     }

@@ -296,6 +296,7 @@ namespace dvbseserviceview
         List<Bouquet> bouquet_list = new List<Bouquet>();
         string video_pid_list="";
         string audio_pid_list = "";
+        string data_pid_list = "";
         string bouquet_list_string = "";
         string ca_system_id_list = "";
         string feature_list = "";
@@ -307,6 +308,7 @@ namespace dvbseserviceview
         // list of audio/video stream PIDs. Used by filter
         SortedSet<int> audiopidlist = new SortedSet<int>();
         SortedSet<int> videopidlist = new SortedSet<int>();
+        SortedSet<int> datapidlist = new SortedSet<int>();
         // list of CA System ID. Used by filter
         SortedSet<int> casystemidlist = new SortedSet<int>();
 
@@ -316,12 +318,14 @@ namespace dvbseserviceview
 
         //List of ISO 639 language codes for audio streams.  Used by filter
         SortedSet<string> audiolanguagelist = new SortedSet<string>();
+        SortedSet<string> datalanguagelist = new SortedSet<string>();
         //Reserved for future use
         SortedSet<string> subtitlelanguagelist = new SortedSet<string>();
         SortedSet<string> teletextlanguagelist = new SortedSet<string>();
 
         SortedSet<string> audiotypelist = new SortedSet<string>();
         SortedSet<string> videotypelist = new SortedSet<string>();
+        SortedSet<string> datatypelist = new SortedSet<string>();
 
         public SortedSet<int> AudioPidList
         {
@@ -336,6 +340,14 @@ namespace dvbseserviceview
             get
             {
                 return this.videopidlist;
+            }
+        }
+
+        public SortedSet<int> DataPidList
+        {
+            get
+            {
+                return this.datapidlist;
             }
         }
 
@@ -368,6 +380,14 @@ namespace dvbseserviceview
             get
             {
                 return this.audiolanguagelist;
+            }
+        }
+
+        public SortedSet<string> DataLanguageList
+        {
+            get
+            {
+                return this.datalanguagelist;
             }
         }
 
@@ -633,6 +653,13 @@ namespace dvbseserviceview
                 return this.audio_pid_list;
             }
         }
+        public string DataPidListString
+        {
+            get
+            {
+                return this.data_pid_list;
+            }
+        }
         public string BouquetListString
         {
             get
@@ -668,6 +695,14 @@ namespace dvbseserviceview
             get
             {
                 return this.videotypelist;
+            }
+        }
+
+        public SortedSet<string> DataTypeList
+        {
+            get
+            {
+                return this.datatypelist;
             }
         }
 
@@ -739,6 +774,47 @@ namespace dvbseserviceview
                 }
             }
             this.audio_pid_list = tmp.ToString();
+        }
+
+        private void CreateDataPidList()
+        {
+            StringBuilder tmp = new StringBuilder(24);
+            bool first = true;
+            foreach (var stream in this.streams)
+            {
+                if(!IsaudioStream(stream.Type2) && !IsVideoStream(stream.Type2))
+                {
+                    this.datapidlist.Add(stream.Pid);
+                    this.datalanguagelist.Add(stream.Language);
+                    this.datatypelist.Add(stream.Type2);
+                    if (!first)
+                    {
+                        tmp.Append(",");
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
+
+                        if (stream.Language.Count() > 0)
+                        {
+                            tmp.Append(":");
+                            tmp.Append(stream.Language);
+                        }
+                    }
+                    else
+                    {
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
+                        if (stream.Language.Count() > 0)
+                        {
+                            tmp.Append(":");
+                            tmp.Append(stream.Language);
+                        }
+                        first = false;
+                    }
+                }
+            }
+            this.data_pid_list = tmp.ToString();
         }
 
         private void CreateCaSystemIdList()
@@ -873,6 +949,7 @@ namespace dvbseserviceview
             CreateCaSystemIdList();
             CreateBouquetList();
             CreateFeatureList();
+            CreateDataPidList();
         }
     }
 }

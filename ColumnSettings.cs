@@ -28,6 +28,7 @@ namespace dvbseserviceview
         private bool lcn = true;
         private bool bouquet = true;
         private bool features = true;
+        private bool data = true;
 
         public bool Number
         {
@@ -161,6 +162,17 @@ namespace dvbseserviceview
                 this.audio = value;
             }
         }
+        public bool Data
+        {
+            get
+            {
+                return this.data;
+            }
+            set
+            {
+                this.data = value;
+            }
+        }
         public bool Pmt
         {
             get
@@ -271,6 +283,7 @@ namespace dvbseserviceview
             this.lcn = Properties.Settings.Default.columnLcn;
             this.bouquet = Properties.Settings.Default.columnBouquet;
             this.features = Properties.Settings.Default.columnFeatures;
+            this.data = Properties.Settings.Default.columnData;
         }
         public void Save()
         {
@@ -294,6 +307,7 @@ namespace dvbseserviceview
             Properties.Settings.Default.columnLcn = this.lcn;
             Properties.Settings.Default.columnBouquet = this.bouquet;
             Properties.Settings.Default.columnFeatures = this.features;
+            Properties.Settings.Default.columnData = this.data;
         }
     }
 }

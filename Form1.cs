@@ -68,7 +68,8 @@ namespace dvbseserviceview
             CaSystemId,
             Lcn,
             Bouquet,
-            Features
+            Features,
+            Data
         }
 
         struct BouquetKey
@@ -776,6 +777,11 @@ namespace dvbseserviceview
                 h = listview.Columns.Add("Audio", this.columnWidthSettings.Audio, HorizontalAlignment.Left);
                 h.Tag = Columns.Audio;
             }
+            if (columnsettings.Data)
+            {
+                h = listview.Columns.Add("Data", this.columnWidthSettings.Data, HorizontalAlignment.Left);
+                h.Tag = Columns.Data;
+            }
             if (columnsettings.Pmt)
             {
                 h = listview.Columns.Add("PMT", this.columnWidthSettings.Pmt, HorizontalAlignment.Left);
@@ -827,6 +833,7 @@ namespace dvbseserviceview
             if (this.columnSettings.Onid) i.SubItems.Add(Convert.ToString(service.Onid));
             if (this.columnSettings.Video) i.SubItems.Add(service.VideoPidListString); //VPID
             if (this.columnSettings.Audio) i.SubItems.Add(service.AudioPidListString); //APID
+            if (this.columnSettings.Data) i.SubItems.Add(service.DataPidListString); //DATA
             if (this.columnSettings.Pmt) i.SubItems.Add(Convert.ToString(service.Pmt));
             if (this.columnSettings.Pcr) i.SubItems.Add(Convert.ToString(service.Pcr));
             if (this.columnSettings.Type) i.SubItems.Add(Convert.ToString(service.Type));

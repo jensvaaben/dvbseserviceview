@@ -802,5 +802,29 @@ namespace dvbseserviceview.Properties {
                 this["columnWidthFeatures"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool columnData {
+            get {
+                return ((bool)(this["columnData"]));
+            }
+            set {
+                this["columnData"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("100")]
+        public int columnWidthData {
+            get {
+                return ((int)(this["columnWidthData"]));
+            }
+            set {
+                this["columnWidthData"] = value;
+            }
+        }
     }
 }
