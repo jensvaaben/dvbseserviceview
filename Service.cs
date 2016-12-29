@@ -320,6 +320,9 @@ namespace dvbseserviceview
         SortedSet<string> subtitlelanguagelist = new SortedSet<string>();
         SortedSet<string> teletextlanguagelist = new SortedSet<string>();
 
+        SortedSet<string> audiotypelist = new SortedSet<string>();
+        SortedSet<string> videotypelist = new SortedSet<string>();
+
         public SortedSet<int> AudioPidList
         {
             get
@@ -652,6 +655,22 @@ namespace dvbseserviceview
             }
         }
 
+        public SortedSet<string> AudioTypeList
+        {
+            get
+            {
+                return this.audiotypelist;
+            }
+        }
+
+        public SortedSet<string> VideoTypeList
+        {
+            get
+            {
+                return this.videotypelist;
+            }
+        }
+
         private void CreateVideoPidList()
         {
             StringBuilder tmp = new StringBuilder(24);
@@ -661,6 +680,7 @@ namespace dvbseserviceview
                 if (IsVideoStream(stream.Type2))
                 {
                     this.videopidlist.Add(stream.Pid);
+                    this.videotypelist.Add(stream.Type2);
                     if (!first)
                     {
                         tmp.Append(",");
@@ -690,6 +710,7 @@ namespace dvbseserviceview
                 {
                     this.audiopidlist.Add(stream.Pid);
                     this.audiolanguagelist.Add(stream.Language);
+                    this.audiotypelist.Add(stream.Type2);
                     if (!first)
                     {
                         tmp.Append(",");

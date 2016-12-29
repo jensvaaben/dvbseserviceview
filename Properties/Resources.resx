@@ -217,4 +217,10 @@
   <data name="FilterAttributeTypeAudioLanguage" xml:space="preserve">
     <value>AudioLanguage</value>
   </data>
+  <data name="FilterAttributeTypeAudioType" xml:space="preserve">
+    <value>AudioType</value>
+  </data>
+  <data name="FilterAttributeTypeVideoType" xml:space="preserve">
+    <value>VideoType</value>
+  </data>
 </root>

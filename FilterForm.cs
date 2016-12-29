@@ -55,8 +55,10 @@ namespace dvbseserviceview
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeOnid);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeBouquetList);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeVideo);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeVideoType);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudio);
             this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudioLanguage);
+            this.comboBoxAttribute.Items.Add(Properties.Resources.FilterAttributeTypeAudioType);
 
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
             this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
@@ -141,6 +143,8 @@ namespace dvbseserviceview
             else if (t == FilterAttributeType.Video) return Properties.Resources.FilterAttributeTypeVideo;
             else if (t == FilterAttributeType.Audio) return Properties.Resources.FilterAttributeTypeAudio;
             else if (t == FilterAttributeType.AudioLanguage) return Properties.Resources.FilterAttributeTypeAudioLanguage;
+            else if (t == FilterAttributeType.AudioType) return Properties.Resources.FilterAttributeTypeAudioType;
+            else if (t == FilterAttributeType.VideoType) return Properties.Resources.FilterAttributeTypeVideoType;
             else return Properties.Resources.FilterAttributeTypeNone; // this should not happen
         }
 
@@ -234,6 +238,10 @@ namespace dvbseserviceview
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeLessThan);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeMoreThan);
                     break;
+                case FilterAttributeType.AudioType:
+                case FilterAttributeType.VideoType:
+                    this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeContains);
+                    break;
                 default:
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIs);
                     this.comboBoxCondition.Items.Add(Properties.Resources.FilterRelationTypeIsNot);
@@ -326,6 +334,14 @@ namespace dvbseserviceview
             else if (s == Properties.Resources.FilterAttributeTypeAudioLanguage)
             {
                 return FilterAttributeType.AudioLanguage;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeAudioType)
+            {
+                return FilterAttributeType.AudioType;
+            }
+            else if (s == Properties.Resources.FilterAttributeTypeVideoType)
+            {
+                return FilterAttributeType.VideoType;
             }
             else
             {
