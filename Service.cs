@@ -654,7 +654,7 @@ namespace dvbseserviceview
 
         private void CreateVideoPidList()
         {
-            string tmp = "";
+            StringBuilder tmp = new StringBuilder(24);
             bool first = true;
             foreach (var stream in this.streams)
             {
@@ -663,22 +663,26 @@ namespace dvbseserviceview
                     this.videopidlist.Add(stream.Pid);
                     if (!first)
                     {
-                        tmp += ",";
-                        tmp += Convert.ToString(stream.Pid);
+                        tmp.Append(",");
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
                     }
                     else
                     {
-                        tmp += Convert.ToString(stream.Pid);
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
                         first = false;
                     }
                 }
             }
-            this.video_pid_list = tmp;
+            this.video_pid_list = tmp.ToString();
         }
 
         private void CreateAudioPidList()
         {
-            string tmp = "";
+            StringBuilder tmp = new StringBuilder(24);
             bool first = true;
             foreach (var stream in this.streams)
             {
@@ -688,25 +692,32 @@ namespace dvbseserviceview
                     this.audiolanguagelist.Add(stream.Language);
                     if (!first)
                     {
-                        tmp += ",";
-                        tmp += Convert.ToString(stream.Pid);
+                        tmp.Append(",");
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
+
                         if (stream.Language.Count() > 0)
                         {
-                            tmp += string.Format(":{0}", stream.Language);
+                            tmp.Append(":");
+                            tmp.Append(stream.Language);
                         }
                     }
                     else
                     {
-                        tmp += Convert.ToString(stream.Pid);
+                        tmp.Append(Convert.ToString(stream.Pid));
+                        tmp.Append(":");
+                        tmp.Append(stream.Type2);
                         if (stream.Language.Count() > 0)
                         {
-                            tmp += string.Format(":{0}", stream.Language);
+                            tmp.Append(":");
+                            tmp.Append(stream.Language);
                         }
                         first = false;
                     }
                 }
             }
-            this.audio_pid_list = tmp;
+            this.audio_pid_list = tmp.ToString();
         }
 
         private void CreateCaSystemIdList()
