@@ -26,7 +26,10 @@ namespace dvbseserviceview
         Audio,
         AudioLanguage,
         VideoType,
-        AudioType
+        AudioType,
+        Data,
+        DataLanguage,
+        DataType
     }
 
     internal enum FilterRelationType
@@ -225,12 +228,18 @@ namespace dvbseserviceview
                     return FilterMatchIntList(f.filterRelationType, s.AudioPidList, f.Value);
                 case FilterAttributeType.Video:
                     return FilterMatchIntList(f.filterRelationType, s.VideoPidList, f.Value);
+                case FilterAttributeType.Data:
+                    return FilterMatchIntList(f.filterRelationType, s.DataPidList, f.Value);
                 case FilterAttributeType.AudioLanguage:
                     return FilterMatchStringList(s.AudioLanguageList,f);
+                case FilterAttributeType.DataLanguage:
+                    return FilterMatchStringList(s.DataLanguageList, f);
                 case FilterAttributeType.AudioType:
                     return FilterMatchStringList(s.AudioTypeList, f);
                 case FilterAttributeType.VideoType:
                     return FilterMatchStringList(s.VideoTypeList, f);
+                case FilterAttributeType.DataType:
+                    return FilterMatchStringList(s.DataTypeList, f);
                 default:
                     return false; // this should not happen
             }

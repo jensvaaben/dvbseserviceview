@@ -126,6 +126,33 @@ namespace dvbseserviceview.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Data.
+        /// </summary>
+        internal static string FilterAttributeTypeData {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DataLanguage.
+        /// </summary>
+        internal static string FilterAttributeTypeDataLanguage {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeDataLanguage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to DataType.
+        /// </summary>
+        internal static string FilterAttributeTypeDataType {
+            get {
+                return ResourceManager.GetString("FilterAttributeTypeDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Features.
         /// </summary>
         internal static string FilterAttributeTypeFeatures {

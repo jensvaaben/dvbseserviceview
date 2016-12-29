@@ -223,4 +223,13 @@
   <data name="FilterAttributeTypeVideoType" xml:space="preserve">
     <value>VideoType</value>
   </data>
+  <data name="FilterAttributeTypeData" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="FilterAttributeTypeDataLanguage" xml:space="preserve">
+    <value>DataLanguage</value>
+  </data>
+  <data name="FilterAttributeTypeDataType" xml:space="preserve">
+    <value>DataType</value>
+  </data>
 </root>
