@@ -2281,14 +2281,14 @@ namespace dvbseserviceview
             if (this.columnSettings.Name) i.SubItems.Add(s.Name);
             if (this.columnSettings.Provider) i.SubItems.Add(s.Provider);
 
-            if (this.servicediffnetworktype == NetworkType.DVBS)
+            if (this.networktype == NetworkType.DVBS)
             {
                 if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbSTuner));
                 if (this.columnSettings.Position) i.SubItems.Add(s.DvbSTuner.Position);
             }
             else //DVB-T or DVB-C
             {
-                if (this.columnSettings.Frequency) if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbCTTuner));
+                if (this.columnSettings.Frequency) i.SubItems.Add(GetTunerString(s.DvbCTTuner));
             }
 
             AddDvbValues(s, i);
