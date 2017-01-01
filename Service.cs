@@ -174,7 +174,7 @@ namespace dvbseserviceview
         int pid = -1;
         List<CA> ca_list = new List<CA>();
         string application_name = "";
-        string language = "";
+        SortedSet<string> language = new SortedSet<string>();
 
         public int Type
         {
@@ -231,7 +231,7 @@ namespace dvbseserviceview
                 this.application_name = value;
             }
         }
-        public string Language
+        public SortedSet<string> Language
         {
             get
             {
@@ -744,7 +744,10 @@ namespace dvbseserviceview
                 if (IsaudioStream(stream.Type2))
                 {
                     this.audiopidlist.Add(stream.Pid);
-                    this.audiolanguagelist.Add(stream.Language);
+                    foreach(string lan in stream.Language)
+                    {
+                        this.audiolanguagelist.Add(lan);
+                    }
                     this.audiotypelist.Add(stream.Type2);
                     if (!first)
                     {
@@ -756,7 +759,10 @@ namespace dvbseserviceview
                         if (stream.Language.Count() > 0)
                         {
                             tmp.Append(":");
-                            tmp.Append(stream.Language);
+                            foreach(string lan in stream.Language)
+                            {
+                                tmp.Append(lan);
+                            }
                         }
                     }
                     else
@@ -767,7 +773,10 @@ namespace dvbseserviceview
                         if (stream.Language.Count() > 0)
                         {
                             tmp.Append(":");
-                            tmp.Append(stream.Language);
+                            foreach (string lan in stream.Language)
+                            {
+                                tmp.Append(lan);
+                            }
                         }
                         first = false;
                     }
@@ -785,7 +794,10 @@ namespace dvbseserviceview
                 if(!IsaudioStream(stream.Type2) && !IsVideoStream(stream.Type2))
                 {
                     this.datapidlist.Add(stream.Pid);
-                    this.datalanguagelist.Add(stream.Language);
+                    foreach(string lan in stream.Language)
+                    {
+                        this.datalanguagelist.Add(lan);
+                    }
                     this.datatypelist.Add(stream.Type2);
                     if (!first)
                     {
@@ -797,7 +809,10 @@ namespace dvbseserviceview
                         if (stream.Language.Count() > 0)
                         {
                             tmp.Append(":");
-                            tmp.Append(stream.Language);
+                            foreach (string lan in stream.Language)
+                            {
+                                tmp.Append(lan);
+                            }
                         }
                     }
                     else
@@ -808,7 +823,10 @@ namespace dvbseserviceview
                         if (stream.Language.Count() > 0)
                         {
                             tmp.Append(":");
-                            tmp.Append(stream.Language);
+                            foreach (string lan in stream.Language)
+                            {
+                                tmp.Append(lan);
+                            }
                         }
                         first = false;
                     }
@@ -884,13 +902,19 @@ namespace dvbseserviceview
                 else if (s.Type2 == "subtitle")
                 {
                     this.subtitlepidlist.Add(s.Pid);
-                    this.teletextlanguagelist.Add(s.Language);
+                    foreach(string lan in s.Language)
+                    {
+                        this.teletextlanguagelist.Add(lan);
+                    }
                     list.Add(s.Type2);
                 }
                 else if (s.Type2 == "teletext")
                 {
                     this.teletextpidlist.Add(s.Pid);
-                    this.teletextlanguagelist.Add(s.Language);
+                    foreach (string lan in s.Language)
+                    {
+                        this.teletextlanguagelist.Add(lan);
+                    }
                     list.Add(s.Type2);
                 }
             }

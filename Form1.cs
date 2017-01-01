@@ -608,7 +608,11 @@ namespace dvbseserviceview
             s.Pid = Convert.ToInt32(l.Attributes["pid"].Value);
             if(l.Attributes["language"]!=null)
             {
-                s.Language = l.Attributes["language"].Value;
+                string[] lan = l.Attributes["language"].Value.Split(new char[1] { ',' });
+                foreach(string lang in lan)
+                {
+                    s.Language.Add(lang);
+                }
             }
 
             if (l.Attributes["application_name"] != null)
