@@ -1,6 +1,6 @@
 # DVBStreamExplorer Service View
 
-[![build status](https://ci.appveyor.com/api/projects/status/github/jensvaaben/dvbseserviceview?branch=master&svg=true)](https://ci.appveyor.com/api/projects/status/github/jensvaaben/dvbseserviceview?branch=master&svg=true)
+[![build status](https://ci.appveyor.com/api/projects/status/github/jensvaaben/dvbseserviceview?branch=master&svg=true)](https://ci.appveyor.com/project/jensvaaben/dvbseserviceview)
 
 The service view is similar to the service viewer built in [DVBStreamExplorer](http://www.dvbstreamexplorer.com/dvbse/dvbse.php). Unlike [DVBStreamExplorer](http://www.dvbstreamexplorer.com/dvbse/dvbse.php) source code is available so you can modify and improve it exactly to your need.
 More info here [http://blog.dvbstreamexplorer.com/p/dvbstreamexplorer-service-viewer.html](http://blog.dvbstreamexplorer.com/p/dvbstreamexplorer-service-viewer.html).
