@@ -1,4 +1,10 @@
-version: 1.0.{build}
+version: 1.1.7.{build}
+configuration: Release
 build:
   project: dvbseserviceview.sln
   verbosity: minimal
+artifacts:
+- path: bin\Release\dvbseserviceview.exe
+  name: dvbseserviceview
+  type: zip
+  
